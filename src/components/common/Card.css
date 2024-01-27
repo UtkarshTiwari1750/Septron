@@ -1,0 +1,7 @@
+.c-parent>.c-button:hover{
+    filter: grayscale(0);
+}
+
+.c-button:hover{
+    background: white;
+}
