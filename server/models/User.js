@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 var validateEmail = function(email) {
-    var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})/;
     return re.test(email)
 };
 
@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
             lowercase: true,
             unique: true,
             validate: [validateEmail, 'Please fill a valid email address'],
-            match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
+            match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})/, 'Please fill a valid email address']
         },
         password: {
             type: String,
@@ -42,16 +42,10 @@ const userSchema = new mongoose.Schema({
             ref: "Profile",
             required:[true, "Profile is required"],
         },
-        videos: [
+        contents: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Video"
-            }
-        ],
-        books: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Book"
+                ref: "Content"
             }
         ],
         token: {
@@ -62,6 +56,12 @@ const userSchema = new mongoose.Schema({
         resetPasswordExpires: {
             type: Date,
         },
+        contentProgress: [  
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "ContentProgress",
+            } 
+        ]
     }, 
     {timestamps: true}
 );
