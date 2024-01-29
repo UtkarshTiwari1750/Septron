@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 const contentSchema = new mongoose.Schema({
-        mediaName:{
+        contentName:{
             type: String,
             required: [true, "Media Name is Required"],
             trim: true,
         },
-        mediaDescription: {
+        contentDescription: {
             type: String,
             required: [true, "Description is Required"],
             trim: true,
@@ -15,7 +15,7 @@ const contentSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
         },
-        mediaContent:[ 
+        contentSections:[ 
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Section",

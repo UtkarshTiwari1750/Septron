@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
 const profileSchema = new mongoose.Schema({
-    image:{
-        type: String,
-        trim: true,
-    },
     gender: {
         type: String,
         enum: {

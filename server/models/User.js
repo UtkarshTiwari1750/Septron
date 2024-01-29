@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
         accounType: {
             type: String,
             enum: {
-                values: ['Creator', 'User'],
+                values: ['Artist', 'Normal'],
                 message: '{VALUE} is not a Valid Acccount Type',
             },
             trim: true,
@@ -41,6 +41,10 @@ const userSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Profile",
             required:[true, "Profile is required"],
+        },
+        image:{
+            type: String,
+            trim: true,
         },
         contents: [
             {
