@@ -14,11 +14,13 @@ const subSectionSchema = new mongoose.Schema({
             type: String,
             trim: true,
         },
-        url: {
-            type: String,
-            required: [true, "Url is Required"],
-            trim: true,
-        }
+        url:[
+            {
+                type: String,
+                required: [true, "Url is Required"],
+                trim: true,
+            }
+        ] 
     },  
     {timestamps: true}
 );

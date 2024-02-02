@@ -28,10 +28,7 @@ const contentSchema = new mongoose.Schema({
             }
         ],
         price: {
-            type: {
-                enum: [Number, String],
-                message: "Not a Valid type of Price"
-            },
+            type: String,
             required: [true, "Price is Required"],
         },
         thumbnail: {
@@ -51,6 +48,12 @@ const contentSchema = new mongoose.Schema({
             trim: true,
         },
         viwers: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User",
+            }
+        ],
+        buyers: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "User",

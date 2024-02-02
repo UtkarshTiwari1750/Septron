@@ -1,16 +1,30 @@
-// const express = require("express");
-// const app = express();
-
+const express = require("express");
+const app = express();
+const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv")
 dotenv.config();
 const database = require("./config/database");
-database.connect();
+const {configCloudinary} = require("./config/cloudinary");
+// database.connect();
+configCloudinary();
+app.use(express.json());
 
-// const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4000;
+const contentRoutes = require("./routes/Content");
+app.use(
+    fileUpload({
+        useTempFiles: true,
+        tempFileDir:"/tmp/",
+    })
+)
 
-// app.listen(PORT, () => {
-//     console.log(`App is running at ${PORT}`);
-// });
+app.use("/api/v1/content", contentRoutes);
+
+app.listen(PORT, () => {
+    console.log(`App is running at ${PORT}`);
+});
+
+
 
 // const User = require("./models/User");
 // const mailSender = require("./utils/mailSender");
