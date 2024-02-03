@@ -2,12 +2,18 @@ import React from 'react'
 import logo from "../../assets/png/logo-white-transparent.png"
 import {AiOutlineSearch} from 'react-icons/ai';
 import Button from './Button';
+import { NavLink,Link } from 'react-router-dom'
 const Navbar = () => {
   return (
     <nav className='container py-4'>
         <div className='w-[90%] mx-auto flex justify-between items-center text-white'>
             <div className='w-[5%]'>
-              <img src={logo} alt="logo" className=''/>
+              {/* <NavLink to="/">
+              </NavLink> */}
+              <Link to="/">
+                <img src="https://firebasestorage.googleapis.com/v0/b/septron-909d2.appspot.com/o/Septron%2Flogo-white-transparent.png?alt=media&token=964bf6a7-a22e-4ebe-bf85-5344e419710a" 
+                alt="logo" className=''/>
+              </Link>
             </div>
             
             <div className='font-Roboto w-[35%] flex justify-between items-center'>

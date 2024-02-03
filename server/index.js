@@ -10,7 +10,11 @@ configCloudinary();
 app.use(express.json());
 
 const PORT = process.env.PORT || 4000;
+
+
 const contentRoutes = require("./routes/Content");
+const authRoutes = require("./routes/Auth");
+
 app.use(
     fileUpload({
         useTempFiles: true,
@@ -19,6 +23,15 @@ app.use(
 )
 
 app.use("/api/v1/content", contentRoutes);
+app.use("/api/v1/auth", authRoutes);
+
+// Testing the server
+app.get("/", (req, res) => {
+	return res.json({
+		success: true,
+		message: "Your server is up and running ...",
+	});
+});
 
 app.listen(PORT, () => {
     console.log(`App is running at ${PORT}`);

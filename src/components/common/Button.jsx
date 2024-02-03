@@ -1,15 +1,24 @@
 import React from 'react'
 
-const Button = ({text, icon}) => {
+const Button = ({text,handleOnClick, children, customClasses, disabled}) => {
   return (
-    <button className='font-Roboto flex items-center border-white border px-3 py-1 rounded-md w-[18%]'>
+    <button className={`font-Roboto flex items-center border-white border px-3 py-1 rounded-md w-[18%] ${customClasses}`}
+    onClick={handleOnClick}
+    disabled={disabled}
+    >
         {
-            icon ? 
-            (icon)
+            children ? 
+            (
+              <>
+                <span>{text}</span>
+                {children}
+              </>
+            )
             : 
-            (<span></span>)
+            (
+              text
+            )
         }
-        <p>{text}</p>
     </button>
   )
 }

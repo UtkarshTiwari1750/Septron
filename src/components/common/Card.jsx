@@ -10,36 +10,6 @@ const Card = () => {
   const demon = useRef(null);
   const demonslayer = useRef(null);
   const [isGrayScale, setIsGrayScale] = useState(true);
-
-  function changeGrayscale(state){
-    // const demon = document.querySelector(".c-demon");
-    // const demonslayer = document.querySelector('.c-demonslayer');
-    
-
-    console.log(state + "Element : " + demon);
-    if(demon.current && demonslayer.current){
-
-      console.log("DEMON..", demon.current.className);
-      console.log("DEMONSLAYER..", demonslayer.current.className);
-
-      if(state === 'Enter' ){
-        // demon.current.className.remove('opacity-0');
-        // demonslayer.current.className.remove('opacity-100');
-        demon.current.className.add('opacity-100');
-        // demonslayer.className.add('opacity-0');
-        // demon.current.className.remove('grayscale');
-        demon.current.className.add('grayscale-0');
-      }
-      else{
-        demon.current.className.add('opacity-0');
-        // demonslayer.current.className.add('opacity-100');
-        // demon.current.className.remove('opacity-100');
-        // demonslayer.current.className.remove('opacity-0');
-        // demon.current.className.remove('grayscale-0');
-        demon.current.className.add("grayscale");
-      }
-    }
-  }
   
   return (
     <div className='w-[250px] h-[380px] flex flex-col items-center justify-center pl-4'>

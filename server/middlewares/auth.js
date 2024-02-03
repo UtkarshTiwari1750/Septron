@@ -42,7 +42,7 @@ exports.auth = async(req, res, next) => {
 } 
 
 
-exports.isStudent = async(req, res, next) => {
+exports.isNormal = async(req, res, next) => {
     try {        
         if(req.user.accountType !== "Normal") {
             return res.status(400).json({
@@ -62,7 +62,7 @@ exports.isStudent = async(req, res, next) => {
     }
 }
 
-exports.isInstructor = async(req, res, next) => {
+exports.isArtist = async(req, res, next) => {
     try{
         if(req.user.accountType !== "Artist") {
             return res.status(400).json({
