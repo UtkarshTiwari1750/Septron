@@ -16,8 +16,7 @@ const Navbar = () => {
       }
     })()
   })
-
-
+  
   return (
     <nav className='container py-4'>
         <div className='w-[90%] mx-auto flex justify-between items-center text-white'>
@@ -58,15 +57,11 @@ const Navbar = () => {
                       </div>
                     ))
                   )}
-
-                  
-                  
                 </div>
-
-          
-
-                <Button text='Login' />
-                <Button text='Sign Up' />
+                <div className='flex justify-between gap-4'>
+                  <Button text='Login' />
+                  <Button text='Sign Up' />
+                </div>
             </div>
         </div>
     </nav>

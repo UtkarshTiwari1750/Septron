@@ -7,7 +7,8 @@ module.exports = {
     extend: {
       backgroundColor:{
         "purpleNeon": "#BC13FE"
-      }
+      },
+      
     },
   },
   plugins: [],
