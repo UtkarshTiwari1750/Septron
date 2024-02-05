@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
         accounType: {
             type: String,
             enum: {
-                values: ['Artist', 'Normal'],
+                values: ['Artist', 'Normal', 'Admin'],
                 message: '{VALUE} is not a Valid Acccount Type',
             },
             trim: true,

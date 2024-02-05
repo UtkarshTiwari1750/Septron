@@ -1,11 +1,10 @@
 import React, {Suspense} from 'react'
-import Card from './Card'
 import { useRef } from 'react';
 import { useState } from 'react';
 import Demonbg from "../assets/gif/DemonSlayerbg.gif";
-import Navbar from './Navbar';
 import {BsFillPlayFill} from 'react-icons/bs'
-import Button from './Button';
+import Button from './common/Button';
+import Navbar from './common/Navbar';
 // const Spline = React.lazy(() => import('@splinetool/react-spline'));
 // import Spline from '@splinetool/react-spline';
 
@@ -28,7 +27,7 @@ const Hero = () => {
 
         <div className='z-10 w-[70%] mx-auto flex flex-col justify-between gap-y-2'>
           <h2 className='text-5xl font-libre'>Watch All Animes</h2>
-          <p className='text-lg opacity-50 font-Nonum leading-5'>
+          <p className='text-lg opacity-50 font-Nanum leading-5'>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel eum quasi porro quam! Autem molestiae similique, illo quibusdam quis rem fugiat ducimus, enim, repudiandae asperiores distinctio recusandae harum inventore adipisci!
           </p>
           <Button text='Watch Now' icon={<BsFillPlayFill />} />

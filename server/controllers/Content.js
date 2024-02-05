@@ -11,56 +11,56 @@ const FILE_TYPE = ['png', 'jpg', 'jpeg'];
 // Create Content
 exports.createContent = async(req, res) => {
     try {
-        // const {
-        //     contentName,
-        //     contentDescription,
-        //     price,
-        //     tag: _tag,
-        //     genre,
-        //     status,
-        //     instructions: _instructions,
-        // } = req.body;
+        const {
+            contentName,
+            contentDescription,
+            price,
+            tag: _tag,
+            genre,
+            status,
+            instructions: _instructions,
+        } = req.body;
         const thumbnail = req.files.thumbnailImage;
 
-        // const tag = JSON.parse(_tag);
-        // const instructions = JSON.parse(_instructions);
+        const tag = JSON.parse(_tag);
+        const instructions = JSON.parse(_instructions);
 
-        // const userId = req.user.id;
+        const userId = req.user.id;
 
-        // // Validating the received data
-        // if(!contentName || !contentDescription || !price || !tag 
-        //     || !genre || !instructions || !thumbnail) {
-        //     return res.status(400).json({
-        //         success: false,
-        //         message: "All fields are required",
-        //     });
-        // }
+        // Validating the received data
+        if(!contentName || !contentDescription || !price || !tag 
+            || !genre || !instructions || !thumbnail) {
+            return res.status(400).json({
+                success: false,
+                message: "All fields are required",
+            });
+        }
 
-        // // Draft is not compulsory option if not given then by-default Set it as "Draft" 
-        // if(!status || status === undefined) {
-        //     status = "Draft";
-        // }
+        // Draft is not compulsory option if not given then by-default Set it as "Draft" 
+        if(!status || status === undefined) {
+            status = "Draft";
+        }
 
-        // // Check if user is Artist or not
-        // const userDetails = await User.findById((userId), {
-        //     accounType: "Artist",
-        // });
+        // Check if user is Artist or not
+        const userDetails = await User.findById((userId), {
+            accounType: "Artist",
+        });
 
-        // if(!userDetails) {
-        //     return res.status(400).json({
-        //         success: false,
-        //         message: "Only Artist can create content"
-        //     });
-        // }
+        if(!userDetails) {
+            return res.status(400).json({
+                success: false,
+                message: "Only Artist can create content"
+            });
+        }
 
-        // // Check if Genre exist or not
-        // const genreDetails = await Genre.findOne({name: genre});
-        // if(!genreDetails) {
-        //     return res.status(400).json({
-        //         success: false,
-        //         message: "Not a valid Genre",
-        //     });
-        // }
+        // Check if Genre exist or not
+        const genreDetails = await Genre.findById(genre);
+        if(!genreDetails) {
+            return res.status(400).json({
+                success: false,
+                message: "Not a valid Genre",
+            });
+        }
 
         // Check file type and call upload function
         const fileType = thumbnail.name.split(".").slice(-1);
@@ -84,40 +84,40 @@ exports.createContent = async(req, res) => {
         //     });
         // }
         
-        // const contentDetails = await Content.create({
-        //     contentName,
-        //     contentDescription,
-        //     creator: userDetails._id,
-        //     tag,
-        //     genre: genreDetails._id,
-        //     price,
-        //     // thumbnail: //PENDING
-        //     instructions,
-        //     status,
-        // });
+        const contentDetails = await Content.create({
+            contentName,
+            contentDescription,
+            creator: userDetails._id,
+            tag,
+            genre: genreDetails._id,
+            price,
+            // thumbnail: //PENDING
+            instructions,
+            status,
+        });
 
-        // const updatedUserDetails = await User.findByIdAndUpdate(
-        //     {userId},
-        //     {$push:{
-        //         contents: contentDetails._id,
-        //     }},
-        //     {new: true}
-        // );
+        const updatedUserDetails = await User.findByIdAndUpdate(
+            {userId},
+            {$push:{
+                contents: contentDetails._id,
+            }},
+            {new: true}
+        );
 
-        // const updatedGenre = await Genre.findByIdAndUpdate(
-        //     {id: genreDetails._id},
-        //     {
-        //         $push:{
-        //             contents: contentDetails._id,
-        //         }
-        //     },
-        //     {new: true}
-        // );
+        const updatedGenre = await Genre.findByIdAndUpdate(
+            {id: genreDetails._id},
+            {
+                $push:{
+                    contents: contentDetails._id,
+                }
+            },
+            {new: true}
+        );
 
         return res.status(200).json({
             success: true,
             message: "Content Created Successfully",
-            // data: contentDetails,
+            data: contentDetails,
         })
 
     } catch(error) {
@@ -421,6 +421,27 @@ exports.getCreatorContents = async(req, res) => {
         return res.status(500).json({
             success: false,
             message: "GET CREATOR CONTENT CONTROLLER ERROR",
+            error: error,
+        }); 
+    }
+}
+
+// Get all Content name
+exports.getAllContentsName = async(req, res) => {
+    try{
+        const allContentName = await Content.find({}).select({contentName: true});
+        console.log("ALL CONTENT NAME...", allContentName);
+
+        return res.status(200).json({
+            success: true,
+            message: "All Content name fetched successfully",
+            data: allContentName,
+        })
+    } catch(error) {
+        console.log("GET ALL CONTENT NAME CONTROLLER ERROR...", error);
+        return res.status(500).json({
+            success: false,
+            message: "GET ALL CONTENT NAME CONTROLLER ERROR",
             error: error,
         }); 
     }

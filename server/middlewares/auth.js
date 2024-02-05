@@ -83,6 +83,26 @@ exports.isArtist = async(req, res, next) => {
 }
 
 
+exports.isAdmin = async(req, res, next) => {
+    try{
+        if(req.user.accountType !== "Admin") {
+            return res.status(400).json({
+                success: false,
+                message: "This is protected route for Admin only"
+            });
+        }
+
+        next();
+    } catch (error) {
+        console.log("IS Admin ERROR...", error);
+        return res.status(400).json({
+            success: false,
+            message: "IS Admin ERROR...",
+            error: error,
+        });
+    }
+}
+
 
 
 

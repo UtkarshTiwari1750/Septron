@@ -8,5 +8,9 @@ export const endpoints = {
     CHANGE_PASSWORD_API: BASE_URL + '/auth/changepassword',
 }
 
+// CONTENT ENDPOINTS
+export const contentEndpoints = {
+    GET_ALL_CONTENT_NAME: BASE_URL + '/content/getAllContentsName',
+}
 
 
