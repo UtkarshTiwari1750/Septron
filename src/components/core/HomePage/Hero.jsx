@@ -24,9 +24,7 @@ const Hero = () => {
 
     <div className='container flex items-center relative text-white h-[100vh] bg-slate-800'>
       {/* <Card /> */}
-        <div className='absolute top-0 z-50'>
-          <Navbar />
-        </div>
+        
         
       <div className='container flex items-center relative text-white h-[100vh] bg-slate-800'>
         <Swiper className='h-full w-full mySwiper'

@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux';
 import {toast} from 'react-hot-toast';
 import { sendOtp } from '../../../services/operations/authAPI';
 import { useNavigate } from 'react-router-dom';
+import { HiMiniEye } from "react-icons/hi2";
+import { HiEyeSlash } from "react-icons/hi2";
 
 const SignupForm = ({accountType}) => {
     const {
@@ -36,7 +38,7 @@ const SignupForm = ({accountType}) => {
   return (
     <div>
         <form onSubmit={handleSubmit(onSubmitHandle)}
-            className='flex flex-col justify-between gap-y-7'
+            className='flex flex-col justify-between gap-y-4'
         >
             <div className='flex justify-between gap-x-5'>
                 <div className='relative'>
@@ -142,7 +144,12 @@ const SignupForm = ({accountType}) => {
                 >
                     Password <sup>*</sup>
                 </label>
-
+                <div 
+                    className='text-gray-300 absolute right-5 text-2xl bottom-2'
+                    onClick={() => setShowPassword((prev) => !prev)}
+                >
+                    {showPassword ? (<HiMiniEye />) : (<HiEyeSlash />) }
+                </div>
                 {errors.password && (
                     <span className='text-red-500 text-xs absolute'>
                         Password is required
@@ -170,7 +177,12 @@ const SignupForm = ({accountType}) => {
                 >
                     Confirm Password <sup>*</sup>
                 </label>
-                
+                <div 
+                    className='text-gray-300 absolute right-5 text-2xl bottom-2'
+                    onClick={() => setShowConfirmPassword((prev) => !prev)}
+                >
+                    {showConfirmPassword ? (<HiMiniEye />) : (<HiEyeSlash />) }
+                </div>
                 {errors.confirmPassword && (
                     <span className='text-red-500 text-xs absolute'>
                         Confirm Password is required

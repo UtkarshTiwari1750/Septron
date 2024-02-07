@@ -3,7 +3,7 @@
 }
 
 .subheadingText {
-    @apply text-lg font-bold text-gray-400 lg:text-2xl 
+    @apply text-lg font-bold text-gray-400 lg:text-lg 
 }
 
 @keyframes animate {
