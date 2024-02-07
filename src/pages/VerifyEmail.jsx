@@ -25,55 +25,60 @@ const VerifyEmail = () => {
         dispatch(signUp(accountType, firstName, lastName, email, password, confirmPassword, otp, navigate));
     }
   return (
-    <div className='text-white'>
-        <div>
-            <h2>Verify Email</h2>
-
-            <p>
-                A verification code has been sent to you. Enter the code below 
-            </p>
-
-            <form onSubmit={handleOnSubmit}>
-                <OTPInput 
-                    value={otp}
-                    onChange={setOtp}
-                    numInputs={6}
-                    renderSeparator={<span>-</span>}
-                    renderInput={
-                        (prop) => <input {...prop}
-                        style={{
-                                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-                            }}
-                            className='w-full rounded-lg p-3 bg-black text-white text-center mx-2'
-                        />
-                    }
-                />
-
-                <button type='submit'
-                    className='text-white'
-                    onClick={handleOnSubmit}
-                >   
-                    Verify Email
-                </button>
-            </form>
-
-            <div>
+    <div className='text-white w-11/12 mx-auto h-[550px] items-center justify-center flex overflow-hidden'>
+        {loading ? (<div className='loader'></div>)
+            : (
                 <div>
-                    <Link to="/login">
-                        <FaArrowLeftLong />
-                        <p>Back to Login</p>
-                    </Link>
+                    <h2>Verify Email</h2>
+
+                    <p>
+                        A verification code has been sent to you. Enter the code below 
+                    </p>
+
+                    <form onSubmit={handleOnSubmit}>
+                        <OTPInput 
+                            value={otp}
+                            onChange={setOtp}
+                            numInputs={6}
+                            renderSeparator={<span>-</span>}
+                            renderInput={
+                                (prop) => <input {...prop}
+                                style={{
+                                        boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
+                                    }}
+                                    className='w-full rounded-lg p-3 bg-black text-white text-center mx-2'
+                                />
+                            }
+                        />
+
+                        <button type='submit'
+                            className='text-white'
+                            onClick={handleOnSubmit}
+                        >   
+                            Verify Email
+                        </button>
+                    </form>
+
+                    <div>
+                        <div>
+                            <Link to="/login">
+                                <FaArrowLeftLong />
+                                <p>Back to Login</p>
+                            </Link>
+                        </div>
+
+                        <button
+                        onClick={() => dispatch(sendOtp(signupData.email, navigate))}
+                        >
+                            <GiBackwardTime size={"24px"}/>
+                            <p>Resend it</p>
+                        </button>
+                    </div>
+
                 </div>
-
-                <button
-                onClick={() => dispatch(sendOtp(signupData.email, navigate))}
-                >
-                    <GiBackwardTime size={"24px"}/>
-                    <p>Resend it</p>
-                </button>
-            </div>
-
-        </div>
+            )
+        }
+        
     </div>
   )
 }

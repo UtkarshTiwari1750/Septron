@@ -5,6 +5,7 @@ import Signup from './pages/Signup';
 import VerifyEmail from './pages/VerifyEmail';
 import Login from './pages/Login';
 import Navbar from './components/common/Navbar';
+import Error from './pages/Error';
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
         <Route path='/signup' element={<Signup />} />
         <Route path='/login' element={<Login />} />
         <Route path='/verify-email' element={<VerifyEmail />} />
+
+        <Route path='*' element={<Error />} />
       </Routes>
     </div>
   );
