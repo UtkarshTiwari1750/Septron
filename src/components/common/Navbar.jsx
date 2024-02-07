@@ -2,20 +2,20 @@ import React, { useEffect, useState } from 'react'
 import logo from "../../assets/png/logo-white-transparent.png"
 import {AiOutlineSearch} from 'react-icons/ai';
 import Button from './Button';
-import { NavLink,Link } from 'react-router-dom'
+import { NavLink,Link, useNavigate } from 'react-router-dom'
 import { getAllContentName } from '../../services/operations/contentAPI';
 import { NavbarLinks } from '../../data/navbar-links';
 const Navbar = () => {
   const [allContentNames, setAllContentNames] = useState([]);
-
-  useEffect(() => {
-    ;(async()=>{
-      const response = await getAllContentName();
-      if(response.length > 0){
-        setAllContentNames(response);
-      }
-    })()
-  })
+  const navigate = useNavigate();
+  // useEffect(() => {
+  //   ;(async()=>{
+  //     const response = await getAllContentName();
+  //     if(response.length > 0){
+  //       setAllContentNames(response);
+  //     }
+  //   })()
+  // })
   
   return (
     <nav className='container py-4'>
@@ -59,8 +59,8 @@ const Navbar = () => {
                   )}
                 </div>
                 <div className='flex justify-between gap-4'>
-                  <Button text='Login' />
-                  <Button text='Sign Up' />
+                  <Button text='Login' handleOnClick={() => navigate("/login")}/>
+                  <Button text='Sign Up' handleOnClick={() => navigate("signup")} />
                 </div>
             </div>
         </div>

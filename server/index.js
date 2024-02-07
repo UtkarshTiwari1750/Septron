@@ -1,19 +1,31 @@
 const express = require("express");
 const app = express();
+
 const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv")
-dotenv.config();
 const database = require("./config/database");
 const {configCloudinary} = require("./config/cloudinary");
-// database.connect();
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+
+const contentRoutes = require("./routes/Content");
+const authRoutes = require("./routes/Auth");
+
+database.connect();
+dotenv.config();
 configCloudinary();
 app.use(express.json());
+app.use(cookieParser());
+app.use(
+    cors({
+        origin:"*",
+        credentials: true,
+    })
+)
 
 const PORT = process.env.PORT || 4000;
 
 
-const contentRoutes = require("./routes/Content");
-const authRoutes = require("./routes/Auth");
 
 app.use(
     fileUpload({

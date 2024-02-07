@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Button = ({text,handleOnClick, children, customClasses, disabled}) => {
+const Button = ({text, handleOnClick, children, customClasses, disabled, type}) => {
   return (
     <button className={`text-lg box-border flex relative bg-[length:400%] z-10 justify-center gap-3 items-center border-white border px-5 py-2 
       rounded-md before:bg-[length:400%] before:-top-1 before:-bottom-1 before:-left-1 before:-right-1 before:-z-10 
@@ -8,6 +8,7 @@ const Button = ({text,handleOnClick, children, customClasses, disabled}) => {
       transition-all duration-300 before:transition-all before:duration-300 before:opacity-0 before:absolute  ${customClasses}`}
     onClick={handleOnClick}
     disabled={disabled}
+    type={type}
     >
         {
             children ? 

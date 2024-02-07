@@ -20,7 +20,7 @@ export function sendOtp(email, navigate){
             const response = await apiConnector("POST", SENDOTP_API, {email});
             console.log("SEND OTP API RESPONSE...", response);
             
-            if(!response.data.success) {
+            if(!response?.data?.success) {
                 throw new Error(response.data.message);
             }
 

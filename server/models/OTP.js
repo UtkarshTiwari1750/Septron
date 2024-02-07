@@ -13,7 +13,7 @@ const otpSchema = new mongoose.Schema({
         required: [true, "Email is required"],
         trim: true,
         lowercase: true,
-        unique: true,
+        // unique: true,
         validate: [validateEmail, 'Please fill a valid email address'],
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})/, 'Please fill a valid email address']
     },
@@ -26,7 +26,7 @@ const otpSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        exipres: 60 * 5
+        expires: 60 * 5
     },
 });
 

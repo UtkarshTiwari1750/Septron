@@ -164,7 +164,6 @@ exports.sendOtp = async(req, res) => {
     try {
         // Fetching User email
         const {email} = req.body;
-        
         //Validating fetched data
         if(!email) {
             return res.status(400).json({
@@ -174,7 +173,7 @@ exports.sendOtp = async(req, res) => {
         } 
 
         // Checking if user already signup or not
-        const userDetail = await User.findOne({email});
+        const userDetail = await User.findOne({email:email});
         if(userDetail) {
             return res.status(400).json({
                 success: false,
@@ -190,7 +189,7 @@ exports.sendOtp = async(req, res) => {
             upperCaseAlphabets: false
         });
 
-        const result = await OTP.findOne({otp});
+        const result = await OTP.findOne({otp: otp});
         while(result) {
             otp = otpGenerator.generate(6, {
                 digits: true, 
@@ -205,7 +204,7 @@ exports.sendOtp = async(req, res) => {
         });
 
         return res.status(200).json({
-            success: false,
+            success: true,
             message: "OTP Sent Successfully",
             otp,
         });

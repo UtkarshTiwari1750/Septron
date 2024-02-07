@@ -17,8 +17,6 @@ import 'swiper/css/navigation';
 // import required modules
 import {Autoplay, Pagination, Navigation } from 'swiper/modules';
 
-
-
 const Hero = () => {
   const ref = useRef();
   
