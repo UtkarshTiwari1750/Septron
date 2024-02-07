@@ -10,7 +10,7 @@ const VerifyEmail = () => {
     const {signupData, loading} = useSelector((state) => state.auth);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    console.log("SIGNUP FORM DATA...", signupData);
     const {
         accountType,
         firstName,
@@ -21,7 +21,7 @@ const VerifyEmail = () => {
     } = signupData
 
     const handleOnSubmit = (e) => {
-        e.prevenDefault();
+        e.preventDefault();
         dispatch(signUp(accountType, firstName, lastName, email, password, confirmPassword, otp, navigate));
     }
   return (

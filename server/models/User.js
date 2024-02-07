@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
             type: String,
             required: [true, "Password is required"],
         },
-        accounType: {
+        accountType: {
             type: String,
             enum: {
                 values: ['Artist', 'Normal', 'Admin'],
@@ -54,7 +54,6 @@ const userSchema = new mongoose.Schema({
         token: {
             type: String,
             trim: true,
-            unique: true,
         },
         resetPasswordExpires: {
             type: Date,

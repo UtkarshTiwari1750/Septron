@@ -52,7 +52,7 @@ exports.signUp = async(req, res) => {
                 success: false,
                 message: "OTP not found for this Email",
             });
-        } else if(otp !== sendOtp) {
+        } else if(otp !== sendOtp[0].otp) {
             return res.status(400).json({
                 success: false,
                 message: "OTP does not match",
