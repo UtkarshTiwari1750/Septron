@@ -60,7 +60,7 @@ const Navbar = () => {
                 </div>
                 <div className='flex justify-between gap-4'>
                   <Button text='Login' handleOnClick={() => navigate("/login")}/>
-                  <Button text='Sign Up' handleOnClick={() => navigate("signup")} />
+                  <Button text='Sign Up' handleOnClick={() => navigate("/signup")} />
                 </div>
             </div>
         </div>

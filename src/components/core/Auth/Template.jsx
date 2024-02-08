@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import SignupForm from './SignupForm'
 import LoginForm from './LoginForm'
 import { ACCOUNT_TYPE } from '../../../utils/constants'
+import Navbar from '../../common/Navbar'
 
 const Template = ({heading, subheading, formType}) => {
     const [loading, setLoading] = useState(false);
@@ -9,6 +10,9 @@ const Template = ({heading, subheading, formType}) => {
 
   return (
     <div className='bg-[rgb(0,8,20)] w-full h-[100vh] flex justify-center items-center overflow-hidden relative'>
+        <div className='absolute top-0 z-50'>
+            <Navbar />
+        </div>
         {   
             loading 
             ? (<div className='loader'></div>) 

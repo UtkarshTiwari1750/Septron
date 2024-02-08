@@ -3,6 +3,7 @@ import { endpoints } from "../apis";
 import {setLoading, setToken} from "../../slices/authSlice"
 import { toast } from "react-hot-toast";
 import { setUser } from "../../slices/profileSlice";
+import { resetCart } from "../../slices/cartSlice";
 
 const {
     SIGNUP_API,
@@ -117,7 +118,17 @@ export function login(
     }
 }
 
-
+export function logout(navigate) {
+    return (dispatch) => {
+        dispatch(setToken(null));
+        dispatch(setUser(null));
+        dispatch(resetCart());
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        toast.success("Logged Out");
+        navigate("/");
+    }
+}
 
 
 
