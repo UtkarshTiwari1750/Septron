@@ -5,9 +5,11 @@ import Button from './Button';
 import { NavLink,Link, useNavigate } from 'react-router-dom'
 import { getAllContentName } from '../../services/operations/contentAPI';
 import { NavbarLinks } from '../../data/navbar-links';
+import { useSelector } from 'react-redux';
 const Navbar = () => {
   const [allContentNames, setAllContentNames] = useState([]);
   const navigate = useNavigate();
+  const {user} = useSelector((state) => state.profile);
   // useEffect(() => {
   //   ;(async()=>{
   //     const response = await getAllContentName();
@@ -16,7 +18,7 @@ const Navbar = () => {
   //     }
   //   })()
   // })
-  
+  console.log("USER...",user);
   return (
     <nav className='container py-4'>
         <div className='w-[90%] mx-auto flex justify-between items-center text-white'>
@@ -58,10 +60,24 @@ const Navbar = () => {
                     ))
                   )}
                 </div>
-                <div className='flex justify-between gap-4'>
-                  <Button text='Login' handleOnClick={() => navigate("/login")}/>
-                  <Button text='Sign Up' handleOnClick={() => navigate("/signup")} />
-                </div>
+
+                {user 
+                  ? (
+                      <div className='flex justify-between gap-4'>
+                        <Button text="Dashboard" handleOnClick={() => navigate("/dashboard/my-profile")} />
+                        <img src={user?.image} alt="User" 
+                          className='w-[44px] h-[44px] rounded-full'
+                        />
+                      </div>
+                    )
+                  : (
+                      <div className='flex justify-between gap-4'>
+                        <Button text='Login' handleOnClick={() => navigate("/login")}/>
+                        <Button text='Sign Up' handleOnClick={() => navigate("/signup")} />
+                      </div>
+                    ) 
+                }
+                
             </div>
         </div>
     </nav>

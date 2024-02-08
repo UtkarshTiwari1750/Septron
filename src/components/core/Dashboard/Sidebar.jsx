@@ -13,16 +13,17 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
-    <div className='w-full'>
-      <div className='w-[15%] bg-gray-500 backdrop-blur-lg text-white h-[100vh] relative bottom-0'>
+    <div className='w-[17%]'>
+      <div className='w-full bg-gray-500 backdrop-blur-lg text-white h-[100vh] relative bottom-0'>
         <div className='flex flex-col gap-y-3'>
-          <div className='flex items-start pl-6 pt-6'>
+          <Link to="/" 
+          className='flex items-start pl-6 pt-6'>
             <img src="https://firebasestorage.googleapis.com/v0/b/septron-909d2.appspot.com/o/Septron%2Ffavicon-white.png?alt=media&token=a75dc966-8baf-4789-bc44-9ee101ded060" 
               alt="Logo" 
               className='w-10'
             />
             <p className='text-3xl ml-3'>Septron</p>
-          </div>
+          </Link>
 
           <div className='mt-3 flex flex-col gap-y-1'>
             {sidebarLinks.map((link, key) => {
