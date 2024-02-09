@@ -28,10 +28,10 @@ const VerifyEmail = () => {
     <div className='text-white w-11/12 mx-auto h-[550px] items-center justify-center flex overflow-hidden'>
         {loading ? (<div className='loader'></div>)
             : (
-                <div>
-                    <h2>Verify Email</h2>
+                <div className='max-w-[500px] p-4 lg:p-8'>
+                    <h2 className='text-[1.875rem] leading-[2.375rem] font-semibold'>Verify Email</h2>
 
-                    <p>
+                    <p  className='text-lg my-4 text-gray-400'>
                         A verification code has been sent to you. Enter the code below 
                     </p>
 
@@ -49,26 +49,32 @@ const VerifyEmail = () => {
                                     className='w-full rounded-lg p-3 bg-black text-white text-center mx-2'
                                 />
                             }
+                            containerStyle={{
+                                justifyContent: "space-between",
+                                gap: "0 6px",
+                            }}
                         />
 
                         <button type='submit'
-                            className='text-white'
-                            onClick={handleOnSubmit}
+                            className='w-full bg-yellow-400 py-[12px] px-[12px] rounded-[8px] mt-6 font-medium text-black'
                         >   
                             Verify Email
                         </button>
                     </form>
 
-                    <div>
+                    <div className="mt-6 flex items-center justify-between">
                         <div>
-                            <Link to="/login">
+                            <Link to="/login"
+                            className='flex items-center gap-3'
+                            >
                                 <FaArrowLeftLong />
                                 <p>Back to Login</p>
                             </Link>
                         </div>
 
                         <button
-                        onClick={() => dispatch(sendOtp(signupData.email, navigate))}
+                            className="flex items-center text-blue-100 gap-x-2"
+                            onClick={() => dispatch(sendOtp(signupData.email, navigate))}
                         >
                             <GiBackwardTime size={"24px"}/>
                             <p>Resend it</p>

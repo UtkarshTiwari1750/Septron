@@ -35,7 +35,7 @@ const Navbar = () => {
                   <>
                     
                     <Link to={link.path} 
-                      className='text-lg flex justify-center relative px-6 py-2 opacity-80 before:transition-all before:duration-300 before:h-1 before:content-[""] before:absolute before:bg-purpleNeon
+                      className='text-lg font-poppins flex justify-center relative px-6 py-2 opacity-80 before:transition-all before:duration-300 before:h-1 before:content-[""] before:absolute before:bg-purpleNeon
                       before:w-0 before:bottom-0 hover:before:w-[70%] before:rounded-lg hover:opacity-100' 
                       key={index}>
                       {link.title}
@@ -48,7 +48,7 @@ const Navbar = () => {
             <div className='w-[45%] flex justify-between items-center'>
                 <div className='flex group justify-between items-center relative'>
                   <input type="text" placeholder='Search' 
-                    className='bg-transparent border border-white px-4 py-1 outline-none rounded-full font-Roboto placeholder:font-Roboto'
+                    className='bg-transparent font-poppins placeholder:font-poppins border border-white px-4 py-1 outline-none rounded-full font-Roboto placeholder:font-Roboto'
                   />
                   <AiOutlineSearch className='cursor-pointer absolute right-4 '/>
                   

@@ -8,6 +8,7 @@ import Navbar from './components/common/Navbar';
 import Error from './pages/Error';
 import Dashboard from './pages/Dashboard';
 import MyProfile from './components/core/Dashboard/MyProfile';
+import AddContent from './components/core/Dashboard/AddContent';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path='/verify-email' element={<VerifyEmail />} />
         <Route element={<Dashboard />}>
           <Route path='/dashboard/my-profile' element={<MyProfile />}/>
+          <Route path='/dashboard/add-content' element={<AddContent />} />
         </Route>
 
 

@@ -62,8 +62,8 @@ const Hero = () => {
                       muted
                     />
                     <div className='z-50 w-[70%] mx-auto flex flex-col justify-between items-start gap-y-4 absolute '>
-                      <h2 className='text-5xl'>{hero.heading}</h2>
-                      <p className='text-lg opacity-50 leading-5 w-[50%]'>
+                      <h2 className='text-5xl font-poppins'>{hero.heading}</h2>
+                      <p className='text-3xl opacity-50 leading-5 w-[50%] font-nanum'>
                         {hero.subHeading}
                       </p>
                       <Button text='Watch Now'

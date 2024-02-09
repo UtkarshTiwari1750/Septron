@@ -25,6 +25,9 @@
     animation: animate 4s linear infinite;
 }
 
+.animationText {
+  animation: animate 4s linear infinite;
+}
 
 .loader {
     width: 48px;

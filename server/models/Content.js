@@ -69,6 +69,12 @@ const contentSchema = new mongoose.Schema({
             required: [true, "Status is Required"],
             trim: true,
         },
+        contentType: {
+            type: String,
+            enum: ["Video", "Book"],
+            required: [true, "Content Type is Required"],
+            trim: true,
+        }
     },
     {timestamps: true}
 );

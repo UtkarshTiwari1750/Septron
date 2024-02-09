@@ -19,6 +19,7 @@ exports.createContent = async(req, res) => {
             genre,
             status,
             instructions: _instructions,
+            contentType,
         } = req.body;
         const thumbnail = req.files.thumbnailImage;
 
@@ -29,7 +30,7 @@ exports.createContent = async(req, res) => {
 
         // Validating the received data
         if(!contentName || !contentDescription || !price || !tag 
-            || !genre || !instructions || !thumbnail) {
+            || !genre || !instructions || !thumbnail || !contentType) {
             return res.status(400).json({
                 success: false,
                 message: "All fields are required",
@@ -94,6 +95,7 @@ exports.createContent = async(req, res) => {
             // thumbnail: //PENDING
             instructions,
             status,
+            contentType,
         });
 
         const updatedUserDetails = await User.findByIdAndUpdate(

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Children, useState } from 'react'
 import { sidebarLinks } from '../../../data/dashboard-links'
 import { Link, useNavigate } from 'react-router-dom'
 import SidebarLinks from './SidebarLinks'
@@ -8,13 +8,14 @@ import { logout } from '../../../services/operations/authAPI'
 import { VscSignOut } from 'react-icons/vsc'
 
 const Sidebar = () => {
-  const {user} = useSelector((state) => state.auth);
+  const {user} = useSelector((state) => state.profile);
   const [confirmationModal, setConfirmationModal] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  console.log("USER...", user);
   return (
     <div className='w-[17%]'>
-      <div className='w-full bg-gray-500 backdrop-blur-lg text-white h-[100vh] relative bottom-0'>
+      <div className='w-full bg-gray-800 rounded-r-lg backdrop-blur-lg text-white h-[100vh] relative bottom-0'>
         <div className='flex flex-col gap-y-3'>
           <Link to="/" 
           className='flex items-start pl-6 pt-6'>
