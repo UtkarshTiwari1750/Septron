@@ -15,7 +15,7 @@ const Sidebar = () => {
   console.log("USER...", user);
   return (
     <div className='w-[17%]'>
-      <div className='w-full bg-gray-800 rounded-r-lg backdrop-blur-lg text-white h-[100vh] relative bottom-0'>
+      <div className='w-full bg-gray-800 bg-opacity-50 rounded-r-lg backdrop-blur-lg text-white h-[100vh] relative bottom-0'>
         <div className='flex flex-col gap-y-3'>
           <Link to="/" 
           className='flex items-start pl-6 pt-6'>

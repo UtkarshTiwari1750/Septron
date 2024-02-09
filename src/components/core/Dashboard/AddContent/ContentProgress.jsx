@@ -5,6 +5,8 @@ import AddSection from './AddSection';
 import Overview from './Overview';
 import Publish from "./Publish"
 import { useSelector } from 'react-redux';
+import { FaCheck } from "react-icons/fa"
+
 const ContentProgress = () => {
     const {step} = useSelector((state) => state.content);
     const steps = [
@@ -36,11 +38,56 @@ const ContentProgress = () => {
     ];
 
   return (
-    <div>
-        
+    <>
+        <div className='text-white flex w-full justify-between items-center p-4 mt-4'>
+            {
+                steps.map((item) => (
+                    <div
+                        key={item.id}
+                        className='flex items-center gap-4 w-full px-2'
+                    >
+                        <div className={`relative ${item.id < steps.length ? "w-full" : "pl-4" } flex justify-center`}>
+                            <div
+                                className={`border rounded-full p-3 w-[50px] h-[50px] text-xl text-center 
+                                ${step === item.id ? " border-yellow-200 text-yellow-200" : "border-gray-500 text-gray-500"} 
+                                ${item.id < step ? "bg-yellow-200 text-black" : ""}
+                                `}         
+                            >   
+                                {
+                                    item.id < step 
+                                    ? (<FaCheck />)
+                                    : (item.id) 
+                                }
+                                
+                            </div>
 
-        
-    </div>
+                            <p className={`absolute -bottom-7 ${item.id === step ? "text-yellow-200" : "text-gray-500"}`}>
+                                {item.title}
+                            </p>
+
+                        </div>
+                        {
+                            item.id !== steps.length && (
+                                <div 
+                                    className={`h-[1px] w-full border-white border border-dashed
+                                    ${item.id < step ? "border-yellow-200" : "border-gray-500"}`}
+                                >
+                                </div>
+                            )
+                        }
+
+                    </div>
+                ))
+            }
+        </div>
+        {
+            steps.map((item) => {
+                if(step === item.id)
+                    return item.component;
+                return null; 
+            })
+        }
+    </>
   )
 }
 
