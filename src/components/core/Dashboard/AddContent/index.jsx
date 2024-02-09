@@ -3,7 +3,7 @@ import ContentProgress from './ContentProgress'
 
 const AddContent = () => {
   return (
-    <div>
+    <div className='w-full'>
       <ContentProgress />        
     
     </div>

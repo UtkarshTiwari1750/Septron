@@ -5,7 +5,7 @@ import Navbar from '../components/common/Navbar'
 import DashboardNav from '../components/core/Dashboard/DashboardNav'
 const Dashboard = () => {
   return (
-    <div className='flex gap-5'>
+    <div className='flex gap-5 bg-[#000814]'>
       <Sidebar />
       <div className='flex flex-col p-5 w-full'>
         <DashboardNav />

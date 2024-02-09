@@ -22,7 +22,7 @@ const {createSubSection, deleteSubSection, editSubSection} = require("../control
 const upload = require("../middlewares/multer");
 
 // Genre Controllers import
-const {createGenre} = require("../controllers/Genre");
+const {createGenre, getAllGenre} = require("../controllers/Genre");
 
 // ******************************************************************************************
 //                           Content Routes (Only by Instructor)
@@ -47,6 +47,7 @@ router.delete("/deleteSubSection", auth, isArtist, deleteSubSection);
 // ******************************************************************************************
 //                           Genre Routes (Only by Admin)
 // ******************************************************************************************
-router.post("/createGenre", createGenre);
+router.post("/createGenre", auth, isAdmin, createGenre);
+router.get("/getAllGenre", getAllGenre);
 
 module.exports = router;

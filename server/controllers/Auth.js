@@ -120,7 +120,7 @@ exports.login = async(req, res) => {
         if(await bcrypt.compare(password, user.password)) {
             // Creating JWT token for the user
             const token = jwt.sign(
-                {email: user.email, id: user._id, accountType: user.accounType},
+                {email: user.email, id: user._id, accountType: user.accountType},
                 process.env.JWT_SECRET,
                 {
                     expiresIn: "24h",

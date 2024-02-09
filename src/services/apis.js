@@ -11,6 +11,7 @@ export const endpoints = {
 // CONTENT ENDPOINTS
 export const contentEndpoints = {
     GET_ALL_CONTENT_NAME: BASE_URL + '/content/getAllContentsName',
+    GET_ALL_GENRE: BASE_URL + '/content/getAllGenre'
 }
 
 
