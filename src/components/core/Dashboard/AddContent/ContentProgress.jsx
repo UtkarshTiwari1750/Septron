@@ -48,20 +48,20 @@ const ContentProgress = () => {
                     >
                         <div className={`relative ${item.id < steps.length ? "w-full" : "pl-4" } flex justify-center`}>
                             <div
-                                className={`border rounded-full p-3 w-[50px] h-[50px] text-xl text-center 
-                                ${step === item.id ? " border-yellow-200 text-yellow-200" : "border-gray-500 text-gray-500"} 
-                                ${item.id < step ? "bg-yellow-200 text-black" : ""}
+                                className={`border rounded-full p-3 w-[50px] h-[50px] text-xl text-center flex items-center justify-center
+                                ${step === item.id ? " border-yellowNeon text-yellowNeon" : "border-gray-500 text-gray-500"} 
+                                ${item.id < step ? "bg-yellowNeon text-black" : ""}
                                 `}         
                             >   
                                 {
                                     item.id < step 
-                                    ? (<FaCheck />)
+                                    ? (<FaCheck className="text-black"/>)
                                     : (item.id) 
                                 }
                                 
                             </div>
 
-                            <p className={`absolute -bottom-7 ${item.id === step ? "text-yellow-200" : "text-gray-500"}`}>
+                            <p className={`absolute -bottom-7 ${item.id <= step ? "text-yellowNeon" : "text-gray-500"}`}>
                                 {item.title}
                             </p>
 
@@ -70,7 +70,7 @@ const ContentProgress = () => {
                             item.id !== steps.length && (
                                 <div 
                                     className={`h-[1px] w-full border-white border border-dashed
-                                    ${item.id < step ? "border-yellow-200" : "border-gray-500"}`}
+                                    ${item.id < step ? "border-yellowNeon" : "border-gray-500"}`}
                                 >
                                 </div>
                             )
@@ -80,13 +80,15 @@ const ContentProgress = () => {
                 ))
             }
         </div>
-        {
-            steps.map((item) => {
-                if(step === item.id)
-                    return item.component;
-                return null; 
-            })
-        }
+        <div className='mt-6'>
+            {
+                steps.map((item) => {
+                    if(step === item.id)
+                        return item.component;
+                    return null; 
+                })
+            }
+        </div>
     </>
   )
 }

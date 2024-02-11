@@ -11,7 +11,7 @@ const {createContent,
     deleteContent, 
     getAllContents, 
     getContentDetails ,
-    getCreatorContents,
+    getArtistContents,
     getAllContentsName} = require("../controllers/Content");
 
 // Section controllers import 
@@ -32,7 +32,7 @@ router.put("/editContent", auth, isArtist, editContent);
 router.delete("/deleteContent", auth, isArtist, deleteContent);
 router.get("getAllContents", getAllContents);
 router.get("/getContentDetails", getContentDetails);
-router.get("/getCreatorContents", getCreatorContents);
+router.get("/getArtistContents", getArtistContents);
 router.get("/getAllContentsName", getAllContentsName);
 
 router.post("/createSection", auth, isArtist,createSection);

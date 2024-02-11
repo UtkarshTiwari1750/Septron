@@ -387,7 +387,7 @@ exports.getContentDetails = async(req, res) => {
 }
 
 // Get Creator Contents
-exports.getCreatorContents = async(req, res) => {
+exports.getArtistContents = async(req, res) => {
     try{
         const userId = req.user.id;
 
