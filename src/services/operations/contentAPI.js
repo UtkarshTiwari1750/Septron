@@ -1,7 +1,7 @@
 import { contentEndpoints } from "../apis";
 import { apiConnector } from "../apiConnector";
 import {setLoading, setToken} from "../../slices/authSlice"
-import toast, { toast } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 const {
     GET_ALL_CONTENT_NAME,

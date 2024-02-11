@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { getAllGenre } from '../../../../services/operations/contentAPI';
+import { getAllGenre } from '../../../../../services/operations/contentAPI';
 import toast from 'react-hot-toast';
-import Button from "../../../common/Button"
-import { setStep } from '../../../../slices/contentSlice';
+import Button from "../../../../common/Button"
+import { setStep } from '../../../../../slices/contentSlice';
 import { useDispatch } from 'react-redux';
+import Upload from '../Upload';
+
+
 const ContentInfo = () => {
   const {
     register,
@@ -13,6 +16,7 @@ const ContentInfo = () => {
     getValues,
     handleSubmit,
   } = useForm();
+
 
   const [loading, setLoading] = useState(false);
   const [allGenre, setAllGenre] = useState([]);
@@ -34,7 +38,7 @@ const ContentInfo = () => {
       })()
     } 
     else{
-      setAllGenre(sessionStorage.getItem("genreNames"));
+      setAllGenre(JSON.parse(sessionStorage.getItem("genreNames")));
     }
     setLoading(false);
 
@@ -44,49 +48,55 @@ const ContentInfo = () => {
     <form 
     onSubmit={handleSubmit(handleOnSubmit)}
     className='text-white p-5'>
-      <div className='w-11/12 max-w-[1080px] mx-auto px-16 py-6 bg-transparent rounded-lg shadow-[0_0_15px_1px] 
+      <div className='w-11/12 max-w-[880px] mx-auto px-16 py-6 bg-transparent rounded-lg shadow-[0_0_15px_1px] 
         backdrop-blur-lg '
       >
         <div className='flex flex-col justify-center gap-y-6 '>
-          <div className='flex justify-between items-center '>
-            <div className='w-[30%] text-lg font-poppins'>
-              Content Title
-            </div>
-            <div className='relative w-full'>
-              <input 
-                  type="text" 
-                  id='contentName'
-                  className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg 
-                  border border-gray-300 appearance-none dark:text-white dark:border-gray-600 
-                  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
-                  placeholder=" " 
-                  {...register("contentName", {required: true})}
-              />
-              <label htmlFor="contentName"
-                  className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform 
-                  -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white bg-transparent 
-                  dark:bg-[#000814] px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 
-                  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 
-                  peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 
-                  rtl:peer-focus:left-auto start-1"
-              >
-                  Content Title <sup>*</sup>
-              </label>
-              {errors.contentName && (
-                  <span className='text-red-500 text-xs absolute'>
-                    Content Title is required
-                  </span>
-              )}
-            </div>
-          </div>
+          {/* Content Title */}
+          <div className='flex justify-between items-center w-full gap-x-6'>
+              <div className='w-[50%] text-base font-poppins'>
+                Content Title
+                <p className='text-[10px] leading-normal w-[88%] text-'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus </p>
+              </div>
+              <div className='relative w-[70%]'>
+                <textarea 
+                    type="text" 
+                    id='contentName'
+                    className="block px-2.5 pb-2.5 pt-4 min-h-[82px] w-full text-sm text-gray-900 bg-transparent rounded-lg 
+                    border border-gray-300 appearance-none dark:text-white dark:border-gray-600
+                    dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer resize-none" 
+                    placeholder=" " 
+                    {...register("contentName", {required: true})}
+                />
+                <label htmlFor="contentName"
+                    className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform 
+                    -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white bg-transparent 
+                    dark:bg-[#000814] px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 
+                    peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-6 
+                    peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 
+                    rtl:peer-focus:left-auto start-1"
+                >
+                    Content Title <sup>*</sup>
+                </label>
+                {errors.contentName && (
+                    <span className='text-red-500 text-xs absolute'>
+                      Content Title is required
+                    </span>
+                )}
 
-          <div className='flex justify-between items-center '>
-            <div className='w-[30%] text-lg font-poppins'>
+              </div>
+          </div>
+          
+          {/* Description */}
+          <div className='flex justify-between items-center w-full gap-x-6'>
+            <div className='w-[50%] text-base font-poppins'>
               Content Description
+              <p className='text-[10px] leading-normal w-[88%]'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus </p>
             </div>
-            <div className='relative w-full'>
+            <div className='relative  w-[70%]'>
               <textarea 
                   type="text" 
+                  rows={4}
                   id='contentDescription'
                   className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg 
                   border border-gray-300 appearance-none dark:text-white dark:border-gray-600 
@@ -98,7 +108,7 @@ const ContentInfo = () => {
                   className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform 
                   -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white bg-transparent 
                   dark:bg-[#000814] px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 
-                  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 
+                  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-6  
                   peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 
                   rtl:peer-focus:left-auto start-1"
               >
@@ -111,13 +121,25 @@ const ContentInfo = () => {
               )}
             </div>
           </div>
+          
+          <div className='flex justify-between items-center w-full gap-x-6'>
+            <Upload 
+              label="Content Thumbnail"
+              name="thumbnail"
+              register={register}
+              setValue={setValue}
+              errors={errors}
+            />
+          </div>
 
-          <div className='flex justify-between items-center '>
-            <div className='w-[30%] text-lg font-poppins'>
+          {/* Content Type */}
+          <div className='flex justify-between items-center w-full gap-x-6 '>
+            <div className='w-[50%] text-base font-poppins'>
               Content Type <sup>*</sup>
+              <p className='text-[10px] leading-normal w-[88%]'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus </p>
             </div>
               
-            <div className='w-full'>
+            <div className='w-[70%]'>
               <select 
                 id="contentType"
                 {...register("contentType", {required: true})}
@@ -145,13 +167,15 @@ const ContentInfo = () => {
               )}
             </div>
           </div>
-
-          <div className='flex justify-between items-center'>
-            <div className='w-[30%] text-lg font-poppins'>
+          
+          {/* Genre */}
+          <div className='flex justify-between items-center w-full gap-x-6'>
+            <div className='w-[50%] text-base font-poppins'>
               Genre <sup>*</sup>
+              <p className='text-[10px] leading-normal w-[88%] '>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus </p>
             </div>
             
-            <div className='w-full'>
+            <div className='w-[70%]'>
               <select 
                 id="genre"
                 {...register("genre", {required: true})}
@@ -161,17 +185,17 @@ const ContentInfo = () => {
                 <option value="" disabled>
                   Choose Genre
                 </option>
-                {/* {
-                  !loading && allGenre && allGenre?.map((genre, i) => (
+                {
+                  !loading && allGenre?.map((genre, i) => (
                     <option key={i} value={genre?._id}>
                       {genre?.name}
                     </option>
                   ))
-                } */}
+                }
 
-                <option value="Horror">
+                {/* <option value="Horror">
                   Horror
-                </option>
+                </option> */}
               </select>
               {errors.contentType && (
                     <span className='text-red-500 text-xs absolute'>
@@ -180,18 +204,20 @@ const ContentInfo = () => {
               )}
             </div>
           </div>
-
-          <div className='flex justify-between items-center '>
-            <div className='w-[30%] text-lg font-poppins'>
+          
+          {/* Tag */}
+          <div className='flex justify-between items-center w-full gap-x-6'>
+            <div className='w-[50%] text-base font-poppins'>
               Tag <sup>*</sup>
+              <p className='text-[10px] leading-normal w-[88%] '>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus </p>
             </div>
-            <div className='relative w-full'>
-              <input 
+            <div className='relative w-[70%]'>
+              <textarea 
                   type="text" 
                   id='tag'
                   className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg 
                   border border-gray-300 appearance-none dark:text-white dark:border-gray-600 
-                  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+                  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer resize-none" 
                   placeholder=" " 
                   {...register("tag", {required: true})}
               />
@@ -199,7 +225,7 @@ const ContentInfo = () => {
                   className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform 
                   -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white bg-transparent 
                   dark:bg-[#000814] px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 
-                  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 
+                  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-6 
                   peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 
                   rtl:peer-focus:left-auto start-1"
               >
@@ -212,18 +238,21 @@ const ContentInfo = () => {
               )}
             </div>
           </div>
-
-          <div className='flex justify-between items-center '>
-            <div className='w-[30%] text-lg font-poppins'>
+          
+          {/* Instructions */}
+          <div className='flex justify-between items-center w-full gap-x-6'>
+            <div className='w-[50%] text-base font-poppins'>
               Instructions
+              <p className='text-[10px] leading-normal w-[88%]'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus </p>
+
             </div>
-            <div className='relative w-full'>
-              <input 
+            <div className='relative w-[70%]'>
+              <textarea 
                   type="text" 
                   id='instructions'
                   className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg 
                   border border-gray-300 appearance-none dark:text-white dark:border-gray-600 
-                  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+                  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer resize-none" 
                   placeholder=" " 
                   {...register("instructions", {required: true})}
               />
@@ -231,7 +260,7 @@ const ContentInfo = () => {
                   className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform 
                   -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white bg-transparent 
                   dark:bg-[#000814] px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 
-                  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 
+                  peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-6 
                   peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 
                   rtl:peer-focus:left-auto start-1"
               >
@@ -244,6 +273,7 @@ const ContentInfo = () => {
               )}
             </div>
           </div>
+          
 
           <div className='flex justify-end'>
             <Button 
@@ -251,6 +281,7 @@ const ContentInfo = () => {
               type="submit"
             />
           </div>
+
         </div>  
         
       </div>

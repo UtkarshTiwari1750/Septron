@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import ContentInfo from './ContentInfo';
+import ContentInfo from './ContentInfo/ContentInfo';
 import Gallery from './Gallery';
 import AddSection from './AddSection';
 import Overview from './Overview';
