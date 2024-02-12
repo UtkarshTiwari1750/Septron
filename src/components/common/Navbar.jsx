@@ -54,7 +54,9 @@ const Navbar = () => {
                   
                   {allContentNames.length > 0 && (
                     allContentNames.map((contentName, index) => (
-                      <div className='absolute text-black top-9 bg-white w-full none group-hover:opacity-100'>
+                      <div 
+                      key={index}
+                      className='absolute text-black top-9 bg-white w-full none group-hover:opacity-100'>
                         <p className='hover:bg-gray-300 px-4 py-2'>Hello</p>
                       </div>
                     ))

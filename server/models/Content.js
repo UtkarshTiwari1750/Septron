@@ -14,6 +14,8 @@ const contentSchema = new mongoose.Schema({
         creator: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
+            required: [true, "Creator Id is Required"],
+
         },
         contentSections:[ 
             {

@@ -11,7 +11,7 @@ const FILE_TYPE = ['png', 'jpg', 'jpeg'];
 // Create Content
 exports.createContent = async(req, res) => {
     try {
-        const {
+        let {
             contentName,
             contentDescription,
             price,
@@ -20,12 +20,11 @@ exports.createContent = async(req, res) => {
             status,
             instructions: _instructions,
             contentType,
+            thumbnail,
         } = req.body;
-        const thumbnail = req.files.thumbnailImage;
-
+        // const thumbnail = req.files.thumbnail;
         const tag = JSON.parse(_tag);
         const instructions = JSON.parse(_instructions);
-
         const userId = req.user.id;
 
         // Validating the received data
@@ -43,8 +42,8 @@ exports.createContent = async(req, res) => {
         }
 
         // Check if user is Artist or not
-        const userDetails = await User.findById((userId), {
-            accounType: "Artist",
+        const userDetails = await User.findById(userId, {
+            accountType: "Artist",
         });
 
         if(!userDetails) {
@@ -64,26 +63,17 @@ exports.createContent = async(req, res) => {
         }
 
         // Check file type and call upload function
-        const fileType = thumbnail.name.split(".").slice(-1);
-        if(!FILE_TYPE.includes(fileType[0])) {
-            return res.status(400).json({
-                success: false,
-                message: "Please enter valid file type for thumbnail",
-            });
-        }
-
-        // const uploadDetails = await uploadToCloudinary(thumbnail, process.env.FOLDER_NAME)
-
-        //  PENDING NOT WORKING API
-        const uploadDetails = await uploadToFirebase(thumbnail);
-        // console.log("UPLOAD DETAILS...", uploadDetails);
-        
-        // if(!uploadDetails){
+        // const fileType = thumbnail.name.split(".").slice(-1);
+        // if(!FILE_TYPE.includes(fileType[0])) {
         //     return res.status(400).json({
         //         success: false,
-        //         message: "Error in Uploading Image",
+        //         message: "Please enter valid file type for thumbnail",
         //     });
         // }
+
+
+        //  PENDING NOT WORKING API
+        // const uploadDetails = await uploadToFirebase(thumbnail, "single");
         
         const contentDetails = await Content.create({
             contentName,
@@ -92,7 +82,7 @@ exports.createContent = async(req, res) => {
             tag,
             genre: genreDetails._id,
             price,
-            // thumbnail: //PENDING
+            thumbnail,
             instructions,
             status,
             contentType,

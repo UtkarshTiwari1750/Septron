@@ -5,11 +5,8 @@ const Gallery = () => {
   return (
     <div className='text-white'>
       <div>
-        <Upload 
-          label="Content Thumbnail"
-          name="thumbnail"
-          
-        />
+        <h1>Gallery</h1>
+
 
 
       </div>

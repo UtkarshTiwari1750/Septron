@@ -9,7 +9,7 @@ const Upload = ({
     label,
     register,
     setValue,
-    error,
+    errors,
     video = false,
     viewData = null,
     editData = null,
@@ -53,7 +53,7 @@ const Upload = ({
     }, [selectedFile, setValue]);
 
   return (
-    <div className='flex flex-col space-y-2  w-full'>
+    <div className='flex flex-col space-y-2 '>
         <label className='text-lg text-white font-poppins w-[55%]'
             htmlFor={name}
         >
@@ -61,18 +61,19 @@ const Upload = ({
             <p className='text-[10px] leading-normal w-full text-'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus libero magnam ratione, quidem saepe nemo nesciunt veritatis, omnis deleniti</p>
         </label> 
         <div
-            className={`${isDragActive ? "bg-gray-700" : "bg-gray-800"}
+            className={`${isDragActive ? "bg-transparent" : "bg-transparent"}
                 flex min-h-[250px] cursor-pointer items-center justify-center rounded-md
-                border-2 border-dotted border-gray-700
+                border-2 border-dotted 
             `}
         >
-            {previewSource ? (
+            {
+                previewSource ? (
                 <div className='flex w-full flex-col p-6'>
                     {!video ? (
                         <img 
                             src={previewSource} 
                             alt="Preview"
-                            className='h-full w-full rounded-md object-scale-down'  
+                            className='h-full w-full rounded-md object-cover'  
                         />
                     )
                     : (
@@ -91,35 +92,36 @@ const Upload = ({
                                 setSelectedFile(null);
                                 setValue(name, null);
                             }}
-                            className='text-gray-500 underline'
+                            className='text-gray-500 underline mt-3'
                         >
                             Cancle
                         </button>
                     )}
                 </div>
             )
-            : (
-                <div
-                    className='flex w-full flex-col items-center p-6'
-                    {...getRootProps()}
-                >
-                    <input {...getInputProps()} ref={inputRef} />
-                    <div>
-                        <FiUploadCloud />
+            : 
+                (
+                    <div
+                        className='flex w-full flex-col items-center p-6'
+                        {...getRootProps()}
+                    >
+                        <input {...getInputProps()} ref={inputRef} />
+                        <div>
+                            <FiUploadCloud />
+                        </div>
+                        <p>
+                            Drag and drop
+                        </p>
                     </div>
-                    <p>
-                        Drag and drop
-                    </p>
-                </div>
-            )
+                )
             }
         </div>
-        {error?.name && (
+
+        {errors[name] && (
             <span>
                 {label} is required
             </span>
         )}
-        
     </div>
   )
 }

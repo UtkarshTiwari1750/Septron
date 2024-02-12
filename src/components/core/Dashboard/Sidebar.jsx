@@ -12,7 +12,6 @@ const Sidebar = () => {
   const [confirmationModal, setConfirmationModal] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log("USER...", user);
   return (
     <div className='w-[17%]'>
       <div className='w-full bg-gray-800 bg-opacity-50 rounded-r-lg backdrop-blur-lg text-white h-[100vh] relative bottom-0'>
@@ -30,7 +29,7 @@ const Sidebar = () => {
             {sidebarLinks.map((link, key) => {
               if(link.type && user?.accountType !== link.type) return null;
               return (
-                <SidebarLinks link={link} iconName={link.icon} />
+                <SidebarLinks key={key} link={link} iconName={link.icon} />
               )
             })}
           </div>
