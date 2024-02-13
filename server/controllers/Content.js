@@ -4,6 +4,7 @@ const Genre = require("../models/Genre");
 const Section = require("../models/Section");
 const SubSection = require("../models/SubSection");
 const RatingAndReview = require("../models/RatingAndReview");
+const Gallery = require("../models/Gallery");
 
 // Create Content
 exports.createContent = async(req, res) => {
@@ -128,10 +129,6 @@ exports.editContent = async(req, res) => {
             });
         }
 
-        // if(req.files.thumbnailImage) {
-        //     // PENDING
-        // }
-
         for(const key in updates) {
             if(updates.hasOwnProperty(key)) {
                 if(key === 'tag' || key === 'instructions') {
@@ -159,6 +156,7 @@ exports.editContent = async(req, res) => {
         })
         .populate("ratingAndReviews")
         .populate("genre")
+        .populate("gallery")
         
         return res.status(200).json({
             success: true,
@@ -256,8 +254,9 @@ exports.deleteContent = async(req, res) => {
             $pull: {contents: contentId}
         });
 
-        // PENDING :- Code to delete image for firebase or cloudinary
-        
+        // Deleting Gallery for this Content
+        const galleryDetails = await Gallery.findByIdAndDelete(contentDetails.gallery);
+
         // Deleting content 
         await Content.findByIdAndDelete(contentId);
         
@@ -333,7 +332,8 @@ exports.getContentDetails = async(req, res) => {
             }
         })
         .populate("ratingAndReviews")
-        .populate("genre");
+        .populate("genre")
+        .populate("gallery");
 
 
 

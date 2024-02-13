@@ -19,13 +19,15 @@ const {createSection, deleteSection, editSection} = require("../controllers/Sect
 
 // Sub-Section controllers import 
 const {createSubSection, deleteSubSection, editSubSection} = require("../controllers/SubSection")
-const upload = require("../middlewares/multer");
 
 // Genre Controllers import
 const {createGenre, getAllGenre} = require("../controllers/Genre");
 
+// Gallery Controllers Import
+const {createGallery, updateGallery, deleteGallery} = require("../controllers/Gallery");
+
 // ******************************************************************************************
-//                           Content Routes (Only by Instructor)
+//                           Content Routes (Only by Artist)
 // ******************************************************************************************
 router.post("/createContent", auth, isArtist,createContent);
 router.put("/editContent", auth, isArtist, editContent);
@@ -43,6 +45,9 @@ router.post("/createSubSection", auth, isArtist,createSubSection);
 router.put("/editSubSection", auth, isArtist, editSubSection);
 router.delete("/deleteSubSection", auth, isArtist, deleteSubSection);
 
+router.post("/createGallery",auth, isArtist, createGallery);
+router.put("/updateGallery",auth, isArtist, updateGallery);
+router.delete("/deleteGallery", auth, isArtist, deleteGallery);
 
 // ******************************************************************************************
 //                           Genre Routes (Only by Admin)

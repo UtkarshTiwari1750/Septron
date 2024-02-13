@@ -10,12 +10,12 @@ const TextAndVideo = ({textHeading, textSubHeading, buttonText, buttonIcon, vide
         ${reverse ? "flex-row-reverse" : ""}
     `}>
 
-        <div className='text-white flex flex-col items-start gap-y-6 w-[45%]'>
+        <div className='text-white flex flex-col items-start gap-y-6 w-[45%] font-roboto'>
           <h2 className='headingText'>
             {textHeading}
           </h2>
 
-          <p className='subheadingText'>
+          <p className='subheadingText font-raleway'>
             {textSubHeading}             
           </p>
 
@@ -28,11 +28,12 @@ const TextAndVideo = ({textHeading, textSubHeading, buttonText, buttonIcon, vide
           </Button>
         </div>
 
-        <div className='w-[45%]'>
+        <div className='w-[45%] relative group'>
+          <div className="absolute -inset-0.5 animate-tilt opacity-75 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg blur-lg "></div>
           <video src={videoUrl} 
             autoPlay
             loop 
-            className='rounded-lg'
+            className='rounded-lg relative'
             muted
           />
         </div>

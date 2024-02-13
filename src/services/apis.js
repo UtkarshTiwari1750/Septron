@@ -24,6 +24,9 @@ export const contentEndpoints = {
     CREATE_SUBSECTION: BASE_URL + '/content/createSubSection',
     EDIT_SUBSECTION: BASE_URL + '/content/editSubSection',
     DELETE_SUBSECTION: BASE_URL + '/content/deleteSubSection',
+    CREATE_GALLERY: BASE_URL + '/content/createGallery',
+    UPDATE_GALLERY: BASE_URL + '/content/updateGallery',
+    DELETE_GALLERY: BASE_URL + '/content/deleteGallery',
 }
 
 

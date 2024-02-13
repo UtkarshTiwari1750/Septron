@@ -1,6 +1,5 @@
 import { contentEndpoints } from "../apis";
 import { apiConnector } from "../apiConnector";
-import {setLoading, setToken} from "../../slices/authSlice"
 import toast from "react-hot-toast";
 
 const {
@@ -18,6 +17,9 @@ const {
     GET_ALL_CONTENT, 
     GET_CONTENT_DETAILS,
     GET_ARTIST_CONTENT,
+    CREATE_GALLERY,
+    UPDATE_GALLERY,
+    DELETE_GALLERY
 } = contentEndpoints
 
 // Get All Content Name
@@ -329,4 +331,70 @@ export const getArtistContent = async(token) => {
     }
     toast.dismiss(toastId);
     return result;
+}
+
+// Create Gallery 
+export const createGallery = async(images, videos, contentId, token) => {
+    const toastId = toast.loading("Loading...");
+    let result = null;
+    try{
+        const response = await apiConnector("POST", CREATE_GALLERY, 
+            {images, videos, contentId},
+            {Authorization: `Bearer ${token}`},
+        )
+
+        if(!response.data.success) {
+            throw new Error ("Could not create gallery");
+        }
+
+        toast.success("Gallery Created Successfully");
+        result = response?.data?.data;
+    } catch(error) {
+        console.log("CREATE GALLERY API ERROR....", error);
+    }
+    toast.dismiss(toastId);
+    return result;
+}
+
+// Update Gallery 
+export const updateGallery = async(images, videos, galleryId, contentId, token) => {
+    const toastId = toast.loading("Loading...");
+    let result = null;
+    try{
+        const response = await apiConnector("PUT", UPDATE_GALLERY, 
+            {images, videos, galleryId, contentId},
+            {Authorization: `Bearer ${token}`},
+        )
+
+        if(!response.data.success) {
+            throw new Error ("Could not Update gallery");
+        }
+
+        toast.success("Gallery Updated Successfully");
+        result = response?.data?.data;
+    } catch(error) {
+        console.log("UPDATE GALLERY API ERROR....", error);
+    }
+    toast.dismiss(toastId);
+    return result;
+}
+
+// Delete Gallery 
+export const deleteGallery = async(galleryId, contentId, token) => {
+    const toastId = toast.loading("Loading...");
+    try{
+        const response = await apiConnector("DELETE", DELETE_GALLERY, 
+            {galleryId, contentId},
+            {Authorization: `Bearer ${token}`},
+        )
+
+        if(!response.data.success) {
+            throw new Error ("Could not Delete gallery");
+        }
+
+        toast.success("Gallery Deleted Successfully");
+    } catch(error) {
+        console.log("DELETE GALLERY API ERROR....", error);
+    }
+    toast.dismiss(toastId);
 }
