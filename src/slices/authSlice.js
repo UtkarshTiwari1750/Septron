@@ -15,11 +15,11 @@ const authSlice = createSlice({
         },
 
         setLoading(state, value) {
-            state.loading = state.payload;
+            state.loading = value.payload;
         },
 
         setToken(state, value) {
-            state.token = state.payload;
+            state.token = value.payload;
         }
     }
 })

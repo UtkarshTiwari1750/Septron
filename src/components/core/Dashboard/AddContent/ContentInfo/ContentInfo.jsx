@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { createContent, getAllGenre } from '../../../../../services/operations/contentAPI';
 import toast from 'react-hot-toast';
 import Button from "../../../../common/Button"
-import { setStep } from '../../../../../slices/contentSlice';
+import { setContent, setStep } from '../../../../../slices/contentSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Upload from '../Upload';
 import TagInput from './TagInput';
@@ -26,7 +26,7 @@ const ContentInfo = () => {
 
   const handleOnSubmit = async(data) => {
     const thumbnailUrl = await storeToFirebase(data.thumbnail);
-
+    setLoading(true);
     const formData = new FormData();
     formData.append("contentName", data.contentName);
     formData.append("contentDescription", data.contentDescription);
@@ -41,12 +41,13 @@ const ContentInfo = () => {
     try{
       const result = await createContent(formData, token);
       if(result) {
-        console.log("RESULT AAGAYA...", result);
         dispatch(setStep(2));
+        dispatch(setContent(result));
       }
     } catch(error) {
       console.log("ERROR...", error)
     }
+    setLoading(false);
   }
 
   useEffect(() => {

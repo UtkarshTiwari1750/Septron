@@ -1,13 +1,10 @@
 const Content = require("../models/Content");
 const User = require("../models/User");
 const Genre = require("../models/Genre"); 
-const { uploadToCloudinary } = require("../utils/uploadToCloudinary");
-const { uploadToFirebase } = require("../utils/uploadToFirebase");
 const Section = require("../models/Section");
 const SubSection = require("../models/SubSection");
 const RatingAndReview = require("../models/RatingAndReview");
 
-const FILE_TYPE = ['png', 'jpg', 'jpeg'];
 // Create Content
 exports.createContent = async(req, res) => {
     try {
@@ -45,14 +42,14 @@ exports.createContent = async(req, res) => {
         const userDetails = await User.findById(userId, {
             accountType: "Artist",
         });
-
+        
         if(!userDetails) {
             return res.status(400).json({
                 success: false,
                 message: "Only Artist can create content"
             });
         }
-
+        
         // Check if Genre exist or not
         const genreDetails = await Genre.findById(genre);
         if(!genreDetails) {
@@ -61,19 +58,6 @@ exports.createContent = async(req, res) => {
                 message: "Not a valid Genre",
             });
         }
-
-        // Check file type and call upload function
-        // const fileType = thumbnail.name.split(".").slice(-1);
-        // if(!FILE_TYPE.includes(fileType[0])) {
-        //     return res.status(400).json({
-        //         success: false,
-        //         message: "Please enter valid file type for thumbnail",
-        //     });
-        // }
-
-
-        //  PENDING NOT WORKING API
-        // const uploadDetails = await uploadToFirebase(thumbnail, "single");
         
         const contentDetails = await Content.create({
             contentName,
@@ -89,7 +73,7 @@ exports.createContent = async(req, res) => {
         });
 
         const updatedUserDetails = await User.findByIdAndUpdate(
-            {userId},
+            {_id: userDetails._id},
             {$push:{
                 contents: contentDetails._id,
             }},
@@ -97,7 +81,7 @@ exports.createContent = async(req, res) => {
         );
 
         const updatedGenre = await Genre.findByIdAndUpdate(
-            {id: genreDetails._id},
+            {_id: genreDetails._id},
             {
                 $push:{
                     contents: contentDetails._id,

@@ -15,13 +15,13 @@ exports.auth = async(req, res, next) => {
                 message: "Token is missing",
             });
         }
-
         // Verify the token
         try {
             const decode = jwt.verify(token, process.env.JWT_SECRET);
 
             console.log("DECODE...", decode);
             req.user = decode;
+
         } catch(error) {
             console.log("TOKEN VERIFICATION ERROR...", error);
             return res.status(400).json({

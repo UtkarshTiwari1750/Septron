@@ -98,16 +98,16 @@ export function login(
 
             toast.success("Login Successful");
 
-            dispatch(setToken(response.data.token));
+            dispatch(setToken(response?.data?.token));
             const userImage = response?.data?.user?.image 
             ? response?.data?.user?.image 
             : `https://api.dicebear.com/7.x/adventurer/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`
 
             dispatch(setUser({...response.data.user, image: userImage}));
-
-            localStorage.setItem("token", JSON.stringify(response.data.token));
+            
+            localStorage.setItem("token", JSON.stringify(response?.data?.token));
             localStorage.setItem("user", JSON.stringify(response.data.user));
-
+            console.log("TOKEN IN AUTH API...", response?.data?.token);
             navigate("/dashboard/my-profile");
         } catch(error) {
             console.log("LOGIN API ERROR....", error);
