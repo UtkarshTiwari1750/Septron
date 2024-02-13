@@ -76,6 +76,10 @@ const contentSchema = new mongoose.Schema({
             enum: ["Video", "Book"],
             required: [true, "Content Type is Required"],
             trim: true,
+        },
+        gallery: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Gallery"
         }
     },
     {timestamps: true}

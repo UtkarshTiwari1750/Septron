@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import Button from "../../../../common/Button"
 import { setContent, setStep } from '../../../../../slices/contentSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import Upload from '../Upload';
+import Upload from '../UploadComponent/Upload';
 import TagInput from './TagInput';
 import storeToFirebase from '../../../../../utils/storeToFirebase';
 

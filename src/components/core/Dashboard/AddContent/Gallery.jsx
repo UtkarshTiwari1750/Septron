@@ -1,15 +1,31 @@
 import React from 'react'
-import Upload from './Upload'
+import Upload from './UploadComponent/Upload'
+import { useForm } from 'react-hook-form'
 
 const Gallery = () => {
+  const {
+    register,
+    formState: {errors},
+    setValue,
+    getValues,
+    handleSubmit
+  } = useForm()
+
   return (
     <div className='text-white'>
-      <div>
-        <h1>Gallery</h1>
+      <form>
+        <Upload 
+          errors={errors}
+          label="Enter Images"
+          name="image"
+          register={register}
+          setValue={setValue}
+          image={true}
+        />
 
 
 
-      </div>
+      </form>
     </div>
   )
 }

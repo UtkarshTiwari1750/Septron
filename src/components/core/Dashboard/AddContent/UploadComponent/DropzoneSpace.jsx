@@ -1,31 +1,31 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useDropzone } from 'react-dropzone';
-import { useSelector } from 'react-redux';
 import { Player } from 'video-react';
 import { FiUploadCloud } from "react-icons/fi"
+import { IoImageOutline } from "react-icons/io5";
+import { FcFilmReel } from "react-icons/fc";
 
-const Upload = ({
-    name,
-    label,
-    register,
+const DropzoneSpace = ({
+    index,
+    video,
+    image,
+    viewData,
+    editData,
+    setSelectedFile,
+    setAllPreviewSource,
+    selectedFile,
     setValue,
-    errors,
-    video = false,
-    viewData = null,
-    editData = null,
+    previewSource,
+    name,
+    customClasses
 }) => {
-    const {content} = useSelector((state) => state.content);
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [previewSource, setPreviewSource] = useState(
-        viewData ? viewData : editData ? editData: ""
-    );
     const inputRef = useRef(null);
 
     const onDrop = (acceptedFiles) => {
         const file = acceptedFiles[0];
         if(file) {
             previewFile(file);
-            setSelectedFile(file);
+            setSelectedFile((prev) => [...prev, file]);
         }
     }
 
@@ -40,26 +40,11 @@ const Upload = ({
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
-            setPreviewSource(reader.result);
+            setAllPreviewSource( (prev) => [...prev, reader.result]);
         }
     }
-
-    useEffect(() => {
-        register(name, {required: true})
-    }, [register]);
-
-    useEffect(() => {
-        setValue(name, selectedFile);
-    }, [selectedFile, setValue]);
-
   return (
-    <div className='flex flex-col space-y-2 '>
-        <label className='text-lg text-white font-poppins w-[55%]'
-            htmlFor={name}
-        >
-            {label} {!viewData && (<sup className='text-red-700'>*</sup>)}
-            <p className='text-[10px] leading-normal w-full text-'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus libero magnam ratione, quidem saepe nemo nesciunt veritatis, omnis deleniti</p>
-        </label> 
+    <div>
         <div
             className={`${isDragActive ? "bg-transparent" : "bg-transparent"}
                 flex min-h-[250px] cursor-pointer items-center justify-center rounded-md
@@ -73,7 +58,7 @@ const Upload = ({
                         <img 
                             src={previewSource} 
                             alt="Preview"
-                            className='h-full w-full rounded-md object-cover'  
+                            className={`rounded-md ${customClasses ? customClasses : "object-scale-down w-[195.5px] h-[150px]"}`}  
                         />
                     )
                     : (
@@ -88,9 +73,9 @@ const Upload = ({
                         <button
                             type='button'
                             onClick={() => {
-                                setPreviewSource("");
-                                setSelectedFile(null);
-                                setValue(name, null);
+                                setAllPreviewSource((prev) => (prev.filter((_,rmIndex) => index != rmIndex)))
+                                setSelectedFile((prev) => (prev.filter((_,rmIndex) => index != rmIndex)));
+                                setValue(name, selectedFile);
                             }}
                             className='text-gray-500 underline mt-3'
                         >
@@ -107,23 +92,21 @@ const Upload = ({
                     >
                         <input {...getInputProps()} ref={inputRef} />
                         <div>
-                            <FiUploadCloud />
+                            {image ? <IoImageOutline /> : video ? <FcFilmReel /> : <FiUploadCloud size={30}/>}
                         </div>
-                        <p>
-                            Drag and drop
+                        <p className='text-center'>
+                            Drag and drop an {!video ? "image" : "video"}, or <br />click to {" "}
+                            <span className='font-semibold text-yellowNeon'>Browse</span> a
+                            file
                         </p>
                     </div>
                 )
             }
         </div>
-
-        {errors[name] && (
-            <span>
-                {label} is required
-            </span>
-        )}
+    
+    
     </div>
   )
 }
 
-export default Upload
+export default DropzoneSpace
