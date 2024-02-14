@@ -63,3 +63,8 @@
     }
   }
 
+.swiper-button-next::after {
+  position: absolute; 
+  z-index: 45;
+}
+

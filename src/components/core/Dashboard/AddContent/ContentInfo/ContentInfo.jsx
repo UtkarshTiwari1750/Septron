@@ -72,9 +72,11 @@ const ContentInfo = () => {
     <form 
     onSubmit={handleSubmit(handleOnSubmit)}
     className='text-white p-5'>
+      
       <div className='w-11/12 max-w-[880px] mx-auto px-16 py-6 bg-transparent rounded-lg shadow-[0_0_15px_1px] 
         backdrop-blur-lg '
       >
+        
         <div className='flex flex-col justify-center gap-y-6 '>
           {/* Content Title */}
           <div className='flex justify-between items-center w-full gap-x-6'>

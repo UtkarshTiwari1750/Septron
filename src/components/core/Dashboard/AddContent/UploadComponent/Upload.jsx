@@ -1,6 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
 import DropzoneSpace from './DropzoneSpace';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
+import {Autoplay, Pagination, Navigation, Zoom } from 'swiper/modules';
 
 const Upload = ({
     name,
@@ -12,6 +18,7 @@ const Upload = ({
     image = false,
     viewData = null,
     editData = null,
+    required=true
 }) => {
     const {content} = useSelector((state) => state.content);
     const [selectedFile, setSelectedFile] = useState([]);
@@ -19,7 +26,7 @@ const Upload = ({
 
 
     useEffect(() => {
-        register(name, {required: true})
+        register(name, {required: required})
     }, [register]);
 
     useEffect(() => {
@@ -29,73 +36,93 @@ const Upload = ({
 
   return (
     <div className='flex flex-col space-y-2 '>
-        <label className='text-lg text-white font-poppins w-[55%]'
+        <label className='text-lg text-white font-poppins w-[55%] mb-5'
             htmlFor={name}
         >
             {label} {!viewData && (<sup className='text-red-700'>*</sup>)}
             <p className='text-[10px] leading-normal w-full text-'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus libero magnam ratione, quidem saepe nemo nesciunt veritatis, omnis deleniti</p>
-        </label> 
-
-
-        
+        </label>         
         {
             (image || video) ? ( 
                 (
-                    <div className='flex w-[70%] mx-auto justify-between gap-4'>
-                        {
-                            allPreviewSource?.map((previewSource, index) => (
+                    <div className='flex w-full mx-auto gap-4'>
+                        <Swiper
+                            className='mySwpier flex justify-between'
+                            style={{
+                                '--swiper-navigation-color': "#fff",
+                                '--swiper-pagination-color': "#fff",
+                            }}
+                            spaceBetween={10}
+                            slidesPerView={3}
+  
+                            navigation={true}
+                            grabCursor={true}
+                            modules={[Navigation]}
+                        >
+                            
+                            {   
+                                allPreviewSource?.map((previewSource, index) => (
+                                    <SwiperSlide
+                                        className=''
+                                    >
+                                        <DropzoneSpace 
+                                            viewData={viewData}
+                                            editData={editData}
+                                            video={video}
+                                            image={image}
+                                            previewSource={previewSource}
+                                            setSelectedFile={setSelectedFile}
+                                            setAllPreviewSource={setAllPreviewSource}
+                                            selectedFile={selectedFile}
+                                            setValue={setValue}
+                                            name={name}
+                                            index={index}
+                                        />
+                                    </SwiperSlide>
+                                ))
+                            }
+                            <SwiperSlide >
                                 <DropzoneSpace 
                                     viewData={viewData}
                                     editData={editData}
                                     video={video}
                                     image={image}
-                                    previewSource={previewSource}
                                     setSelectedFile={setSelectedFile}
                                     setAllPreviewSource={setAllPreviewSource}
                                     selectedFile={selectedFile}
                                     setValue={setValue}
                                     name={name}
-                                    index={index}
-                                    customClasses=""
+                                    customClasses="cursor-pointer"
                                 />
-                            ))
-                        }
-
-                        <DropzoneSpace 
-                            viewData={viewData}
-                            editData={editData}
-                            video={video}
-                            image={image}
-                            setSelectedFile={setSelectedFile}
-                            setAllPreviewSource={setAllPreviewSource}
-                            selectedFile={selectedFile}
-                            setValue={setValue}
-                            name={name}
-                        />
-                        <DropzoneSpace 
-                            viewData={viewData}
-                            editData={editData}
-                            video={video}
-                            image={image}
-                            setSelectedFile={setSelectedFile}
-                            setAllPreviewSource={setAllPreviewSource}
-                            selectedFile={selectedFile}
-                            setValue={setValue}
-                            name={name}
-                        />
-                        <DropzoneSpace 
-                            viewData={viewData}
-                            editData={editData}
-                            video={video}
-                            image={image}
-                            setSelectedFile={setSelectedFile}
-                            setAllPreviewSource={setAllPreviewSource}
-                            selectedFile={selectedFile}
-                            setValue={setValue}
-                            name={name}
-                        />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <DropzoneSpace 
+                                    viewData={viewData}
+                                    editData={editData}
+                                    video={video}
+                                    image={image}
+                                    setSelectedFile={setSelectedFile}
+                                    setAllPreviewSource={setAllPreviewSource}
+                                    selectedFile={selectedFile}
+                                    setValue={setValue}
+                                    name={name}
+                                />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <DropzoneSpace 
+                                    viewData={viewData}
+                                    editData={editData}
+                                    video={video}
+                                    image={image}
+                                    setSelectedFile={setSelectedFile}
+                                    setAllPreviewSource={setAllPreviewSource}
+                                    selectedFile={selectedFile}
+                                    setValue={setValue}
+                                    name={name}
+                                />
+                            </SwiperSlide>
+                        </Swiper>
                     </div>
-                    
                 )                    
             )
             :

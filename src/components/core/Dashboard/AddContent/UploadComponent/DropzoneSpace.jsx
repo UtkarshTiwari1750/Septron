@@ -32,7 +32,7 @@ const DropzoneSpace = ({
     const { getRootProps, getInputProps, isDragActive} = useDropzone({
         accept: !video
         ? { "image/*": [".jpeg", ".jpg", ".png", ".pdf"] }
-        : { "video/*": [".mp4"]},
+        : { "video/*": [".mp4", ".mkv"]},
         onDrop,
     })
 
@@ -47,7 +47,7 @@ const DropzoneSpace = ({
     <div>
         <div
             className={`${isDragActive ? "bg-transparent" : "bg-transparent"}
-                flex min-h-[250px] cursor-pointer items-center justify-center rounded-md
+                flex mx-auto w-[240px] min-h-[250px] ${(image || video) ? "cursor-grab": "cursor-pointer"} items-center justify-center rounded-md
                 border-2 border-dotted 
             `}
         >
@@ -62,11 +62,7 @@ const DropzoneSpace = ({
                         />
                     )
                     : (
-                        <Player 
-                            aspectRatio='16:9'
-                            playsInline 
-                            src={previewSource}
-                        />
+                        <video src={previewSource} autoPlay muted controls />
                     )}
 
                     {!viewData && (
@@ -92,7 +88,7 @@ const DropzoneSpace = ({
                     >
                         <input {...getInputProps()} ref={inputRef} />
                         <div>
-                            {image ? <IoImageOutline /> : video ? <FcFilmReel /> : <FiUploadCloud size={30}/>}
+                            {image ? <IoImageOutline size={30} /> : video ? <FcFilmReel size={30}/> : <FiUploadCloud size={30}/>}
                         </div>
                         <p className='text-center'>
                             Drag and drop an {!video ? "image" : "video"}, or <br />click to {" "}
@@ -103,8 +99,6 @@ const DropzoneSpace = ({
                 )
             }
         </div>
-    
-    
     </div>
   )
 }
