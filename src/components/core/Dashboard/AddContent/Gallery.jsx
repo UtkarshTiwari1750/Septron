@@ -67,6 +67,7 @@ const Gallery = () => {
         if(result) {
           dispatch(setImages(result?.images));
           dispatch(setVideos(result?.videos));
+          toast.success("SUCCESS"); 
           dispatch(setStep(3));
         }
       } catch(error) {

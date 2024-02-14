@@ -28,10 +28,10 @@ exports.createGallery = async(req, res) => {
             contentId: contentDetails._id,
         };
         if(images.length > 0){
-            data[images] = images;
+            data["images"] = images;
         }
         if(videos.length > 0){
-            data[videos] = videos;
+            data["videos"] = videos;
         }
 
         const gallery = await Gallery.create(data);
