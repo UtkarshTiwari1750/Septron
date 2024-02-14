@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { createContent, getAllGenre } from '../../../../../services/operations/contentAPI';
+import { createContent, getAllGenre, updateContent } from '../../../../../services/operations/contentAPI';
 import toast from 'react-hot-toast';
 import Button from "../../../../common/Button"
 import { setContent, setStep } from '../../../../../slices/contentSlice';
@@ -19,13 +19,81 @@ const ContentInfo = () => {
     handleSubmit,
   } = useForm();
 
-  const {token} = useSelector((state) => state.auth)
+  const {token} = useSelector((state) => state.auth);
+  const {user} = useSelector((state) => state.profile);
+  const { content, editContent } = useSelector((state) => state.content)
   const [loading, setLoading] = useState(false);
   const [allGenre, setAllGenre] = useState([]);
   const dispatch = useDispatch();
 
+
+  // Function to Check if Form Updated or Not
+  const isFormUpdated = () => {
+    const currentValues = getValues();
+    if(
+      currentValues.contentName !== content.contentName ||
+      currentValues.contentDescription !== content.contentDescription ||
+      currentValues.price !== content.price ||
+      currentValues.thumbnail !== content.thumbnail ||
+      currentValues.tag.toString() !== content.tag.toString() ||
+      currentValues.genre !== content.genre ||
+      currentValues.instructions.toString() !== content.instructions.toString() ||
+      currentValues.contentType !== content.contentType
+    ) {
+      return true;
+    } else {
+      return false;
+    }    
+
+
+  }
+
   const handleOnSubmit = async(data) => {
-    const thumbnailUrl = await storeToFirebase(data.thumbnail);
+    if(editContent) {
+      if(isFormUpdated()) {
+        const currentValues = getValues();
+        const formData = new FormData();
+
+        formData.append("contentId", content._id);
+        if(currentValues.contentName !== content.contentName) {
+          formData.append("contentName", data.contentName)
+        }
+        if(currentValues.contentDescription !== content.contentDescription) {
+          formData.append("contentDescription", data.contentDescription)
+        }
+        if(currentValues.price !== content.price) {
+          formData.append("price", data.price)
+        }
+        if(currentValues.tag.toString() !== content.tag.toString()) {
+          formData.append("tag", JSON.stringify(data.tag))
+        }
+        if(currentValues.genre !== content.genre) {
+          formData.append("genre", data.genre)
+        }
+        if(currentValues.instructions.toString() !== content.instructions.toString()) {
+          formData.append("instructions", JSON.stringify(data.instructions))
+        }
+        if(currentValues.contentType !== content.contentType) {
+          formData.append("contentType", data.contentType)
+        }
+        if(currentValues.thumbnail !== content.thumbnail) {
+          const thumbnailUrl = await storeToFirebase(data.thumbnail, user._id);
+          formData.append("thumbnail", thumbnailUrl)
+        }
+        setLoading(true);
+        const result = await updateContent(formData, token);
+        setLoading(false);
+        if( result ) {
+          dispatch(setContent(result));
+          dispatch(setStep(2));
+        }
+      } else {
+        toast.error("No Changes made to the form");
+      }
+      return;
+    }
+
+    const thumbnailUrl = await storeToFirebase(data.thumbnail, user._id);
     setLoading(true);
     const formData = new FormData();
     formData.append("contentName", data.contentName);
@@ -52,6 +120,7 @@ const ContentInfo = () => {
 
   useEffect(() => {
     setLoading(true);
+    // Checking if Genre Names are present inside session Storage or not
     if(!sessionStorage.getItem("genreNames")){
       ;(async() => {
         const result = await getAllGenre();
@@ -66,17 +135,25 @@ const ContentInfo = () => {
     }
     setLoading(false);
 
+    if(editContent) {
+      setValue("contentName", content.contentName);
+      setValue("contentDescription", content.contentDescription);
+      setValue("price", content.price);
+      setValue("thumbnail", content.thumbnail);
+      setValue("tag", content.tag);
+      setValue("genre", content.genre);
+      setValue("instructions", content.instructions);
+      setValue("contentType", content.contentType);      
+    }
   }, []) 
 
   return (
     <form 
     onSubmit={handleSubmit(handleOnSubmit)}
     className='text-white p-5'>
-      
       <div className='w-11/12 max-w-[880px] mx-auto px-16 py-6 bg-transparent rounded-lg shadow-[0_0_15px_1px] 
         backdrop-blur-lg '
-      >
-        
+      >  
         <div className='flex flex-col justify-center gap-y-6 '>
           {/* Content Title */}
           <div className='flex justify-between items-center w-full gap-x-6'>
@@ -148,15 +225,16 @@ const ContentInfo = () => {
             </div>
           </div>
           
+          {/* Thumbnail */}
           <Upload 
             register={register}
             label="Content Thumbnail"
             name="thumbnail"
             setValue={setValue}
             errors={errors}
+            editData={editContent ? content?.thumbnail : null}
           />
           
-
           {/* Content Type */}
           <div className='flex justify-between items-center w-full gap-x-6 '>
             <div className='w-[50%] text-base font-poppins'>
@@ -307,15 +385,29 @@ const ContentInfo = () => {
               )}
             </div>
           </div>
-          <div className='flex justify-end'>
-            <Button 
-              text="Save & Next"
-              type="submit"
-            />
+
+          <div className='flex gap-x-2 justify-end'>
+            {/* Save & Next */}
+            
+            <div className='flex justify-end'>
+              <Button 
+                text={!editContent ? "Save & Next": "Save Changes"}
+                type="submit"
+              />
+            </div>
+
+            {editContent && 
+              <button
+                onClick={() => dispatch(setStep(2))}
+                disabled={loading}
+                className='rounded-md px-2 p-3 font-roboto text-lg border border-white bg-yellowNeon text-[#000814]'
+              >
+                Continue Without Saving
+              </button>
+            }
           </div>
 
-        </div>  
-        
+        </div>   
       </div>
     </form>
   )

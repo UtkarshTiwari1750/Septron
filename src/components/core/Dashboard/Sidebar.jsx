@@ -45,10 +45,10 @@ const Sidebar = () => {
                 text1: "Are you sure ?",
                 text2: "Please Don't Leave us",
                 gif:"https://firebasestorage.googleapis.com/v0/b/septron-909d2.appspot.com/o/Septron%2FGifs%2FDon'tLeave.gif?alt=media&token=c85a07f8-f60d-4dc7-a907-e787cd8e6ad6",
-                btn1Text: "Leave",
-                btn2Text: "Stay",
-                btn1Handler: () => dispatch(logout(navigate)),
-                btn2Handler: () => setConfirmationModal(null)
+                btn1Text: "Stay",
+                btn2Text: "Leave",
+                btn1Handler: () => setConfirmationModal(null),
+                btn2Handler: () => dispatch(logout(navigate)),
               })}
             >
               <div className='flex items-center gap-x-2 pl-4'>

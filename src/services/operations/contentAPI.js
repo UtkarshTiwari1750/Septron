@@ -133,7 +133,7 @@ export const createSubSection = async(data, token) => {
 }
 
 // EDIT CONTENT
-export const editContent = async(data, token) => {
+export const updateContent = async(data, token) => {
     let result = null;
     const toastId = toast.loading("Loading...");
     try{

@@ -24,7 +24,9 @@ exports.createGallery = async(req, res) => {
             });
         }
 
-        let data = {};
+        let data = {
+            contentId: contentDetails._id,
+        };
         if(images.length > 0){
             data[images] = images;
         }

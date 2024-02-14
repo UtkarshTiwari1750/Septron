@@ -10,17 +10,17 @@ const DropzoneSpace = ({
     video,
     image,
     viewData,
-    editData,
     setSelectedFile,
     setAllPreviewSource,
     selectedFile,
     setValue,
     previewSource,
     name,
-    customClasses
+    customClasses,
+    editData = null,
 }) => {
     const inputRef = useRef(null);
-
+    previewSource = editData ? editData : previewSource; 
     const onDrop = (acceptedFiles) => {
         const file = acceptedFiles[0];
         if(file) {
@@ -47,8 +47,8 @@ const DropzoneSpace = ({
     <div>
         <div
             className={`${isDragActive ? "bg-transparent" : "bg-transparent"}
-                flex mx-auto w-[240px] min-h-[250px] ${(image || video) ? "cursor-grab": "cursor-pointer"} items-center justify-center rounded-md
-                border-2 border-dotted 
+                flex mx-auto min-h-[250px] ${(image || video) ? "cursor-grab  w-[240px] ": "cursor-pointer"} items-center justify-center rounded-md
+                border-2 border-dotted text-white
             `}
         >
             {
@@ -72,6 +72,7 @@ const DropzoneSpace = ({
                                 setAllPreviewSource((prev) => (prev.filter((_,rmIndex) => index != rmIndex)))
                                 setSelectedFile((prev) => (prev.filter((_,rmIndex) => index != rmIndex)));
                                 setValue(name, selectedFile);
+
                             }}
                             className='text-gray-500 underline mt-3'
                         >

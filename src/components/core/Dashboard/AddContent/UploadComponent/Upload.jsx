@@ -213,8 +213,8 @@ const Upload = ({
         </div> */}
 
         {errors[name] && (
-            <span>
-                {label} is required
+            <span className='text-red-600 text-sm'>
+                {label} is required <sup>*</sup>
             </span>
         )}
     </div>

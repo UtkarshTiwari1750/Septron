@@ -153,6 +153,7 @@ exports.editContent = async(req, res) => {
             populate: {
                 path: "subSections"
             },
+            strictPopulate: false
         })
         .populate("ratingAndReviews")
         .populate("genre")

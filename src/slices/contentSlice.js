@@ -18,7 +18,7 @@ const contentSlice = createSlice({
             state.paymentLoading = action.payload;
         },
         setEditContent: (state, action) => {
-            state.editCourse = action.payload;
+            state.editContent = action.payload;
         },
         setContent: (state, action) => {
             state.content = action.payload;
