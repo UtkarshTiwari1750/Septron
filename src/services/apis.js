@@ -29,4 +29,7 @@ export const contentEndpoints = {
     DELETE_GALLERY: BASE_URL + '/content/deleteGallery',
 }
 
-
+// PROFILE ENDPOINTS
+export const profileEndpoints = {
+    DELETE_ACCOUNT: BASE_URL + "/profile/deleteProfile",
+}

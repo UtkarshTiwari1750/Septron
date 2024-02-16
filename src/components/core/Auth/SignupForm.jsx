@@ -145,7 +145,7 @@ const SignupForm = ({accountType}) => {
                     Password <sup>*</sup>
                 </label>
                 <div 
-                    className='text-gray-300 absolute right-5 text-2xl bottom-2'
+                    className='text-gray-300 absolute cursor-pointer right-5 text-2xl bottom-2'
                     onClick={() => setShowPassword((prev) => !prev)}
                 >
                     {showPassword ? (<HiMiniEye />) : (<HiEyeSlash />) }
@@ -178,7 +178,7 @@ const SignupForm = ({accountType}) => {
                     Confirm Password <sup>*</sup>
                 </label>
                 <div 
-                    className='text-gray-300 absolute right-5 text-2xl bottom-2'
+                    className='text-gray-300 absolute cursor-pointer right-5 text-2xl bottom-2'
                     onClick={() => setShowConfirmPassword((prev) => !prev)}
                 >
                     {showConfirmPassword ? (<HiMiniEye />) : (<HiEyeSlash />) }

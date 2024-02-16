@@ -10,6 +10,9 @@ const sectionSchema = new mongoose.Schema({
             type: String,
             trim: true,
         },
+        sectionImage: {
+            type:String,
+        },
         subSections: [
             {
                 type: mongoose.Schema.Types.ObjectId,

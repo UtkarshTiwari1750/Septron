@@ -111,7 +111,7 @@ export function login(
             navigate("/dashboard/my-profile");
         } catch(error) {
             console.log("LOGIN API ERROR....", error);
-            toast.error("Login Failed");
+            toast.error(error?.response?.data?.message);
         }
         dispatch(setLoading(false));
         toast.dismiss(toastId);

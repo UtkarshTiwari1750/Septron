@@ -84,11 +84,11 @@ exports.deleteProfile = async(req, res) => {
         // PENDING :- DELETE PROFILE PIC FROM FIREBASE
 
         await User.findByIdAndDelete(id);
+        await ContentProgress.deleteMany({userId: id});
         return res.status(200).json({
             success: true,
             message: "User deleted successfully",
         })
-        await ContentProgress.deleteMany({userId: id});
     } catch(error) {
         console.log("DELETE PROFILE CONTROLLER ERROR...", error);
         return res.status(500).json({

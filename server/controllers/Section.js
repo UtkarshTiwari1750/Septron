@@ -9,6 +9,7 @@ exports.createSection = async(req, res) => {
         const {
             sectionName,
             sectionDescription,
+            sectionImage,
             contentId,
         } = req.body;
 
@@ -19,12 +20,19 @@ exports.createSection = async(req, res) => {
                 message: "Section name id required"
             });
         }
-
+        
+        // Creating data object
+        let data = {
+            "sectionName": sectionName,
+        }
+        if(sectionDescription) {
+            data["sectionDescription"] = sectionDescription;
+        }
+        if(sectionImage) {
+            data["sectionImage"] = sectionImage;
+        }
         // Create a Section
-        const newSection = await Section.create({
-            sectionName,
-            sectionDescription,
-        });
+        const newSection = await Section.create(data);
 
         // Push this section inside content
         const updatedContent = await Content.findByIdAndUpdate(contentId,{
@@ -58,7 +66,7 @@ exports.createSection = async(req, res) => {
 // Edit Content
 exports.editSection = async(req, res) => {
     try{
-        const {sectionId, sectionName, sectionDescription} = req.body;
+        const {sectionId, sectionName, sectionDescription, sectionImage, contentId} = req.body;
 
         if(!sectionId) {
             return res.status(400).json({
@@ -67,8 +75,19 @@ exports.editSection = async(req, res) => {
             });
         }
 
+        // Creating data object
+        let data = {
+            "sectionName": sectionName,
+        }
+        if(sectionDescription) {
+            data["sectionDescription"] = sectionDescription;
+        }
+        if(sectionImage) {
+            data["sectionImage"] = sectionImage;
+        }
+
         const sectionDetails = await Section.findByIdAndUpdate(sectionId, 
-            {sectionName, sectionDescription},
+            data,
             {new: true}
         );
 

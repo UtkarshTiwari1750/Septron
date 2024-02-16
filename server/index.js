@@ -8,8 +8,10 @@ const {configCloudinary} = require("./config/cloudinary");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
+// Routes
 const contentRoutes = require("./routes/Content");
 const authRoutes = require("./routes/Auth");
+const profileRoutes = require("./routes/Profile");
 
 database.connect();
 dotenv.config();
@@ -34,8 +36,10 @@ app.use(
     })
 )
 
+// Mounting Routes
 app.use("/api/v1/content", contentRoutes);
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/profile", profileRoutes);
 
 // Testing the server
 app.get("/", (req, res) => {
