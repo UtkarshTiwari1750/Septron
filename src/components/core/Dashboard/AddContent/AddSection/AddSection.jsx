@@ -15,16 +15,18 @@ const AddSection = () => {
   const {token} = useSelector((state) => state.auth);
   const {
     register,
+    handleSubmit,
     setValue,
     getValues,
     formState: {errors},
-    handleSubmit,
   } = useForm();
+
   const dispatch = useDispatch();
 
   const handleAddSection = async(data) => {
-    const sectionValue = data?.sectionName?.trim();
     console.log("Section data...", data);
+
+    const sectionValue = data?.sectionName?.trim();
     // Handling Empty Input Value
     if(!sectionValue || sectionValue === "") {
       toast.error("Enter Section Name to Add")
@@ -70,7 +72,6 @@ const AddSection = () => {
             <div className='flex justify-between gap-x-4 items-center'>
               <p className='text-lg'>
                 {content?.contentName}
-                Add Section
               </p>
               
               {/* Add Icon */}
@@ -94,18 +95,22 @@ const AddSection = () => {
               
               <input 
                 type="text" 
-                id={"sectionName"}
+                id="sectionName"
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg 
                 border border-gray-300 appearance-none dark:text-white dark:border-gray-600
                 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer resize-none" 
                 placeholder=" " 
                 {...register("sectionName", {required: true})}
               />
+              {errors.sectionName && (
+                <span className='text-red-700 '>
+                  Section Name is required
+                </span>
+              )}
 
               {/* Add Button */}
               <button className='rounded-lg px-4 py-2 border border-white'
-                onClick={handleAddSection}
-                type='button'
+                type='submit'
               >
                 Add
               </button>
