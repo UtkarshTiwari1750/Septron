@@ -49,6 +49,7 @@ const ContentInfo = () => {
   }
 
   const handleOnSubmit = async(data) => {
+    const toastId = toast.loading("Loading...")
     if(editContent) {
       if(isFormUpdated()) {
         const currentValues = getValues();
@@ -115,6 +116,7 @@ const ContentInfo = () => {
     } catch(error) {
       console.log("ERROR...", error)
     }
+    toast.dismiss(toastId);
     setLoading(false);
   }
 
@@ -156,10 +158,10 @@ const ContentInfo = () => {
       >  
         <div className='flex flex-col justify-center gap-y-6 '>
           {/* Content Title */}
-          <div className='flex justify-between items-center w-full gap-x-6'>
-              <div className='w-[50%] text-base font-poppins'>
-                Content Title
-                <p className='text-[10px] leading-normal w-[88%] text-'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus </p>
+          <div className='flex justify-between items-start w-full gap-x-6'>
+              <div className='w-[50%] text-lg font-poppins'>
+                Content Title <sup className='text-red-500'>*</sup>
+                <p className='text-sm leading-normal w-[88%] text-'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus </p>
               </div>
               <div className='relative w-[70%]'>
                 <textarea 
@@ -191,10 +193,10 @@ const ContentInfo = () => {
           </div>
           
           {/* Description */}
-          <div className='flex justify-between items-center w-full gap-x-6'>
-            <div className='w-[50%] text-base font-poppins'>
-              Content Description
-              <p className='text-[10px] leading-normal w-[88%]'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus </p>
+          <div className='flex justify-between items-start w-full gap-x-6'>
+            <div className='w-[50%] text-lg font-poppins'>
+              Content Description <sup className='text-red-500'>*</sup>
+              <p className='text-sm leading-normal w-[88%]'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus </p>
             </div>
             <div className='relative  w-[70%]'>
               <textarea 
@@ -236,10 +238,10 @@ const ContentInfo = () => {
           />
           
           {/* Content Type */}
-          <div className='flex justify-between items-center w-full gap-x-6 '>
-            <div className='w-[50%] text-base font-poppins'>
-              Content Type <sup>*</sup>
-              <p className='text-[10px] leading-normal w-[88%]'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus </p>
+          <div className='flex justify-between mt-3 items-start w-full gap-x-6 '>
+            <div className='w-[50%] text-lg font-poppins'>
+              Content Type <sup className='text-red-500'>*</sup>
+              <p className='text-sm leading-normal w-[88%]'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus </p>
             </div>
               
             <div className='w-[70%]'>
@@ -272,10 +274,10 @@ const ContentInfo = () => {
           </div>
           
           {/* Genre */}
-          <div className='flex justify-between items-center w-full gap-x-6'>
-            <div className='w-[50%] text-base font-poppins'>
-              Genre <sup>*</sup>
-              <p className='text-[10px] leading-normal w-[88%] '>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus </p>
+          <div className='flex justify-between items-start w-full gap-x-6'>
+            <div className='w-[50%] text-lg font-poppins'>
+              Genre <sup className='text-red-500'>*</sup>
+              <p className='text-sm leading-normal w-[88%] '>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus </p>
             </div>
             
             <div className='w-[70%]'>
@@ -313,14 +315,14 @@ const ContentInfo = () => {
             errors={errors}
             setValue={setValue}
             getValues={getValues}
-            placeholder="Enter Tags Here"
+            placeholder="Tags"
           />
 
           {/* Instructions */}
-          <div className='flex justify-between items-center w-full gap-x-6'>
-            <div className='w-[50%] text-base font-poppins'>
-              Instructions
-              <p className='text-[10px] leading-normal w-[88%]'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus </p>
+          <div className='flex justify-between items-start w-full gap-x-6'>
+            <div className='w-[50%] text-lg font-poppins'>
+              Instructions <sup className='text-red-500'>*</sup>
+              <p className='text-sm leading-normal w-[88%]'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus </p>
 
             </div>
             <div className='relative w-[70%]'>
@@ -352,10 +354,10 @@ const ContentInfo = () => {
           </div>
           
           {/* Price */}
-          <div className='flex justify-between items-center w-full gap-x-6'>
-            <div className='w-[50%] text-base font-poppins'>
-              Price
-              <p className='text-[10px] leading-normal w-[88%]'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus </p>
+          <div className='flex justify-between items-start w-full gap-x-6'>
+            <div className='w-[50%] text-lg font-poppins'>
+              Price <sup className='text-red-500'>*</sup>
+              <p className='text-sm leading-normal w-[88%]'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus </p>
 
             </div>
             <div className='relative w-[70%]'>

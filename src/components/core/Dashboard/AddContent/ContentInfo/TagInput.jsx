@@ -48,10 +48,10 @@ const TagInput = ({
   }, [tags])
   
   return (
-    <div className='flex justify-between items-center w-full gap-x-6'>
-      <div className='w-[50%] text-base font-poppins'>
-        Tag <sup>*</sup>
-        <p className='text-[10px] leading-normal w-[88%] '>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus </p>
+    <div className='flex justify-between items-start w-full gap-x-6'>
+      <div className='w-[50%] text-lg font-poppins'>
+        Tag <sup className='text-red-500'>*</sup>
+        <p className='text-sm leading-normal w-[88%] '>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus </p>
       </div>
 
       <div className='relative w-[70%]'>
@@ -73,7 +73,7 @@ const TagInput = ({
             peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 
             rtl:peer-focus:left-auto start-1 cursor-text"
         >
-          {placeholder} 
+          {placeholder} <sup>*</sup>
         </label>
       
         {errors[name] && (

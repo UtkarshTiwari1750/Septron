@@ -64,7 +64,7 @@ const AddSection = () => {
         {/* Section Structure */}
         <form
           onSubmit={handleSubmit(handleAddSection)} 
-          className='w-[30%] border border-white rounded-lg px-4 py-4 h-full min-h-[100px]'>
+          className='w-[40%] border border-white rounded-lg px-4 py-4 h-full min-h-[100px]'>
           
           {/* Headin and Section Name Input */}
           <div className=''>
@@ -130,7 +130,7 @@ const AddSection = () => {
         </form>
 
         {/* Add Section Form */}
-        <div className='w-[50%]'>
+        <div className='w-[55%]'>
           {addSubSection ? (<SubSectionForm subSectionFormData={subSectionFormData} />): (<div></div>)}
         </div>
 

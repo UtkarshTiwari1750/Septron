@@ -13,11 +13,11 @@ export const FORM_DETAILS = {
         SECTION_IMAGE_SUBHEADING: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus `,
     },
     SUBSECTION: {
-        SUBSECTION_TITLE_HEADING: "Sub-Section Title",
+        SUBSECTION_TITLE_HEADING: "Title",
         SUBSECTION_TITLE_SUBHEADING: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus `,
-        SUBSECTION_DESCRIPTION_HEADING: "Sub-Section Description",
+        SUBSECTION_DESCRIPTION_HEADING: "Description",
         SUBSECTION_DESCRIPTION_SUBHEADING: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus `,
-        SUBSECTION_IMAGE_HEADING: "Sub-Section Image",
+        SUBSECTION_IMAGE_HEADING: "Upload PDF   ",
         SUBSECTION_IMAGE_SUBHEADING: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus `,
     }
 }

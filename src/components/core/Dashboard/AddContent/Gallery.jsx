@@ -135,6 +135,7 @@ const Gallery = () => {
         image={true}
         required={false}
         editData={editGallery.images}
+        multiInput={true}
       />
 
       {/* For Video Upload */}
@@ -147,10 +148,11 @@ const Gallery = () => {
           setValue={setValue}
           video={true}
           required={false}
+          multiInput={true}
         />
       </div>
 
-      {/* For Buttons */}
+      {/* Buttons */}
       <div className='flex items-center justify-end gap-x-6 text-white'>
         {/* Back Button */}
         <button className=' text-lg font-roboto box-border flex items-center gap-x-2 bg-gray-600 border border-white rounded-md px-5 py-2'

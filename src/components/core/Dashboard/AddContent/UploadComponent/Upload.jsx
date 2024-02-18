@@ -14,17 +14,20 @@ const Upload = ({
     register,
     setValue,
     errors,
+    customIcon,
     video = false,
     image = false,
+    pdf = false,
     viewData = null,
     editData = null,
-    required=true
+    required=true,
+    multiInput = false
 }) => {
     const {content} = useSelector((state) => state.content);
     const [selectedFile, setSelectedFile] = useState([]);
     const [allPreviewSource, setAllPreviewSource] = useState([]);    
 
-
+    console.log("PDF...", pdf)
     useEffect(() => {
         register(name, {required: required})
     }, [register]);
@@ -36,14 +39,14 @@ const Upload = ({
 
   return (
     <div className='flex flex-col space-y-2 '>
-        <label className='text-lg text-white font-poppins w-[55%] mb-5'
+        <label className='text-lg text-white font-poppins mb-5 w-full'
             htmlFor={name}
         >
-            {label} {!viewData && (<sup className='text-red-700'>*</sup>)}
-            <p className='text-[10px] leading-normal w-full text-'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus libero magnam ratione, quidem saepe nemo nesciunt veritatis, omnis deleniti</p>
+            {label} {!viewData && (<sup className='text-red-500'>*</sup>)}
+            <p className='text-sm leading-normal w- '>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus libero magnam ratione, quidem saepe nemo nesciunt veritatis, omnis deleniti</p>
         </label>         
         {
-            (image || video) ? ( 
+            (multiInput) ? ( 
                 (
                     <div className='flex w-full mx-auto gap-4'>
                         <Swiper
@@ -138,6 +141,10 @@ const Upload = ({
                     name={name}
                     customClasses="w-full h-full object-cover "
                     index={0}    
+                    customIcon={customIcon}
+                    pdf={pdf}
+                    video={video}
+                    multiInput={multiInput}
                 />
             )
         }
