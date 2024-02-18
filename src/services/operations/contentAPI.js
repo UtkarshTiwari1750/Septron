@@ -1,6 +1,6 @@
 import { contentEndpoints } from "../apis";
 import { apiConnector } from "../apiConnector";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 const {
     GET_ALL_CONTENT_NAME,
@@ -208,7 +208,8 @@ export const editSubSection = async(data, token) => {
 export const deleteContent = async(contentId, token) => {
     const toastId = toast.loading("Loading...");
     try{
-        const response = await apiConnector("DELETE", DELETE_CONTENT, contentId, {
+        console.log("content id:- ", contentId);
+        const response = await apiConnector("DELETE", DELETE_CONTENT, {contentId}, {
             Authorization: `Bearer ${token}`,
         })
 

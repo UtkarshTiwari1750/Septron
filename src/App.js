@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard';
 import MyProfile from './components/core/Dashboard/MyProfile';
 import AddContent from './components/core/Dashboard/AddContent';
 import Setting from './components/core/Dashboard/Settings';
+import MyContent from './components/core/Dashboard/AddContent/MyContent';
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
           <Route path='/dashboard/my-profile' element={<MyProfile />}/>
           <Route path='/dashboard/add-content' element={<AddContent />} />
           <Route path='/dashboard/settings' element={<Setting />} />
-          
+          <Route path='/dashboard/my-content' element={<MyContent />} />
         </Route>
 
 

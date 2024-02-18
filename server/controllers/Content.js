@@ -179,7 +179,7 @@ exports.editContent = async(req, res) => {
 exports.deleteContent = async(req, res) => {
     try{
         // Fetch data from request body
-        const contentId = req.body;
+        const {contentId} = req.body;
         const userId = req.user.id;
 
         // Validating data
@@ -191,7 +191,7 @@ exports.deleteContent = async(req, res) => {
         }
 
         // Finding Content from DB
-        const contentDetails = await Content.findById(contentId);
+        const contentDetails = await Content.findById({_id:contentId});
 
         if(!contentDetails) {
             return res.status(400).json({
@@ -201,7 +201,7 @@ exports.deleteContent = async(req, res) => {
         }
 
         // Finding Creator from DB
-        const userDetails = await User.findById(userId);
+        const userDetails = await User.findById({_id:userId});
 
         if(!userDetails) {
             return res.status(400).json({
@@ -220,7 +220,7 @@ exports.deleteContent = async(req, res) => {
         }
         else {
             // Removing Content from Creator's contents list
-            const contentIndex = userDetails.contents.indexOf(contentId); 
+            const contentIndex = userDetails.contents.indexOf(contentDetails._id); 
             userDetails.contents.splice(contentIndex, 1);
             userDetails.save(); 
         }
@@ -228,7 +228,7 @@ exports.deleteContent = async(req, res) => {
         // Remove content from all the buyers list
         for(const buyerId of contentDetails.buyers){
             await User.findByIdAndUpdate(buyerId,
-                {$pull: {contents: contentId}}
+                {$pull: {contents: contentDetails._id}}
             )
         }
         
@@ -252,14 +252,14 @@ exports.deleteContent = async(req, res) => {
 
         // Deleting this course from it's genre's content list
         const genreDetails = await Genre.findByIdAndUpdate(contentDetails.genre, {
-            $pull: {contents: contentId}
+            $pull: {contents: contentDetails._id}
         });
 
         // Deleting Gallery for this Content
         const galleryDetails = await Gallery.findByIdAndDelete(contentDetails.gallery);
 
         // Deleting content 
-        await Content.findByIdAndDelete(contentId);
+        await Content.findByIdAndDelete(contentDetails._id);
         
         // Returning success response
         return res.status(200).json({
@@ -373,7 +373,7 @@ exports.getArtistContents = async(req, res) => {
             });
         }
 
-        const userContents = await User.findById({userId})
+        const userContents = await User.findById({_id: userId})
         .populate("contents").exec();
 
         // OTHER WAY
