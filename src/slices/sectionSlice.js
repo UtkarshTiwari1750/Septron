@@ -4,7 +4,9 @@ const initialState = {
     sectionNames: null,
     sectionDescription: null,
     sectionImage: null,
-    editSection: false,
+    editSection: null,
+    addSection: null,
+    loading: false,
 }
 
 const sectionSlice = createSlice({
@@ -22,6 +24,12 @@ const sectionSlice = createSlice({
         },
         setEditSection: (state, value) => {
             state.editSection = value.payload;
+        },
+        setAddSection: (state, value) => {
+            state.addSection = value.payload;
+        },
+        setLoading: (state, value) => {
+            state.loading = value.payload;
         }
     }
 });
@@ -30,7 +38,9 @@ export const {
     setSectionNames, 
     setSectionDescription, 
     setSectionImage, 
-    setEditSection
+    setEditSection,
+    setAddSection,
+    setLoading
 } = sectionSlice.actions;
 
 export default sectionSlice.reducer;

@@ -8,13 +8,14 @@ import { createSection } from '../../../../../services/operations/contentAPI';
 import { setContent } from '../../../../../slices/contentSlice';
 import NestedView from './NestedView';
 import SubSectionForm from './SubSectionForm';
+import SectionForm from './SectionForm';
 
 const AddSection = () => {
   const {content} = useSelector((state) => state.content);
   // const {sectionNames} = useSelector((state) => state.section);
   const {token} = useSelector((state) => state.auth);
-  const [subSectionFormData, setSubSectionFormData] = useState(false);
-  const {addSubSection} = useSelector((state) => state.subSection)
+  const {addSubSection, editSubSection} = useSelector((state) => state.subSection)
+  const {addSection, editSection} = useSelector((state) => state.section);
   const {
     register,
     handleSubmit,
@@ -76,7 +77,7 @@ const AddSection = () => {
               
               {/* Add Icon */}
               <AiOutlineFolderAdd 
-                size={25} 
+                size={30} 
                 className='cursor-pointer mr-6 hover:scale-90'
                 onClick={handleAddIcon}
               />
@@ -131,7 +132,10 @@ const AddSection = () => {
 
         {/* Add Section Form */}
         <div className='w-[55%]'>
-          {addSubSection ? (<SubSectionForm subSectionFormData={subSectionFormData} />): (<div></div>)}
+          {addSubSection && (<SubSectionForm />)}
+          {editSubSection && (<SubSectionForm />)}
+          {addSection && (<SectionForm />)}
+          {editSection && (<SectionForm />)}
         </div>
 
       </div>

@@ -63,7 +63,6 @@ export const getAllGenre = async() => {
 // Create Content
 export const createContent = async(data, token) => {
     let result = null;
-    const toastId = toast.loading("Loading...");
     try{
         const response = await apiConnector("POST",CREATE_CONTENT, data, {
             "Content-Type": "multipart/form-data",
@@ -80,7 +79,6 @@ export const createContent = async(data, token) => {
     } catch(error){
         console.log("CREATE CONTENT API ERROR....", error);
     }
-    toast.dismiss(toastId);
     return result;
 }
 
@@ -111,7 +109,6 @@ export const createSection = async(data, token) => {
 // CREATE SUBSECTION
 export const createSubSection = async(data, token) => {
     let result = null;
-    const toastId = toast.loading("Loading...");
     try{
         const response = await apiConnector("POST",CREATE_SUBSECTION, data, {
             "Content-Type": "multipart/form-data",
@@ -128,7 +125,6 @@ export const createSubSection = async(data, token) => {
     } catch(error){
         console.log("CREATE SUBSECTION API ERROR....", error);
     }
-    toast.dismiss(toastId);
     return result;
 }
 

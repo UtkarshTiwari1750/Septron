@@ -5,6 +5,7 @@ const initialState = {
     content: null,
     paymentLoading: false,
     editContent: false,
+    loading: false,
 }
 
 const contentSlice = createSlice({
@@ -28,6 +29,9 @@ const contentSlice = createSlice({
             state.content = null;
             state.editContent = false;
         },
+        setLoading: (state, value) => {
+            state.loading = value.payload;
+        }
     },
 })
 
@@ -37,6 +41,7 @@ export const {
     setEditContent,
     setContent,
     resetContentState,
+    setLoading
 } = contentSlice.actions;
 
 export default contentSlice.reducer;

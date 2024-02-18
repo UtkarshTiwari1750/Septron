@@ -19,7 +19,6 @@ export default async function storeToFirebase(images, userId) {
         }
     }))
     
-    toast.success("IMAGE UPLOADED")
     console.log("DOWNLOAD URLS...", downloadUrl);
     return downloadUrl;
 }

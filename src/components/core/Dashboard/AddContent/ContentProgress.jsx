@@ -39,7 +39,7 @@ const ContentProgress = () => {
 
   return (
     <>
-        <div className='text-white flex w-full justify-between items-center p-4 mt-4'>
+        <div className='text-white flex w-full justify-between items-center p-4 mt-4 pl-40 mb-8'>
             {
                 steps.map((item) => (
                     <div

@@ -10,9 +10,9 @@ exports.createSubSection = async(req, res) => {
             sectionId,
             title,
             description,
+            url,
         } = req.body;
 
-        const file = req.files.file;
         // Validating data 
         if(!title || !sectionId || !description) {
             return res.status(400).json({
@@ -20,8 +20,6 @@ exports.createSubSection = async(req, res) => {
                 message: "All field are required"
             });
         }
-
-        // PENDING UPLOAD CODE
 
         // Create a Section
         const newSubSection = await SubSection.create({

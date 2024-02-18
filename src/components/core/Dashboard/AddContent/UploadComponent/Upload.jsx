@@ -27,7 +27,6 @@ const Upload = ({
     const [selectedFile, setSelectedFile] = useState([]);
     const [allPreviewSource, setAllPreviewSource] = useState([]);    
 
-    console.log("PDF...", pdf)
     useEffect(() => {
         register(name, {required: required})
     }, [register]);

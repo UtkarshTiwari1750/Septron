@@ -5,6 +5,7 @@ import { FiUploadCloud } from "react-icons/fi"
 import { IoImageOutline } from "react-icons/io5";
 import { FcFilmReel } from "react-icons/fc";
 import { Document, Page } from 'react-pdf';
+import { setLoading } from '../../../../../slices/contentSlice';
 
 const DropzoneSpace = ({
     index,
@@ -26,6 +27,7 @@ const DropzoneSpace = ({
     const inputRef = useRef(null);
     previewSource = editData ? editData : previewSource; 
     const onDrop = (acceptedFiles) => {
+        setLoading(true);
         const file = acceptedFiles[0];
         if(file) {
             previewFile(file);
@@ -46,7 +48,7 @@ const DropzoneSpace = ({
         reader.readAsDataURL(file);
         reader.onloadend = () => {
             setAllPreviewSource( (prev) => [...prev, reader.result]);
-            console.log("Preview Source...", reader.result);
+            setLoading(false);
         }
     }
 
@@ -55,7 +57,7 @@ const DropzoneSpace = ({
 
     function onDocumentLoadSuccess({ numPages }) {
         setNumPages(numPages);
-      }
+    }
     
 
   return (
