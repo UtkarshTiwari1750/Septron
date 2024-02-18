@@ -2,15 +2,15 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     addSubSection: false,
-    editSubSection: null,
+    editSubSection: false,
 }
 
 const subSectionSlice = createSlice({
     name: "subSection",
     initialState: initialState,
     reducers: {
-        setAddSubSection: (state, value) => {
-            state.addSubSection = value.payload;
+        setAddSubSection: (state, action) => {
+            state.addSubSection = action.payload;
         },
         setEditSubSection: (state, value) => {
             state.editSubSection = value.payload;

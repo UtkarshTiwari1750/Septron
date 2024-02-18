@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { RxDropdownMenu } from "react-icons/rx"
 import { MdEdit } from "react-icons/md"
 import { RiDeleteBin6Line } from "react-icons/ri"
@@ -8,8 +8,8 @@ import { RiVideoUploadFill } from "react-icons/ri";
 import { setAddSubSection } from '../../../../../slices/subSectionSlice'
 
 const NestedView = ({ handleChangeEditSectionName }) => {
+    const dispatch = useDispatch();
     const {content} = useSelector((state) => state.content);
-    console.log("SECTION...", content);
     const [confirmationModal, setConfirmationModal] = useState(null);
     const handleDeleteSection = async(sectionId) => {
 
@@ -56,12 +56,28 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                             </button>
                             <span>|</span>
                             <AiFillCaretDown />
-                            <RiVideoUploadFill 
-                                onClick={() => setAddSubSection(true)}
-                                className='cursor-pointer '
-                            />
+                            <div
+                                onClick={() => dispatch(setAddSubSection(true))}
+                            >
+                                <RiVideoUploadFill 
+                                    className='cursor-pointer'
+                                    size={50}
+                                />
+
+                            </div>
                         </div>
                     </summary>
+                    
+                    <div>
+                        {section?.subSection?.map((subSection) => (
+                            <div>
+                                <div>
+                                    <p>{subSection?.title}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
                 </details>
             ))}
         </div>
