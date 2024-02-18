@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AiOutlineFolderAdd } from "react-icons/ai";
 import Input from '../../../../common/Input';
@@ -8,11 +8,13 @@ import toast from 'react-hot-toast';
 import { createSection } from '../../../../../services/operations/contentAPI';
 import { setContent } from '../../../../../slices/contentSlice';
 import NestedView from './NestedView';
+import MultiForm from './MultiForm';
 
 const AddSection = () => {
   const {content} = useSelector((state) => state.content);
   // const {sectionNames} = useSelector((state) => state.section);
   const {token} = useSelector((state) => state.auth);
+  const [showForm, setShowForm] = useState(false);
   const {
     register,
     handleSubmit,
@@ -24,8 +26,6 @@ const AddSection = () => {
   const dispatch = useDispatch();
 
   const handleAddSection = async(data) => {
-    console.log("Section data...", data);
-
     const sectionValue = data?.sectionName?.trim();
     // Handling Empty Input Value
     if(!sectionValue || sectionValue === "") {
@@ -100,7 +100,7 @@ const AddSection = () => {
                 border border-gray-300 appearance-none dark:text-white dark:border-gray-600
                 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer resize-none" 
                 placeholder=" " 
-                {...register("sectionName", {required: true})}
+                {...register("sectionName", {required: false})}
               />
               {errors.sectionName && (
                 <span className='text-red-700 '>
@@ -127,7 +127,7 @@ const AddSection = () => {
 
         {/* Add Section Form */}
         <div className='w-[50%]'>
-          <p>Add Section Form</p>
+          {showForm? (<MultiForm />): (<div></div>)}
         </div>
 
       </div>

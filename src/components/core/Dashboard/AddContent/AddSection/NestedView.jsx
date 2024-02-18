@@ -4,26 +4,32 @@ import { RxDropdownMenu } from "react-icons/rx"
 import { MdEdit } from "react-icons/md"
 import { RiDeleteBin6Line } from "react-icons/ri"
 import { AiFillCaretDown } from "react-icons/ai"
+import { RiVideoUploadFill } from "react-icons/ri";
+import { setAddSubSection } from '../../../../../slices/subSectionSlice'
 
 const NestedView = ({ handleChangeEditSectionName }) => {
     const {content} = useSelector((state) => state.content);
+    console.log("SECTION...", content);
     const [confirmationModal, setConfirmationModal] = useState(null);
     const handleDeleteSection = async(sectionId) => {
 
     }
+
   return (
-    <div>
+    <div className='text-white'>
         <div>
-            {content?.contentSection?.map((section) => (
-                <details key={section._id} open>
-                    <summary>
-                        <div>
+            {content?.contentSections?.map((section) => (
+                <details 
+                    className='flex items-center'
+                    key={section._id} open>
+                    <summary className='flex items-center justify-between'>
+                        <div className='flex items-center justify-between'>
                             <RxDropdownMenu />
                             <p>
                                 {section.sectionName}
                             </p>
                         </div>
-                        <div>
+                        <div className='flex items-center justify-between'>
                             <button
                                 onClick={() =>
                                     handleChangeEditSectionName(
@@ -50,6 +56,10 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                             </button>
                             <span>|</span>
                             <AiFillCaretDown />
+                            <RiVideoUploadFill 
+                                onClick={() => setAddSubSection(true)}
+                                className='cursor-pointer '
+                            />
                         </div>
                     </summary>
                 </details>
