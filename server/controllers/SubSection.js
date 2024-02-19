@@ -34,7 +34,7 @@ exports.createSubSection = async(req, res) => {
                 subSections: newSubSection._id,
             }
         }, {new: true})
-        .populate("subSections");
+        .populate("subSections")
 
         return res.status(200).json({
             success: true,

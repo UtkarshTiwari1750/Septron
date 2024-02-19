@@ -4,12 +4,13 @@ import { useForm } from 'react-hook-form'
 import Button from '../../../common/Button'
 import { MdNavigateNext } from "react-icons/md";
 import { IoChevronBackSharp } from "react-icons/io5";
-import {setEditContent, setStep} from "../../../../slices/contentSlice"
+import {setContent, setEditContent, setStep} from "../../../../slices/contentSlice"
 import { useDispatch, useSelector } from 'react-redux';
 import storeToFirebase from '../../../../utils/storeToFirebase';
 import { createGallery } from '../../../../services/operations/contentAPI';
-import { setImages, setVideos } from '../../../../slices/gallerySlice';
+import { setEditGallery, setImages, setVideos } from '../../../../slices/gallerySlice';
 import toast from 'react-hot-toast';
+import { setEditSection } from '../../../../slices/sectionSlice';
 
 const Gallery = () => {
   const {
@@ -30,8 +31,8 @@ const Gallery = () => {
   const isGalleryUpdated = () => {
     const currentValues = getValues();
     if(
-      currentValues.images.toString() !== images.toString() ||
-      currentValues.videos.toString() !== videos.toString()
+      currentValues.images !== images ||
+      currentValues.videos !== videos
     ) {
       return true;
     } else {
@@ -47,7 +48,7 @@ const Gallery = () => {
         const currentValues = getValues();
         let images = [];
         let videos = [];
-        const toastId = toast.loading("Loading...")
+        const toastId = toast.loading("Loading...");
         if(currentValues.image !== data.image) {
           images = await storeToFirebase(data?.image, user._id);
         }
@@ -58,11 +59,14 @@ const Gallery = () => {
         setLoading(true);
         try{
           const result = await createGallery(JSON.stringify(images), JSON.stringify(videos), content._id, token);
+          const updatedContent = {...content};
+          updatedContent["gallery"] = result;
           if(result) {
             dispatch(setImages(result?.images));
             dispatch(setVideos(result?.videos));
-            toast.success("SUCCESS"); 
             dispatch(setStep(3));
+            dispatch(setContent(updatedContent));
+            dispatch(setEditGallery(null));
           }
         } catch(error) {
           console.log("ERROR while uploading to gallery....", error);
@@ -70,7 +74,10 @@ const Gallery = () => {
 
         toast.dismiss(toastId);  
       } else {
-        toast.error("No Changes made to the Form")
+        toast.error("No Changes made");
+        toast.success("Continue without saving");
+        dispatch(setStep(3));
+        dispatch(setEditSection(content?._id))
       } 
       return;
     }
@@ -93,16 +100,17 @@ const Gallery = () => {
       setLoading(true);
       try{
         const result = await createGallery(JSON.stringify(images), JSON.stringify(videos), content._id, token);
+        const updatedContent = {...content};
+        updatedContent["gallery"] = result;
         if(result) {
           dispatch(setImages(result?.images));
           dispatch(setVideos(result?.videos));
-          toast.success("SUCCESS"); 
+          dispatch(setContent(updatedContent));
           dispatch(setStep(3));
         }
       } catch(error) {
         console.log("ERROR while uploading to gallery....", error);
       }
-
     }
     toast.dismiss(toastId);  
   }
@@ -114,12 +122,15 @@ const Gallery = () => {
   }
 
   // To Initialize the Values during Edit Mode
-  useEffect(() => {
-    if(editGallery) {
-      setValue("image", images);
-      setValue("video", videos);
-    }
-  }, [])
+  // useEffect(() => {
+  //   if(editGallery) {
+  //     setValue("image", images);
+  //     setValue("video", videos);
+  //   }
+  // }, [])
+  console.log("Content...", content);
+
+  console.log("Edit Gallery....", editGallery);
   return (
     <form 
       onSubmit={handleSubmit(handleOnSubmit)}
@@ -134,7 +145,7 @@ const Gallery = () => {
         setValue={setValue}
         image={true}
         required={false}
-        editData={editGallery.images}
+        editData={editGallery ? content?.gallery?.images : null}
         multiInput={true}
       />
 
@@ -149,6 +160,7 @@ const Gallery = () => {
           video={true}
           required={false}
           multiInput={true}
+          editData={editGallery ? content?.gallery?.videos : null}
         />
       </div>
 

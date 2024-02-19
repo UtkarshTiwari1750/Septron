@@ -35,7 +35,12 @@ const Upload = ({
         setValue(name, selectedFile);
     }, [selectedFile, setValue]);
 
-
+    useEffect(() => {
+        if(editData) {
+            setAllPreviewSource(editData);
+        }
+    })
+    console.log("All Preview Source...", allPreviewSource);
   return (
     <div className='flex flex-col space-y-2 '>
         <label className='text-lg text-white font-poppins mb-5 w-full'
@@ -56,7 +61,6 @@ const Upload = ({
                             }}
                             spaceBetween={10}
                             slidesPerView={3}
-  
                             navigation={true}
                             grabCursor={true}
                             modules={[Navigation]}
@@ -69,7 +73,7 @@ const Upload = ({
                                     >
                                         <DropzoneSpace 
                                             viewData={viewData}
-                                            editData={editData}
+                                            //editData={editData}
                                             video={video}
                                             image={image}
                                             previewSource={previewSource}
@@ -79,6 +83,7 @@ const Upload = ({
                                             setValue={setValue}
                                             name={name}
                                             index={index}
+                                            multiInput={multiInput}
                                         />
                                     </SwiperSlide>
                                 ))
@@ -86,7 +91,7 @@ const Upload = ({
                             <SwiperSlide >
                                 <DropzoneSpace 
                                     viewData={viewData}
-                                    editData={editData}
+                                    // editData={editData}
                                     video={video}
                                     image={image}
                                     setSelectedFile={setSelectedFile}
@@ -95,6 +100,7 @@ const Upload = ({
                                     setValue={setValue}
                                     name={name}
                                     customClasses="cursor-pointer"
+                                    multiInput={multiInput}
                                 />
                             </SwiperSlide>
                             <SwiperSlide>
@@ -108,6 +114,7 @@ const Upload = ({
                                     selectedFile={selectedFile}
                                     setValue={setValue}
                                     name={name}
+                                    multiInput={multiInput}
                                 />
                             </SwiperSlide>
                             <SwiperSlide>
@@ -121,6 +128,7 @@ const Upload = ({
                                     selectedFile={selectedFile}
                                     setValue={setValue}
                                     name={name}
+                                    multiInput={multiInput}
                                 />
                             </SwiperSlide>
                         </Swiper>

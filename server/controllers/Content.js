@@ -315,7 +315,7 @@ exports.getAllContents = async(req, res) => {
 exports.getContentDetails = async(req, res) => {
     try {
         // Fetch data from request body
-        const contentId = req.body;
+        const {contentId} = req.body;
 
         if(!contentId) {
             return res.status(400).json({
@@ -324,10 +324,10 @@ exports.getContentDetails = async(req, res) => {
             });
         }
 
-        const contentDetails = await Content.findById(contentId)
+        const contentDetails = await Content.findById({_id:contentId})
         .populate("creator")
         .populate({
-            path: "contentSection",
+            path: "contentSections",
             populate: {
                 path: "subSections",
             }
@@ -335,7 +335,6 @@ exports.getContentDetails = async(req, res) => {
         .populate("ratingAndReviews")
         .populate("genre")
         .populate("gallery");
-
 
 
         // Calculate Total Rating 

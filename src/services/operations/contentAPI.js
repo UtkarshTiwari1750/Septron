@@ -78,6 +78,7 @@ export const createContent = async(data, token) => {
         result = response?.data?.data;
     } catch(error){
         console.log("CREATE CONTENT API ERROR....", error);
+        toast.error(error?.response?.data?.message);
     }
     return result;
 }
@@ -222,11 +223,11 @@ export const deleteContent = async(contentId, token) => {
 }
 
 // DELETE SECTION
-export const deleteSection = async(sectionId, contentId, token) => {
+export const deleteSection = async(data, token) => {
     let result = null;
     const toastId = toast.loading("Loading...");
     try{
-        const response = await apiConnector("DELETE",DELETE_SECTION, {sectionId, contentId}, {
+        const response = await apiConnector("DELETE",DELETE_SECTION, data, {
             Authorization: `Bearer ${token}`,
         })
 
@@ -245,11 +246,11 @@ export const deleteSection = async(sectionId, contentId, token) => {
 }
 
 // DELETE SUB-SECTION
-export const deleteSubSection = async(sectionId, subSectionId, token) => {
+export const deleteSubSection = async(data, token) => {
     let result = null;
     const toastId = toast.loading("Loading...");
     try{
-        const response = await apiConnector("DELETE",DELETE_SUBSECTION, {subSectionId, sectionId}, {
+        const response = await apiConnector("DELETE", DELETE_SUBSECTION, data, {
             Authorization: `Bearer ${token}`,
         })
 
@@ -292,7 +293,7 @@ export const getContentDetails = async(contentId) => {
     let result = [];
     const toastId = toast.loading("Loading...");
     try{
-        const response = await apiConnector("GET", GET_CONTENT_DETAILS, contentId);
+        const response = await apiConnector("POST", GET_CONTENT_DETAILS, {contentId});
         console.log("GET CONTENT DETAILS API REPONSE...", response);
 
         if(!response?.data?.success) {

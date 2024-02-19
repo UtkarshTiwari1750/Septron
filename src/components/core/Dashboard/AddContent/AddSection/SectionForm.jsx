@@ -9,16 +9,16 @@ import { MdOutlineAddToPhotos } from 'react-icons/md';
 
 const SectionForm = () => {
     const {
-        register,
-        setValue,
-        getValues,
-        handleSubmit,
-        formState: {errors}
+      register,
+      setValue,
+      getValues,
+      handleSubmit,
+      formState: {errors}
     } = useForm();
     const {editSection, addSection, loading} = useSelector((state) => state.section)
     const {content} = useSelector((state) => state.content);
     const handleOnSubmit = async(data) => {
-
+      
     }
 
     const handleCancel = async() => {

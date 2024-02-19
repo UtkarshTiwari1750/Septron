@@ -45,7 +45,8 @@ exports.createSection = async(req, res) => {
             populate: {
                 path: "subSections",
             }
-        });
+        })
+        .populate("gallery");
 
         return res.status(200).json({
             success: true,
@@ -105,6 +106,7 @@ exports.editSection = async(req, res) => {
                 path: "subSections"
             },
         })
+        .populate("gallery");
         
         return res.status(200).json({
             success: true,

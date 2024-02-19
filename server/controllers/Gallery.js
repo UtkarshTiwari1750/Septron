@@ -34,21 +34,22 @@ exports.createGallery = async(req, res) => {
             data["videos"] = videos;
         }
 
-        const gallery = await Gallery.create(data);
+        const galleryDetails = await Gallery.create(data);
 
         const newContentDetails = await Content.findByIdAndUpdate(contentId, 
             {
                 $push: {
-                    gallery: gallery._id
+                    gallery: galleryDetails._id
                 }
             },
             {new: true}
-        );
-
+        )
+        
+        
         return res.status(200).json({
             success: true,
             message: "Gallery Created Successfully",
-            data: newContentDetails,
+            data: galleryDetails,
         })
 
     } catch(error) {
@@ -88,12 +89,13 @@ exports.updateGallery = async(req, res) => {
         }
 
         // Updating Database
-        const updatedGallery = await Gallery.findByIdAndUpdate(galleryId, data, {new: true});
-
+        const updatedGallery = await Gallery.findByIdAndUpdate({_id:galleryId}, data, {new: true});
+        const updatedContent = await Content.findById({_id: updatedGallery.contentId})
         // Return Success Response
         return res.status(200).json({
             success: true,
             message: "Gallery Updated Successfully",
+            data: updatedContent,
         })
     } catch (error) {
         console.log("UPDATE GALLERY CONTROLLER ERROR...", error);

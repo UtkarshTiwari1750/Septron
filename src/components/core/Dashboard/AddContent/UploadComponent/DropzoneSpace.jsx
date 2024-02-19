@@ -25,7 +25,6 @@ const DropzoneSpace = ({
     multiInput,
 }) => {
     const inputRef = useRef(null);
-    previewSource = editData ? editData : previewSource; 
     const onDrop = (acceptedFiles) => {
         setLoading(true);
         const file = acceptedFiles[0];
@@ -52,14 +51,6 @@ const DropzoneSpace = ({
         }
     }
 
-    const [numPages, setNumPages] = useState();
-    const [pageNumber, setPageNumber] = useState(1);
-
-    function onDocumentLoadSuccess({ numPages }) {
-        setNumPages(numPages);
-    }
-    
-
   return (
     <div>
         <div
@@ -81,12 +72,7 @@ const DropzoneSpace = ({
                             />)
                             :<iframe src={previewSource} frameborder="0"></iframe>
                             }
-                            
-                            {pdf && 
-                                (<Document file={selectedFile[0]} >
-                                    <Page pageNumber={pageNumber} />
-                                </Document>)
-                            }
+
                         </div>
                     )
                     : (

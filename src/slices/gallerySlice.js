@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
     images: null,
     videos: null,
-    editGallery: false
+    editGallery: null,
 }
 
 const gallerySlice = createSlice({
@@ -22,5 +22,5 @@ const gallerySlice = createSlice({
     }
 });
 
-export const { setImages, setVideos } = gallerySlice.actions;
+export const { setImages, setVideos, setEditGallery } = gallerySlice.actions;
 export default gallerySlice.reducer;
