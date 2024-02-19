@@ -6,7 +6,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-import {Autoplay, Pagination, Navigation, Zoom } from 'swiper/modules';
+import {Autoplay, Pagination, Navigation } from 'swiper/modules';
 
 const Upload = ({
     name,
@@ -68,9 +68,7 @@ const Upload = ({
                             
                             {   
                                 allPreviewSource?.map((previewSource, index) => (
-                                    <SwiperSlide
-                                        className=''
-                                    >
+                                    <SwiperSlide>
                                         <DropzoneSpace 
                                             viewData={viewData}
                                             //editData={editData}

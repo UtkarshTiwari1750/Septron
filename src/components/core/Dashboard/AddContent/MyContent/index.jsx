@@ -40,15 +40,22 @@ const MyContent = () => {
         {loading 
         ? <div className='loader'></div> 
         : (
-            <div className='w-full'>
+            <table className='w-full'>
+                <tr className=''>
+                    <th>Thumbnail</th>
+                    <th>Details</th>
+                    <th>Price</th>
+                    <th>Content Type</th>
+                </tr>
                 {artistContent.map((content, index) => (
-                    <div className='w-full flex justify-between items-center' 
+                    <tr className='w-full flex justify-between items-center' 
                         key={index}
                     >
-                        <div className='flex justify-between items-center'>
+                        <td className='flex justify-between items-center gap-x-4   '>
                             <img 
                                 src={content?.thumbnail} 
                                 alt={content?.contentName} 
+                                className='w-[150px] h-[150px] object-contain'
                             />
 
                             <div>
@@ -62,18 +69,18 @@ const MyContent = () => {
                                     {content?.status}
                                 </p>
                             </div>
-                        </div>
+                        </td>
                         <div>
                             {/* PENDING:- TotalDuration */}
                             <p>{content?.totalDuration}</p> 
                         </div>
-                        <div>
-                            <p>{content?.price}</p>
-                        </div>
-                        <div>
-                            <p>{content?.contentType}</p>
-                        </div>
-                        <div>
+                        <td>
+                            <p>₹ {content?.price}</p>
+                        </td>
+                        <td>
+                            <p>{content?.contentType === "Video" ? "Anime" : "Comic"}</p>
+                        </td>
+                        <td>
                             <button 
                                 className='flex items-center rounded-lg border-white p-4 bg-slate-500 text-black hover:bg-slate-800'
                                 onClick={() => handleDeleteContent(index)}
@@ -81,10 +88,10 @@ const MyContent = () => {
                                 <RiDeleteBin6Line />
                                 <p>Delete</p>
                             </button>
-                        </div>
-                    </div>
+                        </td>
+                    </tr>
                 ))}
-            </div>
+            </table>
         )
         }
         

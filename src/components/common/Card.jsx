@@ -27,10 +27,7 @@ const Card = () => {
             Demon Slayer
           </h2>
           
-          <p 
-          className='text-left text-[10px]'>
-              Lorem ipsum dolor sit amet .
-          </p>
+          
         </div>
 
         <button 

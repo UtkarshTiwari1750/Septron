@@ -1,5 +1,7 @@
 import React from 'react'
 import Button from '../../../common/Button'
+import { IoChevronBackSharp } from 'react-icons/io5'
+import { MdNavigateNext } from 'react-icons/md'
 
 const NextAndPrevButton = ({
     handleGoBack,
@@ -15,7 +17,7 @@ const NextAndPrevButton = ({
         <button className=' text-lg font-roboto box-border flex items-center gap-x-2 bg-gray-600 border border-white rounded-md px-5 py-2'
             onClick={handleGoBack}
         >
-            {backIcon}
+            {backIcon ? backIcon : <IoChevronBackSharp />}
             {backText}
         </button>
         
@@ -26,7 +28,7 @@ const NextAndPrevButton = ({
             customClasses="gap-x-2 item-center"
             handleOnClick={handleNext}
         >
-            {nextIcon}
+            {nextIcon ? nextIcon : <MdNavigateNext />}
         </Button>
     </div>
         

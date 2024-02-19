@@ -21,3 +21,8 @@ export const FORM_DETAILS = {
         SUBSECTION_IMAGE_SUBHEADING: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum atque eligendi, laudantium quam ducimus `,
     }
 }
+
+export const COURSE_STATUS = {
+    DRAFT: "Draft",
+    PUBLISHED: "Published",
+}

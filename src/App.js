@@ -12,6 +12,7 @@ import AddContent from './components/core/Dashboard/AddContent';
 import Setting from './components/core/Dashboard/Settings';
 import MyContent from './components/core/Dashboard/AddContent/MyContent';
 import Overview from './components/core/Dashboard/AddContent/Overview';
+import Videos from './pages/Videos';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path='/dashboard/my-content' element={<MyContent />} />
           <Route path='/dashboard/overview' element={<Overview />} />
         </Route>
+        <Route path='/videos' element={<Videos />} />
 
 
         <Route path='*' element={<Error />} />

@@ -32,7 +32,7 @@ const {createGallery, updateGallery, deleteGallery} = require("../controllers/Ga
 router.post("/createContent", auth, isArtist,createContent);
 router.put("/editContent", auth, isArtist, editContent);
 router.delete("/deleteContent", auth, isArtist, deleteContent);
-router.get("getAllContents", getAllContents);
+router.get("/getAllContents", getAllContents);
 router.post("/getContentDetails", getContentDetails);
 router.get("/getArtistContents", auth, isArtist, getArtistContents);
 router.get("/getAllContentsName", getAllContentsName);
