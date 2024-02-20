@@ -12,6 +12,11 @@ const Overview = () => {
   const {content} = useSelector((state) => state.content);
   const [overviewData, setOverviewData] = useState(null);  
   const dispatch = useDispatch();
+
+  const handleGoBack = () => {
+    dispatch(setStep(3));
+  }
+
   useEffect(() => {
     ;(async() => {
       try {
@@ -164,7 +169,7 @@ const Overview = () => {
         <div>
           <NextAndPrevButton 
             backText="Add Section"
-            // PENDING: BACK HANDLER
+            handleGoBack={handleGoBack}
             nextText="Publish"
             handleNext={() => dispatch(setStep(5))}
           />

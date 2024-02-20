@@ -85,7 +85,7 @@ const Gallery = () => {
         toast.error("No Changes made");
         toast.success("Continue without saving");
         dispatch(setStep(3));
-        dispatch(setEditSection(content?._id))
+        // dispatch(setEditSection(content?._id))
       } 
       return;
     }
