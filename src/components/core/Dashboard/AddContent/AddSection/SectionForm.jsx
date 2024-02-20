@@ -1,11 +1,12 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { FORM_DETAILS } from '../../../../../utils/constants';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Upload from '../UploadComponent/Upload';
 import { FaFilePdf } from 'react-icons/fa6';
 import Button from '../../../../common/Button';
 import { MdOutlineAddToPhotos } from 'react-icons/md';
+import { setAddSection, setEditSection } from '../../../../../slices/sectionSlice';
 
 const SectionForm = () => {
     const {
@@ -17,12 +18,14 @@ const SectionForm = () => {
     } = useForm();
     const {editSection, addSection, loading} = useSelector((state) => state.section)
     const {content} = useSelector((state) => state.content);
+    const dispatch = useDispatch();
     const handleOnSubmit = async(data) => {
       
     }
 
     const handleCancel = async() => {
-
+      dispatch(setEditSection(null));
+      dispatch(setAddSection(null));
     }
 
   return (

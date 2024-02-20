@@ -4,12 +4,14 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { MdEdit } from "react-icons/md"
 import { RiDeleteBin6Line } from "react-icons/ri"
 import { RiVideoAddFill } from "react-icons/ri";
-import { setAddSubSection } from '../../../../../slices/subSectionSlice'
+import { setAddSubSection, setEditSubSection } from '../../../../../slices/subSectionSlice'
 import { FaFilePdf } from "react-icons/fa";
 import { AiOutlineFilePdf } from "react-icons/ai";
 import { GoVideo } from "react-icons/go";
 import { deleteSection, deleteSubSection } from '../../../../../services/operations/contentAPI';
 import {setContent} from "../../../../../slices/contentSlice";
+import ConfirmationModal from '../../../../common/ConfirmationModal';
+import { setAddSection, setEditSection } from '../../../../../slices/sectionSlice';
 
 const NestedView = ({ handleChangeEditSectionName }) => {
     const dispatch = useDispatch();
@@ -31,6 +33,7 @@ const NestedView = ({ handleChangeEditSectionName }) => {
         } catch(error) {
             console.log("Error in Nested View Delete Section...", error);
         }
+        setConfirmationModal(null);
     }
 
     const handleDeleteSubSection = async(subSectionId, sectionId) => {
@@ -41,11 +44,16 @@ const NestedView = ({ handleChangeEditSectionName }) => {
             };
             const result = await deleteSubSection(data, token);
             if(result) {
-                dispatch(setContent(result));
+                const updatedSections = content.contentSections.map((section) => 
+                    section._id === sectionId ? result : section
+                )
+                const updatedContent = {...content, contentSections: updatedSections}
+                dispatch(setContent(updatedContent));
             }
         } catch(error) {
             console.log("Error in Nested View Delete SubSection...", error);
         }
+        setConfirmationModal(null);
     }
 
     const handleEditSubSection = async(subSectionId) => {
@@ -94,17 +102,18 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                             </button>
                             <span>|</span>
                             <button
-                                // onClick={() => 
-                                //     setConfirmationModal({
-                                //         text1: "Delete this Section?",
-                                //         text2: "All the Files in this Section will be deleted",
-                                //         btn1Text: "Delete",
-                                //         btn2Text: "Cancel",
-                                //         btn1Handler: () => handleDeleteSection(section._id),
-                                //         btn2Handler: () => setConfirmationModal(null)
-                                //     })
-                                // }
-                                onClick={handleDeleteSection}
+                                onClick={(e) =>{
+                                        e.preventDefault();
+                                        setConfirmationModal({
+                                            text1: "Delete this Section?",
+                                            text2: "All the Files in this Section will be deleted",
+                                            btn1Text: "Delete",
+                                            btn2Text: "Cancel",
+                                            btn1Handler: () => handleDeleteSection(section._id),
+                                            btn2Handler: () => setConfirmationModal(null)
+                                        })
+                                    } 
+                                }
                             >
                                 <RiDeleteBin6Line 
                                     className='cursor-pointer hover:scale-90 transition-all duration-100'
@@ -113,7 +122,12 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                             </button>
                             <span>|</span>
                             <div
-                                onClick={() => dispatch(setAddSubSection(section._id))}
+                                onClick={() => {
+                                    dispatch(setEditSubSection(null));
+                                    dispatch(setEditSection(null));
+                                    dispatch(setAddSection(null));
+                                    dispatch(setAddSubSection(section._id))
+                                }}
                                 className=''
                             >   
                                 {content?.contentType === "Video"
@@ -165,17 +179,16 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                                     </button>
                                     <span>|</span>
                                     <button
-                                        // onClick={() => 
-                                        //     setConfirmationModal({
-                                        //         text1: "Delete this Section?",
-                                        //         text2: "All the Files in this Section will be deleted",
-                                        //         btn1Text: "Delete",
-                                        //         btn2Text: "Cancel",
-                                        //         btn1Handler: () => handleDeleteSubSection(subSection._id, section._id),
-                                        //         btn2Handler: () => setConfirmationModal(null)
-                                        //     })
-                                        // }
-                                        onClick={() => handleDeleteSubSection(subSection._id, section._id)}
+                                        onClick={() => 
+                                            setConfirmationModal({
+                                                text1: "Delete this SubSection?",
+                                                text2: "All the Files in this Sub-Section will be deleted",
+                                                btn1Text: "Delete",
+                                                btn2Text: "Cancel",
+                                                btn1Handler: () => handleDeleteSubSection(subSection._id, section._id),
+                                                btn2Handler: () => setConfirmationModal(null)
+                                            })
+                                        }
                                         type='button'
                                     >
                                         <RiDeleteBin6Line 
@@ -191,7 +204,9 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                 </details>
             ))}
         </div>
-    
+    {
+        confirmationModal && <ConfirmationModal modalData={confirmationModal}/>   
+    }
     </div>
   )
 }

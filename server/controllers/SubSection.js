@@ -115,7 +115,8 @@ exports.deleteSubSection = async(req, res) => {
         const sectionDetails = await Section.findByIdAndUpdate(sectionId, 
             {$pull: {subSections: subSectionId}},
             {new: true}
-        );
+        )
+        .populate("subSections");
 
         if(!sectionDetails) {
             return res.status(400).json({

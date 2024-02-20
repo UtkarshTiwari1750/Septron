@@ -1,7 +1,7 @@
 const Content = require("../models/Content");
 const Section = require("../models/Section");
 const SubSection = require("../models/SubSection");
-
+const User = require("../models/User");
 // Create Section
 exports.createSection = async(req, res) => {
     try {
@@ -184,7 +184,23 @@ exports.deleteSection = async(req, res) => {
         const updatedContent = await Content.findByIdAndUpdate(contentId,
             {$pull:{contentSections: sectionId}},
             {new: true}
-        );
+        )
+        .populate({
+            path: "creator",
+            populate: {
+                path: "additionalDetails",
+            }
+        })
+        .populate({
+            path:"contentSections",
+            populate: {
+                path: "subSections"
+            },
+            strictPopulate: false
+        })
+        .populate("ratingAndReviews")
+        .populate("genre")
+        .populate("gallery");
 
         // Returning success response
         return res.status(200).json({

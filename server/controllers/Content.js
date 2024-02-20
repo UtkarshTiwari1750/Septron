@@ -148,7 +148,7 @@ exports.editContent = async(req, res) => {
             }
         })
         .populate({
-            path:"contentSection",
+            path:"contentSections",
             populate: {
                 path: "subSections"
             },

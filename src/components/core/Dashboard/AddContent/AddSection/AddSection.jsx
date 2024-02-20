@@ -13,6 +13,8 @@ import NextAndPrevButton from '../NextAndPrevButton';
 import { IoChevronBackSharp } from 'react-icons/io5';
 import { MdNavigateNext } from 'react-icons/md';
 import { setEditGallery } from '../../../../../slices/gallerySlice';
+import { setAddSection, setEditSection } from '../../../../../slices/sectionSlice';
+import { setAddSubSection } from '../../../../../slices/subSectionSlice';
 
 const AddSection = () => {
   const {content} = useSelector((state) => state.content);
@@ -57,7 +59,10 @@ const AddSection = () => {
   }
 
   const handleAddIcon = () => {
-
+    dispatch(setEditSection(null));
+    dispatch(setAddSubSection(null));
+    dispatch(setEditSection(null));
+    dispatch(setAddSection(true));
   }
 
   const handleChangeEditSectionName = () => {
