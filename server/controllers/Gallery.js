@@ -81,21 +81,21 @@ exports.updateGallery = async(req, res) => {
         // Creating an Updated Data
         let updatedData = {};
         if(images.length > 0) {
-            updatedData[images] = images;
+            updatedData["images"] = images;
         }
 
         if(videos.length > 0) {
-            updatedData[videos] = videos;
+            updatedData["videos"] = videos;
         }
 
         // Updating Database
-        const updatedGallery = await Gallery.findByIdAndUpdate({_id:galleryId}, data, {new: true});
+        const updatedGallery = await Gallery.findByIdAndUpdate({_id:galleryId}, updatedData, {new: true});
         const updatedContent = await Content.findById({_id: updatedGallery.contentId})
         // Return Success Response
         return res.status(200).json({
             success: true,
             message: "Gallery Updated Successfully",
-            data: updatedContent,
+            data: updatedGallery,
         })
     } catch (error) {
         console.log("UPDATE GALLERY CONTROLLER ERROR...", error);

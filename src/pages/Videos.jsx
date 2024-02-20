@@ -104,7 +104,7 @@ const Videos = () => {
             </h2>
 
             <Card 
-                image={}
+                
             />
 
         </section>

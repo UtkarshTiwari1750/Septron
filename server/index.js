@@ -1,12 +1,24 @@
 const express = require("express");
-const app = express();
-
+const { createServer } = require("http");
 const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv")
 const database = require("./config/database");
 const {configCloudinary} = require("./config/cloudinary");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const {Server} = require("socket.io");
+
+// Socket.io Config
+const app = express();
+const server = createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", 'POST'],
+        credentials: true,
+
+    },
+});
 
 // Routes
 const contentRoutes = require("./routes/Content");
@@ -26,8 +38,7 @@ app.use(
 )
 
 const PORT = process.env.PORT || 4000;
-
-
+const CHATTING_PORT = process.env.CHATTING_PORT;
 
 app.use(
     fileUpload({
@@ -49,25 +60,20 @@ app.get("/", (req, res) => {
 	});
 });
 
-app.listen(PORT, () => {
-    console.log(`App is running at ${PORT}`);
-});
+io.on("connection", (socket) => {
+    socket.on("comment", (data) => {
+        socket.broadcast.emit("receive_comment", data);
+    });
+})
 
+// app.listen(PORT, () => {
+//     console.log(`App is running at ${PORT}`);
+// });
 
+server.listen(PORT, () => {
+    console.log(`App is running at ${PORT}`)
+})
 
-// const User = require("./models/User");
-// const mailSender = require("./utils/mailSender");
-// const emailTemplate = require("./mail/templates/emailVerificationTemplate")
-// const enter = async() => {
-//     try{
-//         const res = await mailSender("utkarshtiwari1750@gmail.com", "Testing", emailTemplate(123455))
-//         console.log("res", res);
-//     }catch(error){
-//         console.log("ERROR" ,error.message);
-//     }
-// }
-
-// enter();
 
 
 

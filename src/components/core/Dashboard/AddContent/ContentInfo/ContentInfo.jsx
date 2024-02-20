@@ -87,6 +87,7 @@ const ContentInfo = () => {
         if( result ) {
           dispatch(setContent(result));
           dispatch(setStep(2));
+          toast.dismiss(toastId);
         }
       } else {
         toast.error("No Changes made to the form");
@@ -143,7 +144,7 @@ const ContentInfo = () => {
       setValue("price", content.price);
       setValue("thumbnail", content.thumbnail);
       setValue("tag", content.tag);
-      setValue("genre", content.genre);
+      setValue("genre", content.genre._id);
       setValue("instructions", content.instructions);
       setValue("contentType", content.contentType);      
     }

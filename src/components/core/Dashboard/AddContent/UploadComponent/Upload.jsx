@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux';
 import DropzoneSpace from './DropzoneSpace';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-import {Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { Navigation } from 'swiper/modules';
 
 const Upload = ({
     name,
@@ -23,9 +22,8 @@ const Upload = ({
     required=true,
     multiInput = false
 }) => {
-    const {content} = useSelector((state) => state.content);
-    const [selectedFile, setSelectedFile] = useState([]);
-    const [allPreviewSource, setAllPreviewSource] = useState([]);    
+    const [selectedFile, setSelectedFile] = useState(editData ? editData : []);
+    const [allPreviewSource, setAllPreviewSource] = useState(editData ? editData : []);    
 
     useEffect(() => {
         register(name, {required: required})
@@ -35,12 +33,6 @@ const Upload = ({
         setValue(name, selectedFile);
     }, [selectedFile, setValue]);
 
-    useEffect(() => {
-        if(editData) {
-            setAllPreviewSource(editData);
-        }
-    })
-    console.log("All Preview Source...", allPreviewSource);
   return (
     <div className='flex flex-col space-y-2 '>
         <label className='text-lg text-white font-poppins mb-5 w-full'
@@ -153,6 +145,8 @@ const Upload = ({
                 />
             )
         }
+
+
         {/* <DropzoneSpace 
             viewData={viewData}
             editData={editData}

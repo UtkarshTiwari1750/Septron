@@ -13,6 +13,7 @@ import Setting from './components/core/Dashboard/Settings';
 import MyContent from './components/core/Dashboard/AddContent/MyContent';
 import Overview from './components/core/Dashboard/AddContent/Overview';
 import Videos from './pages/Videos';
+import VideoDetails from './pages/VideoDetails';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path='/dashboard/overview' element={<Overview />} />
         </Route>
         <Route path='/videos' element={<Videos />} />
+        <Route path='/videos/:videoId' element={<VideoDetails />}/>
 
 
         <Route path='*' element={<Error />} />

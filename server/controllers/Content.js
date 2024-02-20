@@ -112,7 +112,6 @@ exports.editContent = async(req, res) => {
     try{
         const {contentId} = req.body;
         const updates = req.body;
-
         if(!contentId) {
             return res.status(400).json({
                 success: false,

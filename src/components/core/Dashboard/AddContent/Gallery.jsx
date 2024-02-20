@@ -7,7 +7,7 @@ import { IoChevronBackSharp } from "react-icons/io5";
 import {setContent, setEditContent, setStep} from "../../../../slices/contentSlice"
 import { useDispatch, useSelector } from 'react-redux';
 import storeToFirebase from '../../../../utils/storeToFirebase';
-import { createGallery } from '../../../../services/operations/contentAPI';
+import { createGallery, updateGallery } from '../../../../services/operations/contentAPI';
 import { setEditGallery, setImages, setVideos } from '../../../../slices/gallerySlice';
 import toast from 'react-hot-toast';
 import { setEditSection } from '../../../../slices/sectionSlice';
@@ -31,8 +31,8 @@ const Gallery = () => {
   const isGalleryUpdated = () => {
     const currentValues = getValues();
     if(
-      currentValues.images !== images ||
-      currentValues.videos !== videos
+      currentValues.image.toString() !== images.toString() ||
+      currentValues.video.toString() !== videos.toString()
     ) {
       return true;
     } else {
@@ -48,17 +48,25 @@ const Gallery = () => {
         const currentValues = getValues();
         let images = [];
         let videos = [];
+        
+        const oldImagesUrl = data?.image.filter((img) => typeof(img) === 'string');
+        const newImages = data?.image.filter((img) => typeof(img) === 'object');
+        const oldVideosUrl = data?.video.filter((vid) => typeof(vid) === 'string');
+        const newVideos = data?.video.filter((vid) => typeof(vid) === 'object');
+
         const toastId = toast.loading("Loading...");
-        if(currentValues.image !== data.image) {
-          images = await storeToFirebase(data?.image, user._id);
+        if(newImages.length > 0) {
+          images = await storeToFirebase(newImages, user._id);
         }
-        if(currentValues.video !== data.video) {
-          videos = await storeToFirebase(data?.video, user._id);
+        if(newVideos.length > 0) {
+          videos = await storeToFirebase(newVideos, user._id);
         }
 
+        images = oldImagesUrl.concat(images);
+        videos = oldVideosUrl.concat(videos);
         setLoading(true);
         try{
-          const result = await createGallery(JSON.stringify(images), JSON.stringify(videos), content._id, token);
+          const result = await updateGallery(JSON.stringify(images), JSON.stringify(videos), content?.gallery?._id, content._id, token);
           const updatedContent = {...content};
           updatedContent["gallery"] = result;
           if(result) {
@@ -81,7 +89,7 @@ const Gallery = () => {
       } 
       return;
     }
-
+    
     // First Time Creating Gallery
     const toastId = toast.loading("Loading...")
     if(data?.image?.length === 0 && data?.video?.length === 0) {
@@ -122,15 +130,13 @@ const Gallery = () => {
   }
 
   // To Initialize the Values during Edit Mode
-  // useEffect(() => {
-  //   if(editGallery) {
-  //     setValue("image", images);
-  //     setValue("video", videos);
-  //   }
-  // }, [])
-  console.log("Content...", content);
+  useEffect(() => {
+    if(editGallery) {
+      setValue("image", images);
+      setValue("video", videos);
+    }
+  }, [])
 
-  console.log("Edit Gallery....", editGallery);
   return (
     <form 
       onSubmit={handleSubmit(handleOnSubmit)}

@@ -22,7 +22,7 @@ const DropzoneSpace = ({
     customClasses,
     editData = null,
     customIcon,
-    multiInput,
+    multiInput=false,
 }) => {
     const inputRef = useRef(null);
     const onDrop = (acceptedFiles) => {
@@ -83,10 +83,9 @@ const DropzoneSpace = ({
                         <button
                             type='button'
                             onClick={() => {
-                                setAllPreviewSource((prev) => (prev.filter((_,rmIndex) => index != rmIndex)))
+                                setAllPreviewSource((prev) => (prev.filter((_ ,rmIndex) => index != rmIndex)))
                                 setSelectedFile((prev) => (prev.filter((_,rmIndex) => index != rmIndex)));
                                 setValue(name, selectedFile);
-
                             }}
                             className='text-gray-500 underline mt-3'
                         >
