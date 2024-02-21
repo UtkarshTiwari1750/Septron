@@ -36,6 +36,13 @@ const NestedView = ({ handleChangeEditSectionName }) => {
         setConfirmationModal(null);
     }
 
+    const handleEditSection = async(data) => {
+        dispatch(setAddSection(null));
+        dispatch(setAddSubSection(null));
+        dispatch(setEditSection(data));
+        dispatch(setEditSubSection(null));
+    }
+
     const handleDeleteSubSection = async(subSectionId, sectionId) => {
         try {
             const data = {
@@ -56,8 +63,11 @@ const NestedView = ({ handleChangeEditSectionName }) => {
         setConfirmationModal(null);
     }
 
-    const handleEditSubSection = async(subSectionId) => {
-
+    const handleEditSubSection = async(data) => {
+        dispatch(setAddSection(null));
+        dispatch(setAddSubSection(null));
+        dispatch(setEditSection(null));
+        dispatch(setEditSubSection(data));
     }
   return (
     <div className='text-white'>
@@ -88,12 +98,10 @@ const NestedView = ({ handleChangeEditSectionName }) => {
                         </div>
                         <div className='flex items-center justify-between w-[40%]'>
                             <button
-                                onClick={() =>
-                                    handleChangeEditSectionName(
-                                        section._id,
-                                        section.sectionName
-                                    )
-                                }
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handleEditSection({...section});
+                                }}
                             >
                                 <MdEdit
                                     className='cursor-pointer hover:scale-90 transition-all duration-100'
@@ -166,11 +174,10 @@ const NestedView = ({ handleChangeEditSectionName }) => {
 
                                 <div className='flex items-center justify-between w-[30%]'>
                                     <button
-                                        onClick={() =>
-                                            handleEditSubSection(
-                                                subSection?._id
-                                            )
-                                        }
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            handleEditSubSection({...subSection, sectionId: section?._id});
+                                        }}
                                     >
                                         <MdEdit
                                             className='cursor-pointer hover:scale-90 transition-all duration-100'

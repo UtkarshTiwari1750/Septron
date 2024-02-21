@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { FORM_DETAILS } from '../../../../../utils/constants' 
 import { useForm } from 'react-hook-form'
 import Upload from '../UploadComponent/Upload';
@@ -7,13 +7,13 @@ import Button from '../../../../common/Button';
 import { FaFilePdf } from "react-icons/fa6";
 import storeToFirebase from '../../../../../utils/storeToFirebase';
 import toast from 'react-hot-toast';
-import { createSubSection } from '../../../../../services/operations/contentAPI';
-import { setContent, setEditContent, setLoading, setStep } from '../../../../../slices/contentSlice';
+import { createSubSection, updateSubSection } from '../../../../../services/operations/contentAPI';
+import { setContent, setLoading } from '../../../../../slices/contentSlice';
 import { setAddSubSection, setEditSubSection } from '../../../../../slices/subSectionSlice';
 import { MdOutlineAddToPhotos } from "react-icons/md";
 
 
-const SubSectionForm = ({subSectionFormData}) => {
+const SubSectionForm = ({title}) => {
   const {
     register,
     setValue,
@@ -21,7 +21,7 @@ const SubSectionForm = ({subSectionFormData}) => {
     handleSubmit,
     formState: {errors}
   } = useForm();
-  const {addSubSection,editSubSection} = useSelector((state) => state.subSection);
+  const {addSubSection, editSubSection} = useSelector((state) => state.subSection);
   const {content, loading} = useSelector((state) => state.content);
   const {user} = useSelector((state) => state.profile);
   const {token} = useSelector((state) => state.auth);
@@ -31,7 +31,60 @@ const SubSectionForm = ({subSectionFormData}) => {
     dispatch(setEditSubSection(false));
   }
 
-  const handleAddSubSection = async(data) => {
+  const isFormUpdated = () => {
+    const currentValues = getValues();
+    if(
+      currentValues?.subSectionName !== editSubSection?.title
+      || currentValues?.subSectionDescription !== editSubSection?.description
+      || currentValues?.file.toString() !== editSubSection?.url.toString()
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  const handleOnSubmit = async(data) => {
+    if(editSubSection) {
+      if(isFormUpdated()) {
+        let url = [];
+        
+        const oldFileUrl = data?.file.filter((fi) => typeof(fi) === 'string');
+        const newFile = data?.file.filter((fi) => typeof(fi) === 'object');
+
+        const toastId = toast.loading("Loading...");
+        if(newFile.length > 0) {
+          url = await storeToFirebase(newFile, user._id);
+        }
+
+        url = oldFileUrl.concat(url);
+
+        const formData = new FormData();
+        formData.append("title", data?.subSectionName);
+        formData.append("description", data?.subSectionDescription);
+        formData.append("url", url);
+        formData.append("sectionId", editSubSection?.sectionId);
+        formData.append("subSectionId", editSubSection?._id);
+        setLoading(true);
+        try{
+          const result = await updateSubSection(formData, token);
+          if(result) {
+            const updatedContentSection = content?.contentSections?.map((section) => 
+            section._id === editSubSection.sectionId ? result : section
+            );
+            const updatedContent = {...content, contentSections: updatedContentSection};
+            dispatch(setEditSubSection(null));
+            dispatch(setContent(updatedContent));
+          }
+        } catch(error) {
+          console.log("ERROR while Editing Subsection in SubSection Form....", error);
+        }
+        toast.dismiss(toastId);  
+      } else {
+        toast.error("No Changes made");
+      }
+      return;
+    }    
+
     const toastId = toast.loading("Loading...");
     setLoading(true);
     const url = await storeToFirebase(data?.file, user._id);
@@ -45,12 +98,11 @@ const SubSectionForm = ({subSectionFormData}) => {
     try {
       const result = await createSubSection(formData, token)
       if(result) {
-        toast.success("Let's Go Baby!!");
-        dispatch(setAddSubSection(null));
         const updatedContentSection = content?.contentSections?.map((section) => 
-          section._id === addSubSection ? result : section
+        section._id === addSubSection ? result : section
         );
         const updatedContent = {...content, contentSections: updatedContentSection};
+        dispatch(setAddSubSection(null));
         dispatch(setContent(updatedContent));
       }
 
@@ -60,11 +112,23 @@ const SubSectionForm = ({subSectionFormData}) => {
     toast.dismiss(toastId);
     setLoading(false);
   }
+
+  useEffect(() => {
+    if(editSubSection) {      
+      setValue("subSectionName", editSubSection?.title);
+      setValue("subSectionDescription", editSubSection?.description);
+      setValue("file", editSubSection?.url);
+    }
+  }, [])
+
   return (
     <div className='border border-dotted border-white rounded-lg p-6 h-full w-full'>
       <form className='text-white flex flex-col justify-center gap-y-6 '
-        onSubmit={handleSubmit(handleAddSubSection)}
+        onSubmit={handleSubmit(handleOnSubmit)}
       >
+        <h2 className='text-2xl'>
+          {title}
+        </h2>
         {/* Title */}
         <div className='flex justify-between items-start w-full gap-x-6'>
           <div className='w-[70%] text-lg font-poppins'>
@@ -146,7 +210,7 @@ const SubSectionForm = ({subSectionFormData}) => {
             name="file"
             setValue={setValue}
             errors={errors}
-            editData={editSubSection ? content?.contentSection?.subSection?.url : null}
+            editData={editSubSection ? editSubSection?.url : null}
             customIcon={<FaFilePdf size={25}/>}
             pdf={true}
           />)
@@ -156,6 +220,7 @@ const SubSectionForm = ({subSectionFormData}) => {
             name="file"
             register={register}
             setValue={setValue}
+            editData={editSubSection ? editSubSection?.url : null}
             video={true}
             required={false}
           />)
@@ -173,7 +238,7 @@ const SubSectionForm = ({subSectionFormData}) => {
           
           {/* Next Button */}
           <Button
-            text="Create"
+            text={editSubSection ? "Update" : "Create"}
             type="submit"
             customClasses="gap-x-2 item-center px-2 pr-2"
             disabled={loading}

@@ -46,7 +46,8 @@ exports.createSection = async(req, res) => {
                 path: "subSections",
             }
         })
-        .populate("gallery");
+        .populate("gallery")
+        .populate("genre");
 
         return res.status(200).json({
             success: true,
@@ -69,10 +70,10 @@ exports.editSection = async(req, res) => {
     try{
         const {sectionId, sectionName, sectionDescription, sectionImage, contentId} = req.body;
 
-        if(!sectionId) {
+        if(!sectionId || !sectionName) {
             return res.status(400).json({
                 success: false,
-                message: "SectionId not found",
+                message: "SectionId/Section-Name not found",
             });
         }
 
@@ -101,7 +102,7 @@ exports.editSection = async(req, res) => {
 
         const updatedContent = await Content.findById(contentId)
         .populate({
-            path:"contentSection",
+            path:"contentSections",
             populate: {
                 path: "subSections"
             },

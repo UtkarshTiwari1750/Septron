@@ -77,11 +77,6 @@ const AddSection = () => {
     dispatch(setStep(4));
   }
 
-  // useEffect(() => {
-  //   if(editSection) {
-  //     setValue("")
-  //   }
-  // }, [])
   return (
     <div className='text-white w-full h-full pt-5'>
       <div className='w-full h-full flex flex-col'>
@@ -171,10 +166,10 @@ const AddSection = () => {
 
           {/* Add Section Form */}
           <div className='w-[55%]'>
-            {addSubSection && (<SubSectionForm />)}
-            {editSubSection && (<SubSectionForm />)}
-            {addSection && (<SectionForm />)}
-            {editSection && (<SectionForm />)}
+            {addSubSection && (<SubSectionForm title="Add Sub-Section"/>)}
+            {editSubSection && (<SubSectionForm title="Edit Sub-Section"/>)}
+            {addSection && (<SectionForm title="Add Section"/>)}
+            {editSection && (<SectionForm title="Edit Section"/>)}
           </div>
   
         </div>

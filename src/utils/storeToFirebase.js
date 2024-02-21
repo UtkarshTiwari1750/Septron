@@ -1,6 +1,5 @@
 import { storage } from "../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import toast from "react-hot-toast";
 import { v4 } from "uuid";
 export default async function storeToFirebase(images, userId) {
     if(images === null || images.length === 0) return;

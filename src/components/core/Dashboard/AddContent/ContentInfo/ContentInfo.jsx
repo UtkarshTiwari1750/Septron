@@ -235,7 +235,7 @@ const ContentInfo = () => {
             name="thumbnail"
             setValue={setValue}
             errors={errors}
-            editData={editContent ? content?.thumbnail : null}
+            editData={editContent ? [content?.thumbnail] : null}
           />
           
           {/* Content Type */}

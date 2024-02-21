@@ -154,7 +154,7 @@ export const updateContent = async(data, token) => {
 }
 
 // EDIT SECTION
-export const editSection = async(data, token) => {
+export const updateSection = async(data, token) => {
     let result = null;
     const toastId = toast.loading("Loading...");
     try{
@@ -178,7 +178,7 @@ export const editSection = async(data, token) => {
 }
 
 // EDIT SUB-SECTION
-export const editSubSection = async(data, token) => {
+export const updateSubSection = async(data, token) => {
     let result = null;
     const toastId = toast.loading("Loading...");
     try{

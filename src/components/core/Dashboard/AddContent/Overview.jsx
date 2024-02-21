@@ -37,6 +37,14 @@ const Overview = () => {
         {/* Content Info Section */}
         <div>
           <h2 className='text-2xl'>Content Info</h2>
+          <div className='flex items-center gap-x-4'>
+            <p className='font-poppins text-gray-400'>Thumbnail:-</p>
+            <img 
+              src={overviewData?.thumbnail} 
+              alt="Thumbnail" 
+              className='rounded-lg w-[163px] h-[122px] object-contain'
+            />
+          </div>
           <div className='flex justify-between w-full'>
             <div className='flex items-center gap-x-2'>
               <p className='font-poppins text-gray-400'>Content Name:- </p>
@@ -44,12 +52,8 @@ const Overview = () => {
             </div>
 
             <div className='flex items-center gap-x-4'>
-              <p className='font-poppins text-gray-400'>Thumbnail:-</p>
-              <img 
-                src={overviewData?.thumbnail} 
-                alt="Thumbnail" 
-                className='rounded-lg w-[163px] h-[122px] object-contain'
-              />
+              <p className='font-poppins text-gray-400'>Status:-</p>
+              <p className='font-roboto text-lg'>{overviewData?.status}</p>
             </div>
           </div>
 
@@ -79,27 +83,16 @@ const Overview = () => {
 
           <div className='flex justify-between w-full'>
             <div className='flex items-center gap-x-2'>
-              <p className='font-poppins text-gray-400'>Instructions:- </p>
-              <p className='font-roboto text-lg'>{overviewData?.instructions}</p>
-            </div>
-
-            <div className='flex items-center gap-x-4'>
-              <p className='font-poppins text-gray-400'>Status:-</p>
-              <p className='font-roboto text-lg'>{overviewData?.status}</p>
-            </div>
-          </div>
-
-          <div className='flex justify-between w-full'>
-            <div className='flex items-center gap-x-2'>
               <p className='font-poppins text-gray-400'>Tags:- </p>
               <p className='font-roboto text-lg'>{overviewData?.tag}</p>
             </div>
-
-            <div className='flex items-center gap-x-4'>
-              <p className='font-poppins text-gray-400'>Status:-</p>
-              <p className='font-roboto text-lg'>{overviewData?.status}</p>
+            
+            <div className='flex items-center gap-x-2'>
+              <p className='font-poppins text-gray-400'>Instructions:- </p>
+              <p className='font-roboto text-lg'>{overviewData?.instructions}</p>
             </div>
           </div>
+
         </div>
 
         {/* Gallery */}

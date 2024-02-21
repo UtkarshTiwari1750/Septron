@@ -52,11 +52,10 @@ exports.createSubSection = async(req, res) => {
     }
 }
 
-// Edit Content
+// Edit Sub-Section
 exports.editSubSection = async(req, res) => {
     try{
-        const {sectionId, subSectionId, title, description} = req.body;
-        const files = req.files.file;
+        const {sectionId, subSectionId, title, description, url} = req.body;
 
         if(!subSectionId) {
             return res.status(400).json({
@@ -65,8 +64,8 @@ exports.editSubSection = async(req, res) => {
             });
         }
 
-        const subSectionDetails = await Section.findByIdAndUpdate(sectionId, 
-            {title, description, url, timeDuration},
+        const subSectionDetails = await SubSection.findByIdAndUpdate({_id:subSectionId}, 
+            {title, description, url},
             {new: true}
         );
 
@@ -77,7 +76,7 @@ exports.editSubSection = async(req, res) => {
             });
         }
 
-        const updatedSection = await Section.findById(sectionId)
+        const updatedSection = await Section.findById({_id: sectionId})
         .populate("subSections");
         
         return res.status(200).json({
