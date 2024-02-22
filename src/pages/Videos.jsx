@@ -146,6 +146,7 @@ const Videos = () => {
                                     image={anime?.coverImage?.medium}
                                     releaseDate={anime?.seasonYear}
                                     title={anime?.title?.english}
+                                    meanScore={anime?.meanScore}
                                 />
                             </SwiperSlide>
                         ))}
