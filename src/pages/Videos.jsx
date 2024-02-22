@@ -16,6 +16,7 @@ import Navbar from '../components/common/Navbar';
 import Card from '../components/common/Card';
 import { popularAndTrendingAnime } from '../utils/animeAPI';
 import AnimeCard from '../components/core/Videos/AnimeCard';
+import { useNavigate } from 'react-router-dom';
 
 const Videos = () => {
     const [allContentAndAnime, setAllContentAndAnime] = useState({
@@ -23,6 +24,7 @@ const Videos = () => {
         popularAnimes: [],
         trendingAnimes: []
     });
+    const navigate = useNavigate();
 
     const dataFetching = async() => {
         try {
@@ -166,6 +168,7 @@ const Videos = () => {
                                     image={anime?.image}
                                     releaseDate={anime?.releaseDate}
                                     title={anime?.title}
+                                    handleOnClick={() => navigate(`/videos/${anime?.id}`)}
                                 />
                             </SwiperSlide>
                         ))}
@@ -206,6 +209,7 @@ const Videos = () => {
                                     releaseDate={anime?.seasonYear}
                                     title={anime?.title?.english}
                                     meanScore={anime?.meanScore}
+                                    handleOnClick={() => navigate(`/videos/${anime?.id}`)} 
                                 />
                             </SwiperSlide>
                         ))}

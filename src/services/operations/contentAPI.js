@@ -292,6 +292,7 @@ export const getAllContent = async() => {
 export const getContentDetails = async(contentId) => {
     let result = [];
     const toastId = toast.loading("Loading...");
+    console.log("CONTENT ID...", contentId);
     try{
         const response = await apiConnector("POST", GET_CONTENT_DETAILS, {contentId});
         console.log("GET CONTENT DETAILS API REPONSE...", response);

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { FaPlay } from "react-icons/fa";
 
-const AnimeCard = ({image, releaseDate, title, meanScore}) => {
+const AnimeCard = ({image, releaseDate, title, meanScore, handleOnClick}) => {
   const [playHover, setPlayHover] = useState(false); 
 
   return (
@@ -32,6 +32,7 @@ const AnimeCard = ({image, releaseDate, title, meanScore}) => {
         </div>
 
         <button
+          onClick={handleOnClick}
           onMouseEnter={() => setPlayHover(true)}
           onMouseLeave={() => setPlayHover(false)}
           className='bg-pink-700 hover:bg-pink-500 p-4 rounded-full flex justify-center items-center absolute -top-8 right-2'

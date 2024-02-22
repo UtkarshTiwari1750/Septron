@@ -315,14 +315,12 @@ exports.getContentDetails = async(req, res) => {
     try {
         // Fetch data from request body
         const {contentId} = req.body;
-
         if(!contentId) {
             return res.status(400).json({
                 success: false,
                 message: "Content-Id not found",
             });
         }
-
         const contentDetails = await Content.findById({_id:contentId})
         .populate("creator")
         .populate({
@@ -335,6 +333,12 @@ exports.getContentDetails = async(req, res) => {
         .populate("genre")
         .populate("gallery");
 
+        if(!contentDetails) {
+            return res.status(400).json({
+                success: false,
+                message: "Content Not Found"
+            })
+        }
 
         // Calculate Total Rating 
         const totalRating = 0;

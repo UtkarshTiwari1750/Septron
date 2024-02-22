@@ -93,23 +93,23 @@ async function SearchAnime(query, page = 1) {
             )}</h3> <div id="extra"> <span>${anime["releaseDate"]
             }</span> </div></div></div></a>`;
     }
-    contentdiv.innerHTML += html;
+    // contentdiv.innerHTML += html;
 
-    loader.style.display = "none";
-    contentdiv.style.display = "block";
+    // loader.style.display = "none";
+    // contentdiv.style.display = "block";
 
     return data["hasNextPage"];
 }
 
 const params = new URLSearchParams(window.location.search);
-const query = params.get("query");
+const query = params.get("video");
 let page = 1;
 
-if (query == null) {
-    window.location.replace("./index.html");
-}
+// if (query == null) {
+//     window.location.replace("./index.html");
+// }
 
-document.getElementById("latest").innerHTML = `Search Results: ${query}`;
+// document.getElementById("latest").innerHTML = `Search Results: ${query}`;
 
 
 // Load more results on scroll
@@ -129,20 +129,19 @@ window.addEventListener("scroll", () => {
     }
 });
 
-async function loadData() {
+exports.loadData = async() => {
     try {
         const data = await SearchAnime(query, page)
         hasNextPage = data;
         page += 1;
         RefreshLazyLoader();
-        console.log("Search animes loaded");
+        console.log("Search animes loaded...", data);
 
     } catch (err) {
-        document.getElementById("main-section").style.display = "none";
-        document.getElementById("error-page").style.display = "block";
-        document.getElementById("error-desc").innerHTML = err;
+        // document.getElementById("main-section").style.display = "none";
+        // document.getElementById("error-page").style.display = "block";
+        // document.getElementById("error-desc").innerHTML = err;
         console.error(err);
     }
 }
 
-loadData();

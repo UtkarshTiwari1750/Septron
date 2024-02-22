@@ -62,74 +62,6 @@ function shuffle(array) {
     return array;
 }
 
-// Adding slider animes (trending animes from anilist)
-async function getTrendingAnimes(data) {
-    let SLIDER_HTML = "";
-
-    for (let pos = 0; pos < data.length; pos++) {
-        let anime = data[pos];
-        let title = anime["title"]["userPreferred"];
-        let type = anime["format"];
-        let status = anime["status"];
-        let genres = genresToString(anime["genres"]);
-        let description = anime["description"];
-        let url = "./anime.html?anime=" + encodeURIComponent(title);
-
-        let poster = anime["bannerImage"];
-        if (poster == null) {
-            poster = anime["coverImage"]["extraLarge"];
-        }
-
-        SLIDER_HTML += `<div class="mySlides fade"> <div class="data-slider"> <p class="spotlight">#${pos + 1
-            } Spotlight</p><h1>${title}</h1> <div class="extra1"> <span class="year"><i class="fa fa-play-circle"></i>${type}</span> <span class="year year2"><i class="fa fa-calendar"></i>${status}</span> <span class="cbox cbox1">${genres}</span> <span class="cbox cbox2">HD</span> </div><p class="small-synop">${description}</p><div id="watchh"> <a href="${url}" class="watch-btn"> <i class="fa fa-play-circle"></i> Watch Now </a> <a href="${url}" class="watch-btn watch-btn2"> <i class="fa fa-info-circle"></i> Details<i class="fa fa-angle-right"></i> </a> </div></div><div class="shado"> <a href="${url}"></a> </div><img src="${poster}"> </div>`;
-    }
-}
-
-// Adding popular animes (popular animes from gogoanime)
-async function getPopularAnimes(data) {
-    let POPULAR_HTML = "";
-
-    for (let pos = 0; pos < data.length; pos++) {
-        let anime = data[pos];
-        let title = anime["title"];
-        let id = anime["id"];
-        let url = "./anime.html?anime=" + id;
-        let image = anime["image"];
-        let subOrDub;
-        if (title.toLowerCase().includes("dub")) {
-            subOrDub = "DUB";
-        } else {
-            subOrDub = "SUB";
-        }
-
-        POPULAR_HTML += `<a href="${url}"><div class="poster la-anime"> <div id="shadow1" class="shadow"><div class="dubb"># ${pos + 1
-            }</div> <div class="dubb dubb2">${subOrDub}</div> </div><div id="shadow2" class="shadow"> <img class="lzy_img" src="./static/loading1.gif" data-src="${image}"> </div><div class="la-details"> <h3>${title}</h3></div></div></a>`;
-    }
-}
-// Adding popular animes (popular animes from gogoanime)
-async function getRecentAnimes(page = 1) {
-    const data = (await getJson(recentapi + page))["results"];
-    let RECENT_HTML = "";
-
-    for (let pos = 0; pos < data.length; pos++) {
-        let anime = data[pos];
-        let title = anime["title"];
-        let id = anime["id"].split("-episode-")[0];
-        let url = "./anime.html?anime=" + id;
-        let image = anime["image"];
-        let ep = anime["episode"].split(" ")[1];
-        let subOrDub;
-        if (title.toLowerCase().includes("dub")) {
-            subOrDub = "DUB";
-        } else {
-            subOrDub = "SUB";
-        }
-
-        RECENT_HTML += `<a href="${url}"><div class="poster la-anime"> <div id="shadow1" class="shadow"><div class="dubb">${subOrDub}</div><div class="dubb dubb2">EP ${ep}</div> </div><div id="shadow2" class="shadow"> <img class="lzy_img" src="./static/loading1.gif" data-src="${image}"> </div><div class="la-details"> <h3>${title}</h3></div></div></a>`;
-    }
-
-}
-
 async function RefreshLazyLoader() {
     const imageObserver = new IntersectionObserver((entries, imgObserver) => {
         entries.forEach((entry) => {
@@ -157,7 +89,6 @@ async function loadAnimes() {
     try {
         if (isLoading == false) {
             isLoading = true;
-            await getRecentAnimes(page)
             RefreshLazyLoader();
             console.log("Recent animes loaded");
             page += 1;
@@ -192,20 +123,6 @@ exports.popularAndTrendingAnime = async() => {
     data = data["results"];
     const anilistTrending = shuffle(data["anilistTrending"]);
     const gogoanimePopular = shuffle(data["gogoPopular"]);
-
-    getTrendingAnimes(anilistTrending).then((data) => {
-        RefreshLazyLoader();
-        // showSlides(slideIndex);
-        // showSlides2();
-    });
-
-    getPopularAnimes(gogoanimePopular).then((data) => {
-        RefreshLazyLoader();
-    });
-
-    getRecentAnimes(1).then((data) => {
-        RefreshLazyLoader();
-    });
 
     animes = {
         'Popular':gogoanimePopular,
