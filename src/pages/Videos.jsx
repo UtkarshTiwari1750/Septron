@@ -18,36 +18,43 @@ import { popularAndTrendingAnime } from '../utils/animeAPI';
 import AnimeCard from '../components/core/Videos/AnimeCard';
 
 const Videos = () => {
-    const [popularAnimes, setPopularAnimes] = useState([]);
-    const [trendingAnimes, setTrendingAnimes] = useState([]);
+    const [allContentAndAnime, setAllContentAndAnime] = useState({
+        artistContent: [],
+        popularAnimes: [],
+        trendingAnimes: []
+    });
 
     const dataFetching = async() => {
         try {
             const animes = await popularAndTrendingAnime();
-            setPopularAnimes(animes.Popular);
-            setTrendingAnimes(animes.Trending);
-            console.log("ANIMES...", animes);
+            const userContents = await getAllContent()
+            const demonSlayer = {
+                coverImage:{ 
+                    medium: "https://firebasestorage.googleapis.com/v0/b/septron-909d2.appspot.com/o/Septron%2FImages%2FDemonSlayer.jpeg?alt=media&token=ec4e6361-ebc9-45e4-88ce-c9fe3b796fb7"
+                },
+                gif: "https://firebasestorage.googleapis.com/v0/b/septron-909d2.appspot.com/o/Septron%2FGifs%2FTanjiro%20Demon%20Slayer%20GIF%20-%20Tanjiro%20Demon%20Slayer%20Kimetsu%20No%20Yaiba%20-%20Discover%20%26%20Share%20GIFs.gif?alt=media&token=4d274762-b220-4f79-a263-ef9ab43f0e5c",
+                title:{
+                    english: "Demon Slayer"
+                },
+                meanScore: "80",
+                seasonYear: "2019"
+            }
+            animes.Trending.unshift(demonSlayer);
+            const data = {
+                "artistContent": userContents,
+                "popularAnimes": animes.Popular,
+                "trendingAnimes": animes.Trending
+            }
+            setAllContentAndAnime(data);
         } catch(error) {
             console.log("Error while getting Animes...", error)
         }
     }
 
     useEffect(() => {
-        // ;(async() => {
-        //     try {
-        //         const result = await getAllContent();
-        //         if(result) {
-        //             setVideos(result);
-        //         }
-        //     } catch(error) {
-        //         console.log("Error in Videos Component...", error);
-        //     }
-        // })()
-
         dataFetching();
     }, []);
 
-    console.log("TRENDING DATA...", trendingAnimes);
   return (
     <div className='bg-[#000814]'>
         {/* Navbar */}
@@ -55,6 +62,7 @@ const Videos = () => {
             <Navbar />
         </div>
 
+        {/* Hero Section */}
         <div className='container flex items-center relative text-white h-[100vh] bg-slate-800'>
             <Swiper className='h-full w-full mySwiper'
             spaceBetween={30}
@@ -115,7 +123,57 @@ const Videos = () => {
             </Swiper>
         </div>
         
-        <div className='mt-9'>
+        {/* Content and Anime Slider */}
+        <div className='mt-9 flex flex-col gap-y-6'>
+
+            {/* Popular */}
+            <div
+                className='flex flex-col gap-y-6 px-10 mt-9'
+            >   
+                <div>
+                    <h2 className='text-white text-4xl font-semibold font-lato'>
+                        Popular
+                    </h2>
+                    <p className='text-base font-lato text-gray-500'>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione, perspiciatis! Eos, quidem! Tempore dolor, minus dolorem alias, earum porro provident a quis odit maiores corporis nemo non, ea hic officiis!
+                    </p>
+                </div>
+                <div className='flex'>
+                    <Swiper
+                        slidesPerView={5}
+                        spaceBetween={5}
+                        className='mySwpier flex'
+                        navigation={true}
+                        grabCursor={true}
+                        modules={[Navigation]}
+                    >
+
+                        <SwiperSlide
+                            className='pl-2 '
+                        >
+                            <AnimeCard
+                                image={allContentAndAnime.trendingAnimes[0]?.coverImage?.medium}
+                                releaseDate={allContentAndAnime.trendingAnimes[0]?.seasonYear}
+                                title={allContentAndAnime.trendingAnimes[0]?.title?.english}
+                            />
+                        </SwiperSlide>
+                        {allContentAndAnime.popularAnimes && allContentAndAnime.popularAnimes.map((anime, index) => (
+                            <SwiperSlide
+                                className='pl-2 '
+                                key={index}
+                            >
+                                <AnimeCard
+                                    image={anime?.image}
+                                    releaseDate={anime?.releaseDate}
+                                    title={anime?.title}
+                                />
+                            </SwiperSlide>
+                        ))}
+
+                    </Swiper>
+                </div>
+            </div>
+
             {/* Trending */}
             <div
                 className='flex flex-col gap-y-6 px-10'
@@ -138,9 +196,10 @@ const Videos = () => {
                         modules={[Navigation]}
                     >
 
-                        {trendingAnimes && trendingAnimes.map((anime, index) => (
+                        {allContentAndAnime.trendingAnimes && allContentAndAnime.trendingAnimes.map((anime, index) => (
                             <SwiperSlide
-                                className=''
+                                className='pl-2 '
+                                key={index}
                             >
                                 <AnimeCard
                                     image={anime?.coverImage?.medium}
@@ -154,6 +213,8 @@ const Videos = () => {
                     </Swiper>
                 </div>
             </div>
+
+            
         </div>
 
 
