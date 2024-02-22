@@ -8,6 +8,7 @@ import 'swiper/css/navigation';
 import { Navigation} from 'swiper/modules';
 import NextAndPrevButton from "./NextAndPrevButton"
 import { setStep } from '../../../../slices/contentSlice';
+import InteractiveNestedView from '../../../common/InteractiveNestedView';
 const Overview = () => {
   const {content} = useSelector((state) => state.content);
   const [overviewData, setOverviewData] = useState(null);  
@@ -158,7 +159,16 @@ const Overview = () => {
             </Swiper>
           </div>
         </div>
-        
+
+        {/* Section and Sub-Section */}
+        {/* {content?.contentSections?.map((section) => (
+          <details>
+            <summary></summary>
+
+          </details>
+        ))} */}
+
+        <InteractiveNestedView sectionArray={content?.contentSections}/>
         <div>
           <NextAndPrevButton 
             backText="Add Section"

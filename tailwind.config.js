@@ -8,7 +8,8 @@ module.exports = {
       poppins: ["Poppins", "sans-serif"],
       nanum: ["Nanum Brush Script", "cursive"],
       roboto: ["Roboto Slab", "serif"],
-      raleway: ["Raleway", "sans-serif"]
+      raleway: ["Raleway", "sans-serif"],
+      lato: ['Lato', 'sans-serif']
     },
     extend: {
       backgroundColor:{
@@ -18,7 +19,7 @@ module.exports = {
         "yellowNeon": "#FFD60A"
       },
       animation: {
-        tilt: 'tilt 10s infinite linear'
+        tilt: 'tilt 10s infinite linear',
       },
       keyframes: {
         tilt: {
@@ -34,7 +35,6 @@ module.exports = {
             transform: "scale(1.02)",
             opacity: "1"
           },
-
         }
       }
     },

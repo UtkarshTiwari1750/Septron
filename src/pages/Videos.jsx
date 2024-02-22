@@ -14,26 +14,43 @@ import { BsFillPlayFill } from 'react-icons/bs';
 import { heroData } from '../data/heroData';
 import Navbar from '../components/common/Navbar';
 import Card from '../components/common/Card';
+import { popularAndTrendingAnime } from '../utils/animeAPI';
+import AnimeCard from '../components/core/Videos/AnimeCard';
 
 const Videos = () => {
-    const [videos, setVideos] = useState([]);
+    const [popularAnimes, setPopularAnimes] = useState([]);
+    const [trendingAnimes, setTrendingAnimes] = useState([]);
+
+    const dataFetching = async() => {
+        try {
+            const animes = await popularAndTrendingAnime();
+            setPopularAnimes(animes.Popular);
+            setTrendingAnimes(animes.Trending);
+            console.log("ANIMES...", animes);
+        } catch(error) {
+            console.log("Error while getting Animes...", error)
+        }
+    }
 
     useEffect(() => {
-        ;(async() => {
-            try {
-                const result = await getAllContent();
-                if(result) {
-                    setVideos(result);
-                }
-            } catch(error) {
-                console.log("Error in Videos Component...", error);
-            }
-        })()
-        
+        // ;(async() => {
+        //     try {
+        //         const result = await getAllContent();
+        //         if(result) {
+        //             setVideos(result);
+        //         }
+        //     } catch(error) {
+        //         console.log("Error in Videos Component...", error);
+        //     }
+        // })()
+
+        dataFetching();
     }, []);
 
+    console.log("TRENDING DATA...", trendingAnimes);
   return (
     <div className='bg-[#000814]'>
+        {/* Navbar */}
         <div className='absolute top-0 z-50'>
             <Navbar />
         </div>
@@ -98,6 +115,47 @@ const Videos = () => {
             </Swiper>
         </div>
         
+        <div className='mt-9'>
+            {/* Trending */}
+            <div
+                className='flex flex-col gap-y-6 px-10'
+            >   
+                <div>
+                    <h2 className='text-white text-4xl font-semibold font-lato'>
+                        Trending
+                    </h2>
+                    <p className='text-base font-lato text-gray-500'>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione, perspiciatis! Eos, quidem! Tempore dolor, minus dolorem alias, earum porro provident a quis odit maiores corporis nemo non, ea hic officiis!
+                    </p>
+                </div>
+                <div className='flex'>
+                    <Swiper
+                        slidesPerView={5}
+                        spaceBetween={5}
+                        className='mySwpier flex'
+                        navigation={true}
+                        grabCursor={true}
+                        modules={[Navigation]}
+                    >
+
+                        {trendingAnimes && trendingAnimes.map((anime, index) => (
+                            <SwiperSlide
+                                className=''
+                            >
+                                <AnimeCard
+                                    image={anime?.coverImage?.medium}
+                                    releaseDate={anime?.seasonYear}
+                                    title={anime?.title?.english}
+                                />
+                            </SwiperSlide>
+                        ))}
+
+                    </Swiper>
+                </div>
+            </div>
+        </div>
+
+
         <section className='text-white w-11/12 mx-auto px-4'>
             <h2>
                 Trending
@@ -106,8 +164,9 @@ const Videos = () => {
             <Card 
                 
             />
-
         </section>
+
+        {/*  */}
     
     </div>
   )
