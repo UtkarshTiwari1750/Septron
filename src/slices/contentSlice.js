@@ -41,7 +41,8 @@ const contentSlice = createSlice({
         },
         setAllContentAndAnime: (state, value) => {
             state.allContentAndAnime = value.payload;
-        }
+        },
+
     },
 })
 
@@ -52,7 +53,7 @@ export const {
     setContent,
     resetContentState,
     setLoading,
-    setAllContentAndAnime
+    setAllContentAndAnime,
 } = contentSlice.actions;
 
 export default contentSlice.reducer;

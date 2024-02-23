@@ -168,7 +168,11 @@ const Videos = () => {
                                     image={anime?.image}
                                     releaseDate={anime?.releaseDate}
                                     title={anime?.title}
-                                    handleOnClick={() => {navigate(`/videos/${anime?.id}`)}}
+                                    handleOnClick={() => {
+                                        localStorage.setItem("isArtistContent", false);
+                                        navigate(`/video/${anime?.id}`)
+                                        window.location.reload();
+                                    }}
                                 />
                             </SwiperSlide>
                         ))}
@@ -177,47 +181,6 @@ const Videos = () => {
                 </div>
             </div>
 
-            {/* Trending */}
-            <div
-                className='flex flex-col gap-y-6 px-10'
-            >   
-                <div>
-                    <h2 className='text-white text-4xl font-semibold font-lato'>
-                        Trending
-                    </h2>
-                    <p className='text-base font-lato text-gray-500'>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione, perspiciatis! Eos, quidem! Tempore dolor, minus dolorem alias, earum porro provident a quis odit maiores corporis nemo non, ea hic officiis!
-                    </p>
-                </div>
-                <div className='flex'>
-                    <Swiper
-                        slidesPerView={5}
-                        spaceBetween={5}
-                        className='mySwpier flex'
-                        navigation={true}
-                        grabCursor={true}
-                        modules={[Navigation]}
-                    >
-
-                        {allContentAndAnime.trendingAnimes && allContentAndAnime.trendingAnimes.map((anime, index) => (
-                            <SwiperSlide
-                                className='pl-2 '
-                                key={index}
-                            >
-                                <AnimeCard
-                                    image={anime?.coverImage?.medium}
-                                    releaseDate={anime?.seasonYear}
-                                    title={anime?.title?.english}
-                                    meanScore={anime?.meanScore}
-                                    handleOnClick={() => navigate(`/videos/${anime?.id}`)} 
-                                />
-                            </SwiperSlide>
-                        ))}
-
-                    </Swiper>
-                </div>
-            </div>
-            
             {/* Artist Content */}
             <div
                 className='flex flex-col gap-y-6 px-10 mt-9 w-full'
@@ -259,8 +222,9 @@ const Videos = () => {
                                     releaseDate={anime?.createdAt.split("-")[0]}
                                     title={anime?.contentName}
                                     handleOnClick={() => {
-                                        
-                                        navigate(`/videos/${anime?._id}`);
+                                        localStorage.setItem("isArtistContent", true);
+                                        navigate(`/video/${anime?._id}`);
+                                        window.location.reload();
                                     }}
                                 />
                             </SwiperSlide>
@@ -269,7 +233,52 @@ const Videos = () => {
                     </Swiper>
                 </div>
             </div>
-            
+
+            {/* Trending */}
+            <div
+                className='flex flex-col gap-y-6 px-10'
+            >   
+                <div>
+                    <h2 className='text-white text-4xl font-semibold font-lato'>
+                        Trending
+                    </h2>
+                    <p className='text-base font-lato text-gray-500'>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione, perspiciatis! Eos, quidem! Tempore dolor, minus dolorem alias, earum porro provident a quis odit maiores corporis nemo non, ea hic officiis!
+                    </p>
+                </div>
+                <div className='flex'>
+                    <Swiper
+                        slidesPerView={5}
+                        spaceBetween={5}
+                        className='mySwpier flex'
+                        navigation={true}
+                        grabCursor={true}
+                        modules={[Navigation]}
+                    >
+
+                        {allContentAndAnime.trendingAnimes && allContentAndAnime.trendingAnimes.map((anime, index) => (
+                            <SwiperSlide
+                                className='pl-2 '
+                                key={index}
+                            >
+                                <AnimeCard
+                                    image={anime?.coverImage?.medium}
+                                    releaseDate={anime?.seasonYear}
+                                    title={anime?.title?.english}
+                                    meanScore={anime?.meanScore}
+                                    handleOnClick={() => {
+                                        localStorage.setItem("isArtistContent", false);
+                                        navigate(`/video/${anime?.id}`);
+                                        window.location.reload();
+                                    }} 
+                                />
+                            </SwiperSlide>
+                        ))}
+
+                    </Swiper>
+                </div>
+            </div>
+
         </div>
         
         {

@@ -15,7 +15,7 @@ import 'swiper/css/navigation';
 import {Autoplay, Pagination, Navigation } from 'swiper/modules';
 import Button from '../components/common/Button'
 import { BsFillPlayFill } from 'react-icons/bs'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import AnimeCard from '../components/core/Videos/AnimeCard'
 import Navbar from '../components/common/Navbar'
 
@@ -24,14 +24,9 @@ const VideoDetails = () => {
     const [animeOrArtistContent, setAnimeOrArtistContent] = useState(null);
     const {allContentAndAnime} = useSelector((state) => state.content);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const isArtistContent = localStorage.getItem("isArtistContent");
     const fetchData = async() => {
-      const animeData = await loadData();
-      const artistContent = await getContentDetails(videoId);
-
-      if(!animeData && !artistContent) {
-        toast.error("No Content Found");
-      }
-
       let data = {
         title: "",
         englishName: "",
@@ -42,7 +37,23 @@ const VideoDetails = () => {
         releasedDate: "",
         status: "",
       };
-      if(animeData) {
+
+      if(isArtistContent === 'true') {
+        const artistContent = await getContentDetails(videoId);
+
+        data.title = artistContent.contentName;
+        data.description = artistContent.contentDescription;
+        data.image = artistContent.thumbnail;
+        data.genre = artistContent.genre?.name;
+        data.tag = artistContent.tag;
+        data.releasedDate = artistContent.createdAt;
+        data.status = "Ongoing";
+        data.price = artistContent?.price;
+      } 
+
+      if(isArtistContent === 'false') {
+        const animeData = await loadData();
+        console.log("ANIME DATA...", animeData);
         data['title'] = animeData?.title?.userPreferred ? animeData?.title?.userPreferred : animeData?.name;
         data['englishName'] = animeData?.english ? animeData?.english : animeData?.other_name?.split(',') ;
         data['description'] = animeData?.description;
@@ -52,16 +63,7 @@ const VideoDetails = () => {
         data['releasedDate'] = animeData?.seasonYear ? animeData?.seasonYear : animeData?.released; 
         data['status'] = animeData?.status;
         data['videos'] = animeData?.episodes;
-       }
-      if(artistContent.length !== 0) {
-        console.log("ARTISIT CONTENTdcnsjcnjsncjs..", artistContent)
-        data.title = artistContent.contentName;
-        data.description = artistContent.contentDescription;
-        data.image = artistContent.thumbnail;
-        data.genre = artistContent.genre;
-        data.tag = artistContent.tag;
-        data.releasedDate = artistContent.createdAt;
-        data.status = "Ongoing";
+
       }
       setAnimeOrArtistContent(data)
     }
@@ -70,13 +72,13 @@ const VideoDetails = () => {
       fetchData();
     }, [])
 
-    console.log("ALL CONTENT AND ANIME....", allContentAndAnime);
     return (
     <div className='text-white w-full bg-[#000814]'>
       {/* Navbar */}
       <div className='absolute top-0 z-50'>
         <Navbar />
       </div>
+
       {/* Hero Section */}
       <div className='container flex items-center relative text-white h-[100vh] bg-slate-800'>
         <div className='h-full w-full '>    
@@ -96,14 +98,14 @@ const VideoDetails = () => {
             '>
               <div className='z-50 flex gap-x-5 items-start left-20 '>
                 <img 
-                    src={animeOrArtistContent?.image} 
-                    alt={animeOrArtistContent?.title} 
-                    className='rounded-lg object-contain w-60'
+                  src={animeOrArtistContent?.image} 
+                  alt={animeOrArtistContent?.title} 
+                  className='rounded-lg object-contain w-60 '
                 />
                 <div className='z-50 w-[70%] flex flex-col justify-between items-start gap-y-3'>
                   
-                  <h2 className='text-3xl font-poppins w-[85%]'>{animeOrArtistContent?.title}</h2>
-                  <p className='text-3xl opacity-50 leading-5 w-[80%] font-nanum'>
+                  <h2 className='text-3xl font-poppins w-full'>{animeOrArtistContent?.title}</h2>
+                  <p className='text-lg opacity-50 leading-5 w-[80%] font-lato'>
                     {animeOrArtistContent?.description}
                   </p>
 
@@ -114,10 +116,10 @@ const VideoDetails = () => {
                     </p>
                   </div>
 
-                  <div className='flex gap-2 items-center'>
+                  <div className='flex gap-2 items-start'>
                     <p className='font-poppins'>Tags:</p>
-                    <div className='flex gap-2'>
-                      {animeOrArtistContent?.tag?.map((name, index) => (
+                    <div className='flex flex-wrap w-full gap-2'>
+                      {animeOrArtistContent?.tag && animeOrArtistContent?.tag?.map((name, index) => (
                         <p key={index} 
                           className='text-sm text-gray-400 font-roboto px-2 rounded-full border border-white py-1 text-center'
                         >
@@ -137,11 +139,18 @@ const VideoDetails = () => {
                   <div className='flex gap-2 items-center'>
                     <p className='font-poppins'>Total Episodes:</p>
                     <div className='flex gap-2 text-sm text-gray-400 font-roboto'>
-                      {animeOrArtistContent?.videos.length ? animeOrArtistContent?.videos.length : animeOrArtistContent?.videos  }
+                      {animeOrArtistContent?.videos?.length ? animeOrArtistContent?.videos.length : animeOrArtistContent?.videos  }
+                    </div>
+                  </div>
+                  
+                  <div className='flex gap-2 items-center'>
+                    <p className='font-poppins'>Price:</p>
+                    <div className='flex gap-2 text-lg text-white font-roboto'>
+                      ₹{animeOrArtistContent?.price}
                     </div>
                   </div>
 
-                  <Button text='Watch Now'
+                  <Button text={isArtistContent === 'true' ? "Buy Now" : "Watch Now"}
                   customClasses={`mt-4`}>
                       <BsFillPlayFill />
                   </Button>
@@ -199,50 +208,13 @@ const VideoDetails = () => {
                           image={anime?.image}
                           releaseDate={anime?.releaseDate}
                           title={anime?.title}
-                          handleOnClick={() => {navigate(`/videos/${anime?.id}`)}}
+                          handleOnClick={() => {
+                            localStorage.setItem("isArtistContent", false);
+                            navigate(`/video/${anime?.id}`)
+                            window.location.reload();
+                          }}
                         />
                       </SwiperSlide>
-                    ))}
-
-                </Swiper>
-            </div>
-        </div>
-
-        {/* Trending */}
-        <div
-            className='flex flex-col gap-y-6 px-10'
-        >   
-            <div>
-                <h2 className='text-white text-4xl font-semibold font-lato'>
-                    Trending
-                </h2>
-                <p className='text-base font-lato text-gray-500'>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione, perspiciatis! Eos, quidem! Tempore dolor, minus dolorem alias, earum porro provident a quis odit maiores corporis nemo non, ea hic officiis!
-                </p>
-            </div>
-            <div className='flex'>
-                <Swiper
-                    slidesPerView={5}
-                    spaceBetween={5}
-                    className='mySwpier flex'
-                    navigation={true}
-                    grabCursor={true}
-                    modules={[Navigation]}
-                >
-
-                    {allContentAndAnime.trendingAnimes && allContentAndAnime.trendingAnimes.map((anime, index) => (
-                        <SwiperSlide
-                            className='pl-2 '
-                            key={index}
-                        >
-                            <AnimeCard
-                                image={anime?.coverImage?.medium}
-                                releaseDate={anime?.seasonYear}
-                                title={anime?.title?.english}
-                                meanScore={anime?.meanScore}
-                                handleOnClick={() => navigate(`/videos/${anime?.id}`)} 
-                            />
-                        </SwiperSlide>
                     ))}
 
                 </Swiper>
@@ -290,8 +262,9 @@ const VideoDetails = () => {
                                 releaseDate={anime?.createdAt.split("-")[0]}
                                 title={anime?.contentName}
                                 handleOnClick={() => {
-                                    console.log("URL PARAMETER...", `/videos/${anime?.id}`);
-                                    navigate(`/videos/${anime?._id}`);
+                                  localStorage.setItem("isArtistContent", true);
+                                  navigate(`/video/${anime?._id}`);
+                                  window.location.reload();
                                 }}
                             />
                         </SwiperSlide>
@@ -300,6 +273,53 @@ const VideoDetails = () => {
                 </Swiper>
             </div>
         </div>
+
+        {/* Trending */}
+        <div
+            className='flex flex-col gap-y-6 px-10'
+        >   
+            <div>
+                <h2 className='text-white text-4xl font-semibold font-lato'>
+                    Trending
+                </h2>
+                <p className='text-base font-lato text-gray-500'>
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione, perspiciatis! Eos, quidem! Tempore dolor, minus dolorem alias, earum porro provident a quis odit maiores corporis nemo non, ea hic officiis!
+                </p>
+            </div>
+            <div className='flex'>
+                <Swiper
+                    slidesPerView={5}
+                    spaceBetween={5}
+                    className='mySwpier flex'
+                    navigation={true}
+                    grabCursor={true}
+                    modules={[Navigation]}
+                >
+
+                    {allContentAndAnime.trendingAnimes && allContentAndAnime.trendingAnimes.map((anime, index) => (
+                        <SwiperSlide
+                            className='pl-2 '
+                            key={index}
+                        >
+                            <AnimeCard
+                                image={anime?.coverImage?.medium}
+                                releaseDate={anime?.seasonYear}
+                                title={anime?.title?.english}
+                                meanScore={anime?.meanScore}
+                                handleOnClick={() => {
+                                  localStorage.setItem("isArtistContent", false);
+                                  navigate(`/video/${anime?.id}`);
+                                  window.location.reload();
+                                }} 
+                            />
+                        </SwiperSlide>
+                    ))}
+
+                </Swiper>
+            </div>
+        </div>
+        
+        
           
       </div>
       

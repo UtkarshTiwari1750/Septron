@@ -245,10 +245,6 @@ async function RefreshLazyLoader() {
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
-if (urlParams.get("anime") == null || urlParams.get("episode") == null) {
-    window.location = "./index.html";
-}
-
 // Running functions
 
 async function loadEpisodeData(data) {
@@ -275,7 +271,7 @@ async function loadEpisodeData(data) {
     }
 }
 
-async function loadData() {
+exports.loadData = async() => {
     try {
         let data = await getJson(
             episodeapi +
@@ -290,11 +286,6 @@ async function loadData() {
         await getEpSlider(eplist, urlParams.get("episode"))
         console.log("Episode Slider loaded");
     } catch (err) {
-        document.getElementById("main-section").style.display = "none";
-        document.getElementById("error-page").style.display = "block";
-        document.getElementById("error-desc").innerHTML = err;
         console.error(err);
     }
 }
-
-loadData();

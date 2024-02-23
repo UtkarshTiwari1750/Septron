@@ -31,7 +31,7 @@ function App() {
           <Route path='/dashboard/overview' element={<Overview />} />
         </Route>
         <Route path='/videos' element={<Videos />} />
-        <Route path='/videos/:videoId' element={<VideoDetails />}/>
+        <Route path='/video/:videoId' element={<VideoDetails />}/>
 
 
         <Route path='*' element={<Error />} />
