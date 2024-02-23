@@ -84,7 +84,10 @@ async function getRecommendations(anime_title) {
 }
 
 const animeId = window.location.pathname;
-const urlParams = animeId.split("/")[2];
+let urlParams;
+if(animeId){
+    urlParams = animeId.split("/")[2];
+}
 
 //Running functions
 exports.loadData = async() => {

@@ -6,6 +6,13 @@ const initialState = {
     paymentLoading: false,
     editContent: false,
     loading: false,
+    allContentAndAnime: localStorage.getItem("allContentAndAnime") 
+    ? JSON.parse(localStorage.getItem("allContentAndAnime")) 
+    : {
+        "artistContent": "",
+        "popularAnimes": "",
+        "trendingAnimes": ""
+    },
 }
 
 const contentSlice = createSlice({
@@ -31,6 +38,9 @@ const contentSlice = createSlice({
         },
         setLoading: (state, value) => {
             state.loading = value.payload;
+        },
+        setAllContentAndAnime: (state, value) => {
+            state.allContentAndAnime = value.payload;
         }
     },
 })
@@ -41,7 +51,8 @@ export const {
     setEditContent,
     setContent,
     resetContentState,
-    setLoading
+    setLoading,
+    setAllContentAndAnime
 } = contentSlice.actions;
 
 export default contentSlice.reducer;

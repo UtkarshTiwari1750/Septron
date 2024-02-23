@@ -17,14 +17,13 @@ import Card from '../components/common/Card';
 import { popularAndTrendingAnime } from '../utils/animeAPI';
 import AnimeCard from '../components/core/Videos/AnimeCard';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAllContentAndAnime } from '../slices/contentSlice';
 
 const Videos = () => {
-    const [allContentAndAnime, setAllContentAndAnime] = useState({
-        artistContent: [],
-        popularAnimes: [],
-        trendingAnimes: []
-    });
+    const {allContentAndAnime} = useSelector((state) => state.content);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const dataFetching = async() => {
         try {
@@ -47,7 +46,8 @@ const Videos = () => {
                 "popularAnimes": animes.Popular,
                 "trendingAnimes": animes.Trending
             }
-            setAllContentAndAnime(data);
+            dispatch(setAllContentAndAnime(data));
+            localStorage.setItem("allContentAndAnime", JSON.stringify(data));
         } catch(error) {
             console.log("Error while getting Animes...", error)
         }
@@ -56,7 +56,7 @@ const Videos = () => {
     useEffect(() => {
         dataFetching();
     }, []);
-
+    console.log("SESSTION DATA....", allContentAndAnime)
   return (
     <div className='bg-[#000814]'>
         {/* Navbar */}
@@ -168,7 +168,7 @@ const Videos = () => {
                                     image={anime?.image}
                                     releaseDate={anime?.releaseDate}
                                     title={anime?.title}
-                                    handleOnClick={() => navigate(`/videos/${anime?.id}`)}
+                                    handleOnClick={() => {navigate(`/videos/${anime?.id}`)}}
                                 />
                             </SwiperSlide>
                         ))}
@@ -217,23 +217,70 @@ const Videos = () => {
                     </Swiper>
                 </div>
             </div>
+            
+            {/* Artist Content */}
+            <div
+                className='flex flex-col gap-y-6 px-10 mt-9 w-full'
+            >   
+                <div>
+                    <h2 className='text-white text-4xl font-semibold font-lato'>
+                        Artist Content
+                    </h2>
+                    <p className='text-base font-lato text-gray-500'>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione, perspiciatis! Eos, quidem! Tempore dolor, minus dolorem alias, earum porro provident a quis odit maiores corporis nemo non, ea hic officiis!
+                    </p>
+                </div>
+                <div className='flex w-full'>
+                    <Swiper
+                        slidesPerView={5}
+                        spaceBetween={5}
+                        className='mySwpier flex w-full'
+                        navigation={true}
+                        grabCursor={true}
+                        modules={[Navigation]}
+                    >
 
+                        <SwiperSlide
+                            className='pl-2 '
+                        >
+                            <AnimeCard
+                                image={allContentAndAnime.trendingAnimes[0]?.coverImage?.medium}
+                                releaseDate={allContentAndAnime.trendingAnimes[0]?.seasonYear}
+                                title={allContentAndAnime.trendingAnimes[0]?.title?.english}
+                            />
+                        </SwiperSlide>
+                        {allContentAndAnime.artistContent && allContentAndAnime.artistContent.map((anime, index) => (
+                            <SwiperSlide
+                                className='pl-2 '
+                                key={index}
+                            >
+                                <AnimeCard
+                                    image={anime?.thumbnail}
+                                    releaseDate={anime?.createdAt.split("-")[0]}
+                                    title={anime?.contentName}
+                                    handleOnClick={() => {
+                                        
+                                        navigate(`/videos/${anime?._id}`);
+                                    }}
+                                />
+                            </SwiperSlide>
+                        ))}
+
+                    </Swiper>
+                </div>
+            </div>
             
         </div>
+        
+        {
+            allContentAndAnime.artistContent && allContentAndAnime.artistContent.map((anime) => {
+                console.log("ANIME NAME...", anime?.contentName);
+                return (
+                    <div className='text-white'>{anime?.contentName}hello</div>
+                )
+            })
+        }
 
-
-        <section className='text-white w-11/12 mx-auto px-4'>
-            <h2>
-                Trending
-            </h2>
-
-            <Card 
-                
-            />
-        </section>
-
-        {/*  */}
-    
     </div>
   )
 }

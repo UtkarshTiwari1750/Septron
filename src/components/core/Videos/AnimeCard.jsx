@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { FaPlay } from "react-icons/fa";
 
-const AnimeCard = ({image, releaseDate, title, meanScore, handleOnClick}) => {
+const AnimeCard = ({image, releaseDate, title, meanScore, price, handleOnClick}) => {
   const [playHover, setPlayHover] = useState(false); 
 
   return (

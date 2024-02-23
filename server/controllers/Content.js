@@ -5,6 +5,7 @@ const Section = require("../models/Section");
 const SubSection = require("../models/SubSection");
 const RatingAndReview = require("../models/RatingAndReview");
 const Gallery = require("../models/Gallery");
+const { default: mongoose } = require("mongoose");
 
 // Create Content
 exports.createContent = async(req, res) => {
@@ -315,13 +316,25 @@ exports.getContentDetails = async(req, res) => {
     try {
         // Fetch data from request body
         const {contentId} = req.body;
+
+        console.log("CONTENT ID TYPE....", typeof(contentId));
         if(!contentId) {
             return res.status(400).json({
                 success: false,
                 message: "Content-Id not found",
             });
         }
-        const contentDetails = await Content.findById({_id:contentId})
+
+        const checkContent =  await Content.find({_id: contentId});
+
+        if(!checkContent) {
+            return res.status(400).json({
+                success: false,
+                message: "Content Not Found"
+            })
+        }
+
+        const contentDetails = await Content.findOne({_id: contentId})
         .populate("creator")
         .populate({
             path: "contentSections",
@@ -332,13 +345,6 @@ exports.getContentDetails = async(req, res) => {
         .populate("ratingAndReviews")
         .populate("genre")
         .populate("gallery");
-
-        if(!contentDetails) {
-            return res.status(400).json({
-                success: false,
-                message: "Content Not Found"
-            })
-        }
 
         // Calculate Total Rating 
         const totalRating = 0;
