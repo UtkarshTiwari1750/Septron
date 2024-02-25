@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AiOutlineFolderAdd } from "react-icons/ai";
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-// import { setSectionNames } from '../../../../slices/sectionSlice';
 import { createSection } from '../../../../../services/operations/contentAPI';
 import { setContent, setStep } from '../../../../../slices/contentSlice';
 import NestedView from './NestedView';
@@ -53,7 +52,6 @@ const AddSection = () => {
       } catch(error) {
         console.log("ERROR in HANDLE ADD SECTION...", error);
       }
-      // dispatch(setSectionNames(newSection));
       setValue("sectionName", "");
     }
   }

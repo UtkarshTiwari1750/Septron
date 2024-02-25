@@ -99,6 +99,59 @@ exports.deleteProfile = async(req, res) => {
     }
 }
 
+// Get Buyed Content
+exports.getBuyedContent = async(req, res) => {
+    try {
+        const userId = req.user.id;
 
+        if(!userId) {
+            return res.status(400).json({
+                success: false,
+                message: "User Id doesn't found",
+            });
+        }
+
+        let buyedContent = await User.findById({_id: userId},
+                'contents contentProgress'
+        )
+        .populate({
+            path:"contents",
+            populate: {
+                path: "contentSections",
+                populate: {
+                    path: "subSections"
+                }
+            }
+        })
+        .populate("contentProgress")
+        .exec();
+        
+        console.log("Buyed Content", buyedContent);
+        var subSectionLength = 0;
+        const contents = buyedContent.contents;
+        for(var i = 0; i < contents.length; i++) {
+            let totalDurationInSeconds = 0;
+            subSectionLength = 0;
+            for(var j = 0; j < contents[i].contentSections.length; j++) {
+                totalDurationInSeconds += contents[i].contentSections[j]
+                    .subSections.reduce((acc, curr) => acc + parseInt(curr.timeDuration), 0);
+            }
+
+
+
+        }
+
+        
+
+
+    } catch(error) {
+        console.log("GET BUYED CONTENT CONTROLLER ERROR...", error);
+        return res.status(500).json({
+            success: false,
+            message: "GET BUYED CONTENT CONTROLLER ERROR",
+            error: error,
+        }); 
+    }
+}
 
 

@@ -14,6 +14,7 @@ import MyContent from './components/core/Dashboard/AddContent/MyContent';
 import Overview from './components/core/Dashboard/AddContent/Overview';
 import Videos from './pages/Videos';
 import VideoDetails from './pages/VideoDetails';
+import BuyedContent from './components/core/Dashboard/BuyedContent/BuyedContent';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path='/dashboard/settings' element={<Setting />} />
           <Route path='/dashboard/my-content' element={<MyContent />} />
           <Route path='/dashboard/overview' element={<Overview />} />
+          <Route path='/dashboard/buyed-content' element={<BuyedContent />} />          
         </Route>
         <Route path='/videos' element={<Videos />} />
         <Route path='/video/:videoId' element={<VideoDetails />}/>

@@ -102,7 +102,7 @@ async function verifyPayment(bodyData, token, navigate, dispatch) {
         }
 
         toast.success("Payment successful, you are added to the content");
-        navigate("/dashboard/buyedContent");
+        navigate("/dashboard/buyed-content");
     } catch(error) {
         console.log("PAYMENT VERIFY ERROR...", error);
         toast.error("Could not Verify Payment");
