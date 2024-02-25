@@ -317,7 +317,6 @@ exports.getContentDetails = async(req, res) => {
         // Fetch data from request body
         const {contentId} = req.body;
 
-        console.log("CONTENT ID TYPE....", typeof(contentId));
         if(!contentId) {
             return res.status(400).json({
                 success: false,

@@ -24,6 +24,7 @@ const io = new Server(server, {
 const contentRoutes = require("./routes/Content");
 const authRoutes = require("./routes/Auth");
 const profileRoutes = require("./routes/Profile");
+const paymentRoutes = require("./routes/Payments");
 
 database.connect();
 dotenv.config();
@@ -51,6 +52,7 @@ app.use(
 app.use("/api/v1/content", contentRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/profile", profileRoutes);
+app.use("/api/v1/payment", paymentRoutes);
 
 // Testing the server
 app.get("/", (req, res) => {

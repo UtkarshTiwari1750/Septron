@@ -9,12 +9,13 @@ const contentProgressSchema = new mongoose.Schema({
         ],
         contentId: {
             type: mongoose.Schema.Types.ObjectId,
-            ref:"Content"
+            ref:"Content",
+            required: true,
         },
         userId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
-            require
+            required: true
         }
     },
     {timestamps:true}

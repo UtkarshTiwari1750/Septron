@@ -1,10 +1,10 @@
-exports.courseEnrollmentEmail = (courseName, name) => {
+exports.contentPurchaseEmail = (contentName, name) => {
     return `<!DOCTYPE html>
     <html>
     
     <head>
         <meta charset="UTF-8">
-        <title>Course Registration Confirmation</title>
+        <title>Content Purchase Confirmation</title>
         <style>
             body {
                 background-color: #ffffff;
@@ -73,12 +73,12 @@ exports.courseEnrollmentEmail = (courseName, name) => {
                     alt="Septron Logo" 
                 />
             </a>
-            <div class="message">Course Registration Confirmation</div>
+            <div class="message">${contentName} Purchase Confirmation</div>
             <div class="body">
                 <p>Dear ${name},</p>
-                <p>You have successfully registered for the course <span class="highlight">"${courseName}"</span>. We
-                    are excited to have you as a participant!</p>
-                <p>Please log in to your learning dashboard to access the course materials and start your learning journey.
+                <p>You have successfully purchase the content <span class="highlight">"${contentName}"</span>. We
+                    are excited to have you as a buyer!</p>
+                <p>You can now access the content through the contents section in your Dashboard.
                 </p>
                 <a class="cta" href="">Go to Dashboard</a>
             </div>

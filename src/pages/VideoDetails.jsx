@@ -18,11 +18,14 @@ import { BsFillPlayFill } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
 import AnimeCard from '../components/core/Videos/AnimeCard'
 import Navbar from '../components/common/Navbar'
+import { buyContent } from '../services/operations/paymentAPI'
 
 const VideoDetails = () => {
     const {videoId} = useParams()
     const [animeOrArtistContent, setAnimeOrArtistContent] = useState(null);
     const {allContentAndAnime} = useSelector((state) => state.content);
+    const {token} = useSelector((state) => state.auth);
+    const {user} = useSelector((state) => state.profile);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const isArtistContent = localStorage.getItem("isArtistContent");
@@ -66,6 +69,15 @@ const VideoDetails = () => {
 
       }
       setAnimeOrArtistContent(data)
+    }
+
+    const handleBuyCourse = () => {
+      if(token) {
+        buyContent(token, [videoId], user, navigate, dispatch);
+        return;
+      } else {
+
+      }
     }
 
     useEffect(() => {
@@ -150,8 +162,11 @@ const VideoDetails = () => {
                     </div>
                   </div>
 
-                  <Button text={isArtistContent === 'true' ? "Buy Now" : "Watch Now"}
-                  customClasses={`mt-4`}>
+                  <Button 
+                    text={isArtistContent === 'true' ? "Buy Now" : "Watch Now"}
+                    handleOnClick={isArtistContent && handleBuyCourse  }
+                    customClasses={`mt-4`}
+                  >
                       <BsFillPlayFill />
                   </Button>
                 </div>

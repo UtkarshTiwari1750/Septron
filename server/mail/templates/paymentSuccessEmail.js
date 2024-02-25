@@ -71,7 +71,7 @@ exports.paymentSuccessEmail = (name, amount, orderId, paymentId) => {
                     alt="Septron Logo" 
                 />
             </a>
-            <div class="message">Course Payment Confirmation</div>
+            <div class="message">Content Payment Confirmation</div>
             <div class="body">
                 <p>Dear ${name},</p>
                 <p>We have received a payment of <span class="highlight">₹${amount}</span> </p>.

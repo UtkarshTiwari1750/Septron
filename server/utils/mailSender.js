@@ -9,14 +9,12 @@ const mailSender = async(email, title, body) => {
                 pass: process.env.MAIL_PASS
             }
         })
-
         let info = await transporter.sendMail({
             from: 'Septron',
             to: `${email}`,
             subject: `${title}`,
             html: `${body}`,
         })
-        console.log("OUTPUT OF SENDMAIL...",info);
         return info;
     } catch(error) {
         console.log("ERROR IN MAILSENDER....", error.message);

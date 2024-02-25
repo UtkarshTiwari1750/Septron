@@ -33,3 +33,10 @@ export const contentEndpoints = {
 export const profileEndpoints = {
     DELETE_ACCOUNT: BASE_URL + "/profile/deleteProfile",
 }
+
+// PAYMENT ENDPOINTS
+export const paymentEndpoints = {
+    CAPTURE_PAYMENT: BASE_URL + '/payment/capturePayment',
+    VERIFY_PAYMENT: BASE_URL + '/payment/verifyPayment',
+    SEND_PAYMENT_SUCCESS_EMAIL: BASE_URL + '/payment/sendPaymentSuccessEmail',
+}
