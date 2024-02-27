@@ -226,6 +226,7 @@ const Videos = () => {
                                         navigate(`/video/${anime?._id}`);
                                         window.location.reload();
                                     }}
+                                    
                                 />
                             </SwiperSlide>
                         ))}

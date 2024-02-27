@@ -112,11 +112,12 @@ exports.getBuyedContent = async(req, res) => {
         }
 
         let buyedContent = await User.findById({_id: userId},
-                'contents contentProgress'
+                'contents contentProgress ratingAndReviews'
         )
         .populate({
             path:"contents",
             populate: {
+                path: "ratingAndReviews",
                 path: "contentSections",
                 populate: {
                     path: "subSections"
@@ -126,7 +127,6 @@ exports.getBuyedContent = async(req, res) => {
         .populate("contentProgress")
         .exec();
         
-        console.log("Buyed Content", buyedContent);
 
         var subSectionLength = 0;
         const contents = buyedContent.contents;
@@ -154,6 +154,13 @@ exports.getBuyedContent = async(req, res) => {
                 const multiplier = 100;
                 contents[i].progressPercentage = Math.round((contentProgressCount/ subSectionLength) * 100 * 100) / multiplier;
             }
+
+            totalRating = 0;
+            for(var j = 0; j < contents[i].ratingAndReviews.length; j++) {
+                totalRating += contents[i].ratingAndReviews[j].rating;
+            }
+            
+            contents[i].totalRating = totalRating;
         }
 
         if(!buyedContent) {
@@ -162,7 +169,7 @@ exports.getBuyedContent = async(req, res) => {
                 message: "Could not find user with given id"
             });
         }
-
+        console.log("TOTAL RATING..." , buyedContent.contents[0].totalRating);
         return res.status(200).json({
             success: true,
             message: "User buyed contents found successfully",

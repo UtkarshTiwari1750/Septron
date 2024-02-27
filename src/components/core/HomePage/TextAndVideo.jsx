@@ -2,7 +2,7 @@ import React from 'react'
 import Button from '../../common/Button'
 import { useNavigate } from 'react-router-dom';
 
-const TextAndVideo = ({textHeading, textSubHeading, buttonText, buttonIcon, videoUrl, reverse}) => {
+const TextAndVideo = ({textHeading, textSubHeading, buttonText, buttonIcon, videoUrl, reverse, navigateUrl}) => {
     const navigate = useNavigate();
 
   return (
@@ -20,7 +20,7 @@ const TextAndVideo = ({textHeading, textSubHeading, buttonText, buttonIcon, vide
           </p>
 
           <Button
-            handleOnClick={() => navigate('/content/shows')} 
+            handleOnClick={() => navigate(navigateUrl)} 
             customClasses={`mt-8`} 
           >
             <p>{buttonText}</p>

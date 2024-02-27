@@ -164,7 +164,7 @@ const VideoDetails = () => {
 
                   <Button 
                     text={isArtistContent === 'true' ? "Buy Now" : "Watch Now"}
-                    handleOnClick={isArtistContent && handleBuyCourse  }
+                    handleOnClick={isArtistContent ? handleBuyCourse : "" }
                     customClasses={`mt-4`}
                   >
                       <BsFillPlayFill />

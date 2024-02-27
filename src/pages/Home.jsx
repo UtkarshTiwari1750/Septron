@@ -42,6 +42,7 @@ const Home = () => {
           buttonIcon={<BiSolidMoviePlay />} 
           videoUrl="https://firebasestorage.googleapis.com/v0/b/septron-909d2.appspot.com/o/Septron%2FGifs%2FSoloLeveling.mp4?alt=media&token=3716d891-09c6-40d5-8308-a5909eb4aee3"
           reverse={false}
+          navigateUrl="/videos"
         />
 
         {/* Book Section */}
@@ -55,6 +56,7 @@ const Home = () => {
           buttonIcon={<MdMenuBook />} 
           videoUrl="https://firebasestorage.googleapis.com/v0/b/septron-909d2.appspot.com/o/Septron%2FGifs%2FBookFlip.mp4?alt=media&token=12ac236a-e1d3-4436-90c7-7654e9c30f6b"
           reverse={true}
+          navigateUrl="/books"
         />
       </div>
           
