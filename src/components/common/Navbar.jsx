@@ -19,16 +19,11 @@ const Navbar = () => {
     ;(async()=>{
       const response = await getAllContentName();
       if(response.length > 0){
-        console.log("CONTENT NAME...", response)
         setAllContentNames(response);
       }
     })()
   }, [])
 
-  allContentNames?.map((content) => {
-    console.log("CONTENTNAMES...", content?.contentName)
-  })
-  console.log("USER...",user);
   return (
     <nav className='container py-4'>
         <div className='w-[90%] mx-auto flex justify-between items-center text-white'>

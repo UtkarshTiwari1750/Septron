@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDropzone } from 'react-dropzone';
 import { Player } from 'video-react';
 import { FiUploadCloud } from "react-icons/fi"
@@ -6,6 +6,7 @@ import { IoImageOutline } from "react-icons/io5";
 import { FcFilmReel } from "react-icons/fc";
 import { Document, Page } from 'react-pdf';
 import { setLoading } from '../../../../../slices/contentSlice';
+import { buildCreateSlice } from '@reduxjs/toolkit';
 
 const DropzoneSpace = ({
     index,
@@ -25,6 +26,7 @@ const DropzoneSpace = ({
     multiInput=false,
 }) => {
     const inputRef = useRef(null);
+    const videoRef = useRef(null);
     const onDrop = (acceptedFiles) => {
         setLoading(true);
         const file = acceptedFiles[0];
@@ -47,10 +49,11 @@ const DropzoneSpace = ({
         reader.readAsDataURL(file);
         reader.onloadend = () => {
             setAllPreviewSource( (prev) => [...prev, reader.result]);
+            console.log("VIDEO DURATION...", videoRef?.current?.duration);
             setLoading(false);
         }
     }
-
+    
   return (
     <div>
         <div
@@ -76,7 +79,7 @@ const DropzoneSpace = ({
                         </div>
                     )
                     : (
-                        <video src={previewSource} autoPlay muted controls />
+                        <video ref={videoRef} src={previewSource} autoPlay muted controls />
                     )}
 
                     {!viewData && (

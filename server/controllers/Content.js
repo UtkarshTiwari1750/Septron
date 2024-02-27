@@ -414,7 +414,6 @@ exports.getArtistContents = async(req, res) => {
 exports.getAllContentsName = async(req, res) => {
     try{
         const allContentName = await Content.find({}).select({contentName: true});
-        console.log("ALL CONTENT NAME...", allContentName);
 
         return res.status(200).json({
             success: true,

@@ -32,6 +32,8 @@ export const contentEndpoints = {
 // PROFILE ENDPOINTS
 export const profileEndpoints = {
     DELETE_ACCOUNT: BASE_URL + "/profile/deleteProfile",
+    UPDATE_PROFILE: BASE_URL + "/profile/updateProfile",
+    GET_BUYED_CONTENT: BASE_URL + "/profile/getBuyedContent",
 }
 
 // PAYMENT ENDPOINTS

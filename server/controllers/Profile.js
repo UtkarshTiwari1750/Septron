@@ -127,23 +127,47 @@ exports.getBuyedContent = async(req, res) => {
         .exec();
         
         console.log("Buyed Content", buyedContent);
+
         var subSectionLength = 0;
         const contents = buyedContent.contents;
         for(var i = 0; i < contents.length; i++) {
+            // PENDING
             let totalDurationInSeconds = 0;
             subSectionLength = 0;
             for(var j = 0; j < contents[i].contentSections.length; j++) {
-                totalDurationInSeconds += contents[i].contentSections[j]
-                    .subSections.reduce((acc, curr) => acc + parseInt(curr.timeDuration), 0);
+                // totalDurationInSeconds += contents[i].contentSections[j]
+                //     .subSections.reduce((acc, curr) => acc + parseInt(curr.timeDuration), 0);
+                
+                // contents[i].totalDuration = conv
+                subSectionLength += contents[i].contentSections[j].subSections.length;
             }
 
+            let contentProgressCount = await ContentProgress.findOne({
+                contentId: contents[i]._id,
+                userId: userId,
+            })
 
-
+            contentProgressCount = contentProgressCount?.completedSubSection.length;
+            if(subSectionLength === 0) {
+                contents[i].progressPercentage = 100;
+            } else {
+                const multiplier = 100;
+                contents[i].progressPercentage = Math.round((contentProgressCount/ subSectionLength) * 100 * 100) / multiplier;
+            }
         }
 
-        
+        if(!buyedContent) {
+            return res.status(400).json({
+                success: false,
+                message: "Could not find user with given id"
+            });
+        }
 
-
+        return res.status(200).json({
+            success: true,
+            message: "User buyed contents found successfully",
+            data: buyedContent.contents,
+        })
     } catch(error) {
         console.log("GET BUYED CONTENT CONTROLLER ERROR...", error);
         return res.status(500).json({
