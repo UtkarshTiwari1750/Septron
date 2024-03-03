@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Comments from '../components/common/Comments'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { loadData } from '../utils/animeAPI/anime'
 import { getContentDetails } from '../services/operations/contentAPI'
-import toast from 'react-hot-toast'
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
@@ -12,7 +11,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 // import required modules
-import {Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { Navigation } from 'swiper/modules';
 import Button from '../components/common/Button'
 import { BsFillPlayFill } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
@@ -23,6 +22,7 @@ import { buyContent } from '../services/operations/paymentAPI'
 const VideoDetails = () => {
     const {videoId} = useParams()
     const [animeOrArtistContent, setAnimeOrArtistContent] = useState(null);
+    const [artistContentDetail, setArtistContentDetail] = useState(null);
     const {allContentAndAnime} = useSelector((state) => state.content);
     const {token} = useSelector((state) => state.auth);
     const {user} = useSelector((state) => state.profile);
@@ -43,7 +43,7 @@ const VideoDetails = () => {
 
       if(isArtistContent === 'true') {
         const artistContent = await getContentDetails(videoId);
-
+        setArtistContentDetail(artistContent);
         data.title = artistContent.contentName;
         data.description = artistContent.contentDescription;
         data.image = artistContent.thumbnail;
@@ -163,8 +163,8 @@ const VideoDetails = () => {
                   </div>
 
                   <Button 
-                    text={isArtistContent === 'true' ? "Buy Now" : "Watch Now"}
-                    handleOnClick={isArtistContent ? handleBuyCourse : "" }
+                    text={user?.contents.includes(videoId) ? "Watch Now" :isArtistContent === 'true' ? "Buy Now" : "Watch Now"}
+                    handleOnClick={user?.contents.includes(videoId) ? () => navigate(`/view-content/${videoId}/${artistContentDetail?.contentSections[0]._id}/${artistContentDetail?.contentSections[0]?.subSections[0]._id}`) : isArtistContent ? handleBuyCourse : "" }
                     customClasses={`mt-4`}
                   >
                       <BsFillPlayFill />

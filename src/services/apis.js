@@ -27,6 +27,7 @@ export const contentEndpoints = {
     CREATE_GALLERY: BASE_URL + '/content/createGallery',
     UPDATE_GALLERY: BASE_URL + '/content/updateGallery',
     DELETE_GALLERY: BASE_URL + '/content/deleteGallery',
+    GET_FULL_CONTENT_DETAILS: BASE_URL + '/content/getFullContentDetails',
 }
 
 // PROFILE ENDPOINTS

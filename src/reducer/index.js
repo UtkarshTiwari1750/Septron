@@ -8,7 +8,7 @@ import sectionReducer from "../slices/sectionSlice";
 import subSectionReducer from "../slices/subSectionSlice";
 import commentReducer from "../slices/commentSlice";
 import navReducer from "../slices/navigateSlice";
-
+import viewContentReducer from "../slices/viewContent";
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -19,7 +19,8 @@ const rootReducer = combineReducers({
     section: sectionReducer, 
     subSection: subSectionReducer,
     comment: commentReducer,
-    nav: navReducer
+    nav: navReducer,
+    viewContent: viewContentReducer
 });
 
 export default rootReducer;

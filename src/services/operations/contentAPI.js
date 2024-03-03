@@ -19,7 +19,8 @@ const {
     GET_ARTIST_CONTENT,
     CREATE_GALLERY,
     UPDATE_GALLERY,
-    DELETE_GALLERY
+    DELETE_GALLERY,
+    GET_FULL_CONTENT_DETAILS
 } = contentEndpoints
 
 // Get All Content Name
@@ -395,4 +396,25 @@ export const deleteGallery = async(galleryId, contentId, token) => {
         console.log("DELETE GALLERY API ERROR....", error);
     }
     toast.dismiss(toastId);
+}
+
+// Get Full Content Details 
+export const getFullContentDetails = async(contentId, token) => {
+    const toastId = toast.loading("Loading...");
+    let result = null;
+    try {
+        const response = await apiConnector("POST", GET_FULL_CONTENT_DETAILS, {contentId},
+        {
+            Authorization: `Bearer ${token}`
+        })
+        console.log("FULL CONTENT DETAILS API RESPONSE...", response);
+        if(!response.data.success) {
+            throw new Error(response.data.message);
+        }
+        result = response?.data?.data;
+    } catch(error) {
+        console.log("GET FULL CONTENT DETAILS API ERROR....", error);
+    }
+    toast.dismiss(toastId);
+    return result;
 }

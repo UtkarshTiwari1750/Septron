@@ -429,3 +429,49 @@ exports.getAllContentsName = async(req, res) => {
         }); 
     }
 }
+
+// Get Full Content Details
+exports.getFullContentDetails = async(req, res) => {
+    try {
+        const {contentId} = req.body;
+        const userId = req.user.id;
+        const contentDetails = await Content.findOne({
+            _id: contentId,
+        })
+        .populate({
+            path: "creator",
+            populate: {
+                path: "additionalDetails",
+            }
+        })
+        .populate({
+            path: "contentSections",
+            populate: {
+                path: "subSections"
+            }
+        })
+        .populate("ratingAndReviews")
+        .populate("genre")
+        .exec();
+
+        if(!contentDetails) {
+            return res.status(400).json({
+                success: false,
+                message: "Content not found",
+            });
+        }        
+
+        return res.status(200).json({
+            success: true,
+            message: "Content found successfully",
+            data: contentDetails,
+        });
+    } catch(error) {
+        console.log("GET FULL CONTENT DETAILS CONTROLLER ERROR...", error);
+        return res.status(500).json({
+            success: false,
+            message: "GET FULL CONTENT DETAILS CONTROLLER ERROR",
+            error: error,
+        }); 
+    }
+}

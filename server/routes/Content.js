@@ -12,7 +12,8 @@ const {createContent,
     getAllContents, 
     getContentDetails ,
     getArtistContents,
-    getAllContentsName} = require("../controllers/Content");
+    getAllContentsName,
+    getFullContentDetails} = require("../controllers/Content");
 
 // Section controllers import 
 const {createSection, deleteSection, editSection} = require("../controllers/Section");
@@ -49,6 +50,7 @@ router.post("/createGallery",auth, isArtist, createGallery);
 router.put("/updateGallery",auth, isArtist, updateGallery);
 router.delete("/deleteGallery", auth, isArtist, deleteGallery);
 
+router.post("/getFullContentDetails", auth, getFullContentDetails);
 // ******************************************************************************************
 //                           Genre Routes (Only by Admin)
 // ******************************************************************************************
