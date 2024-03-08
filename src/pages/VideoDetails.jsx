@@ -82,7 +82,7 @@ const VideoDetails = () => {
 
     useEffect(() => {
       fetchData();
-    }, [])
+    }, [videoId])
 
     return (
     <div className='text-white w-full bg-[#000814]'>
@@ -226,7 +226,7 @@ const VideoDetails = () => {
                           handleOnClick={() => {
                             localStorage.setItem("isArtistContent", false);
                             navigate(`/video/${anime?.id}`)
-                            window.location.reload();
+                            // window.location.reload();
                           }}
                         />
                       </SwiperSlide>
@@ -279,7 +279,7 @@ const VideoDetails = () => {
                                 handleOnClick={() => {
                                   localStorage.setItem("isArtistContent", true);
                                   navigate(`/video/${anime?._id}`);
-                                  window.location.reload();
+                                  // window.location.reload();
                                 }}
                             />
                         </SwiperSlide>
@@ -324,7 +324,6 @@ const VideoDetails = () => {
                                 handleOnClick={() => {
                                   localStorage.setItem("isArtistContent", false);
                                   navigate(`/video/${anime?.id}`);
-                                  window.location.reload();
                                 }} 
                             />
                         </SwiperSlide>

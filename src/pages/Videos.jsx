@@ -171,7 +171,7 @@ const Videos = () => {
                                     handleOnClick={() => {
                                         localStorage.setItem("isArtistContent", false);
                                         navigate(`/video/${anime?.id}`)
-                                        window.location.reload();
+                                        // window.location.();
                                     }}
                                 />
                             </SwiperSlide>
@@ -224,7 +224,6 @@ const Videos = () => {
                                     handleOnClick={() => {
                                         localStorage.setItem("isArtistContent", true);
                                         navigate(`/video/${anime?._id}`);
-                                        window.location.reload();
                                     }}
                                     
                                 />
@@ -270,7 +269,6 @@ const Videos = () => {
                                     handleOnClick={() => {
                                         localStorage.setItem("isArtistContent", false);
                                         navigate(`/video/${anime?.id}`);
-                                        window.location.reload();
                                     }} 
                                 />
                             </SwiperSlide>

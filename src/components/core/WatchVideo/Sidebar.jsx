@@ -5,7 +5,7 @@ const Sidebar = ({content}) => {
 
   return (
     <div>
-        <div className='backdrop:blur-sm bg-white/45 rounded-lg p-3 flex flex-col gap-y-3'>
+        <div className='backdrop:blur-sm bg-white/45 rounded-lg p-3 flex flex-col gap-y-3 w-52'>
             {content.contentSections && content.contentSections.map((section, index) => (
                 <details key={index}>
                     <summary className='text-lg font-roboto'>
