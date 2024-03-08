@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Sidebar from '../components/core/WatchVideo/Sidebar';
 import Comments from '../components/common/Comments';
 import { IoPlaySkipForward } from "react-icons/io5";
+import { IoPlaySkipBack } from "react-icons/io5";
 
 
 const WatchVideo = () => {
@@ -89,7 +90,6 @@ const WatchVideo = () => {
               subSectionIndex: subSectionIndex
             });
             setContent(result);
-
           } catch(error) {
             console.log("Error...", error);
           }
@@ -100,6 +100,9 @@ const WatchVideo = () => {
   const sectionDetails = sectionAndSubSection.section;
   const subSectionDetails = sectionAndSubSection.subSection;
   
+
+
+
   const handleNext = () => {
     let navigateUrl = `/view-content/${contentId}/`;
     if(sectionAndSubSection.subSectionIndex === sectionDetails.subSections.length - 1) {
@@ -117,7 +120,6 @@ const WatchVideo = () => {
   }
 
   const handlePrev = () => {
-
   }
 
   console.log("Next video...", nextVideo);
@@ -128,40 +130,55 @@ const WatchVideo = () => {
       <div className='loader'></div>
     </div>) 
     :
-    <div className='text-white p-5'>
+    <div className='text-white p-5 pt-8'>
       {content && (
         <div>
           <div className='flex justify-between w-full gap-x-5 relative'>
-            <div className='absolute'>
+            <div className='absolute h-full left-3'>
               <Sidebar content={content}/>
             </div>
-            <div className='w-[680px] mx-auto'>
-              <video className="w-[680px] object-contain" src={subSectionDetails.url} autoPlay muted controls></video>
+            <div className={`w-[680px] mx-auto relative flex justify-center items-center`}>
+              <video className="w-[680px] object-contain" 
+                src={subSectionDetails.url} 
+                autoPlay 
+                muted 
+                controls
+                onEnded={() => handleNext()}
+              />
             </div>
-            <div className='w-[20%]'>
+            <div className='w-[25%] h-full absolute right-0'>
               <Comments />
             </div>
           </div>
+          
+          <div className='w-[680px] mx-auto mt-3'>
+            <h2 className='text-2xl font-poppins'>{subSectionDetails.title}</h2>
+            <p className='text-white/40 font-roboto'>{subSectionDetails.description}</p>
+          </div>
 
-          <div className='w-11/12 mx-auto mt-3 py-5 flex gap-x-3'>
-            <img 
-              src={content.thumbnail} 
-              alt={content.contentName} 
-              className='h-20'
-            />
+      
+          <div className='w-8/12 mx-auto py-5 flex gap-x-3 items-start justify-between'>
+            <div className='flex items-center'>
+              <img 
+                src={content.thumbnail} 
+                alt={content.contentName} 
+                className='w-64'
+              />
 
-            <div>
               <div>
-                <h2 className='font-poppins text-2xl'>
-                  {content.contentName}
-                </h2>
-                <p className='text-xs'>Genre | {content?.genre.name}</p>
-              </div>
+                <div>
+                  <h2 className='font-poppins text-2xl'>
+                    {content.contentName}
+                  </h2>
+                  <p className='text-xs'>Genre | {content?.genre.name}</p>
+                </div>
 
-              <p>
-                {content.contentDescription}
-              </p>
+                <p>
+                  {content.contentDescription}
+                </p>
+              </div>
             </div>
+            
             
             {nextVideo && 
             (<div className='relative flex justify-center items-center group hover:scale-105 cursor-pointer transition-all duration-300'

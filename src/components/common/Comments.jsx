@@ -29,7 +29,7 @@ const Comments = () => {
         <div className='w-full'>
             <div className='w-11/12 mx-auto max-w-[1080px]'>
                 <form onSubmit={handleSubmit(sendComment)}
-                    className='flex gap-x-3'
+                    className='flex gap-x-3 items-center'
                 >
                     <div className='relative w-[70%]'>
                         <textarea 
@@ -55,7 +55,7 @@ const Comments = () => {
 
                     <button
                         type='submit'
-                        className='rounded-lg px-3 py-1 border'
+                        className='rounded-lg px-3 py-1 font-roboto text-lg  border'
                     >
                         Send
                     </button>
