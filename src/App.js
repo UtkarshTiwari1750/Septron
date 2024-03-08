@@ -16,10 +16,52 @@ import Videos from './pages/Videos';
 import VideoDetails from './pages/VideoDetails';
 import BuyedContent from './components/core/Dashboard/BuyedContent/BuyedContent';
 import WatchVideo from './pages/WatchVideo';
+import gsap from 'gsap';
+import { useEffect, useRef } from 'react';
 
 function App() {
+  const comp = useRef(null);
+  
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      const t1 = gsap.timeline();
+      t1.from('#logo', {
+        scale: "0",
+        duration: 1.3,
+        delay: 0.3,
+        opacity: 100
+      })
+      .from('#contain', {
+        opacity: '100',
+      })
+      .to('#logo', {
+        scale: '10',
+        duration: 1.3,
+        opacity: 0,
+        display: 'none'
+      })
+      .to("#contain", {
+        opacity: 0,
+        display: 'none'
+      })
+      
+    }, comp)
+    return () => ctx.revert()
+  }, [])
+
+
   return (
-    <div className='bg-[#000814] w-full h-screen'>
+    <div className='bg-[#000814] w-full h-screen' ref={comp}>
+
+    <div id='contain' className='flex overflow-hidden justify-center absolute z-30  w-full h-full backdrop-blur-md rounded-lg px-2 py-2 shadow-lg ring-1 ring-black/5 bg-black/40 isolate'>
+      <img 
+        id='logo'
+        src='https://firebasestorage.googleapis.com/v0/b/septron-909d2.appspot.com/o/Septron%2Flogo-white-transparent.png?alt=media&token=964bf6a7-a22e-4ebe-bf85-5344e419710a' 
+        alt="" 
+        className='z-40 w-52 object-contain  backdrop:blur-3xl'
+      />
+    </div>
+
       <Routes>
         <Route path='/' element={<Home /> } />
         <Route path='/signup' element={<Signup />} />

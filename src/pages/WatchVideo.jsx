@@ -6,6 +6,7 @@ import Sidebar from '../components/core/WatchVideo/Sidebar';
 import Comments from '../components/common/Comments';
 import { IoPlaySkipForward } from "react-icons/io5";
 import { IoPlaySkipBack } from "react-icons/io5";
+import Review from '../components/core/WatchVideo/Review';
 
 
 const WatchVideo = () => {
@@ -137,6 +138,7 @@ const WatchVideo = () => {
             <div className='absolute h-full left-3'>
               <Sidebar content={content}/>
             </div>
+
             <div className={`w-[680px] mx-auto relative flex justify-center items-center`}>
               <video className="w-[680px] object-contain" 
                 src={subSectionDetails.url} 
@@ -146,17 +148,19 @@ const WatchVideo = () => {
                 onEnded={() => handleNext()}
               />
             </div>
-            <div className='w-[25%] h-full absolute right-0'>
+            
+            <div className='w-[25%] h-full absolute right-0 rounded-md border border-white p-2'>
               <Comments />
             </div>
           </div>
           
+          {/* Video Info */}
           <div className='w-[680px] mx-auto mt-3'>
             <h2 className='text-2xl font-poppins'>{subSectionDetails.title}</h2>
             <p className='text-white/40 font-roboto'>{subSectionDetails.description}</p>
           </div>
 
-      
+          {/* Content Info */}
           <div className='w-8/12 mx-auto py-5 flex gap-x-3 items-start justify-between'>
             <div className='flex items-center'>
               <img 
@@ -203,7 +207,8 @@ const WatchVideo = () => {
             </div>)}
 
           </div>
-
+            
+          <Review />
 
         </div>
       )}

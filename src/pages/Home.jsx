@@ -1,31 +1,20 @@
-import React, {Suspense, useEffect} from 'react'
-import Card from '../components/common/Card';
-import { useRef } from 'react';
-import { useState } from 'react';
-// import Demonbg from "../../../assets/gif/DemonSlayerbg.gif";
-import Demonbg from "../assets/gif/DemonSlayerbg.gif"
-import Navbar from '../components/common/Navbar';
-import {BsFillPlayFill} from 'react-icons/bs'
-import Button from '../components/common/Button';
-import { useNavigate } from 'react-router-dom';
+import React, {Suspense, useEffect, useLayoutEffect, useRef} from 'react'
 import { BiSolidMoviePlay } from "react-icons/bi";
 import { MdMenuBook } from "react-icons/md";
 import Hero from '../components/core/HomePage/Hero';
-import { getAllContentName } from '../services/operations/contentAPI';
 import TextAndVideo from '../components/core/HomePage/TextAndVideo';
-
-
+import Navbar from '../components/common/Navbar';
 // const Spline = React.lazy(() => import('@splinetool/react-spline'));
 // import Spline from '@splinetool/react-spline';
 
-
-
 const Home = () => {
-  const navigate = useNavigate();
-
-
+  
   return (
     <div className='bg-[#000814] flex flex-col gap-10'>
+      
+      <div className='absolute top-0 z-10'>
+        <Navbar />
+      </div>
 
       {/* Hero Section */}
       <Hero />

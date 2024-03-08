@@ -22,7 +22,7 @@ const Sidebar = ({content}) => {
 
   return (
     <div className='w-full h-full'>
-        <div className='backdrop:blur-sm bg-white/10 rounded-lg h-full p-2 flex flex-col gap-y-3 w-52'>
+        <div className='backdrop-blur-md rounded-lg px-2 py-2 shadow-lg ring-1 ring-black/5 bg-white/20 isolate h-full p-2 flex flex-col gap-y-3 w-52'>
             {content.contentSections && content.contentSections.map((section, index) => (
                 <details key={index} open={activeSection && activeSection._id === section._id}>
                     <summary className={`${activeSection && activeSection._id === section._id && "bg-black/50"} px-2 py-1 rounded-t-md text-lg font-roboto`}>
