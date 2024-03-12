@@ -20,7 +20,10 @@ const {
     CREATE_GALLERY,
     UPDATE_GALLERY,
     DELETE_GALLERY,
-    GET_FULL_CONTENT_DETAILS
+    GET_FULL_CONTENT_DETAILS,
+    CREATE_REVIEW,
+    DELETE_REVIEW,
+    UPDATE_REVIEW
 } = contentEndpoints
 
 // Get All Content Name
@@ -418,3 +421,27 @@ export const getFullContentDetails = async(contentId, token) => {
     toast.dismiss(toastId);
     return result;
 }
+
+
+// Create Review
+export const createReview = async(contentId, review, rating, token) => {
+    const toastId = toast.loading("Loading...");
+    try {
+        const response = await apiConnector("POST", CREATE_REVIEW, 
+            {review, rating, contentId}, 
+            {Authorization: `Bearer ${token}`}
+        )
+
+        if(!response.data.success) {
+            throw new Error("Could not create review");
+        }
+
+        toast.success('Review Created Successfully');
+
+    } catch(error) {
+        console.log("CREATE REVIEW API ERROR....", error);
+    }
+    toast.dismiss(toastId);
+}
+
+export const updateReview = async(reviewId)

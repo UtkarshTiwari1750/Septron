@@ -27,6 +27,9 @@ const {createGenre, getAllGenre} = require("../controllers/Genre");
 // Gallery Controllers Import
 const {createGallery, updateGallery, deleteGallery} = require("../controllers/Gallery");
 
+// Rating and Review Controllers Import
+const {createReview, deleteReview, updateReview} = require("../controllers/Review");
+
 // ******************************************************************************************
 //                           Content Routes (Only by Artist)
 // ******************************************************************************************
@@ -56,5 +59,12 @@ router.post("/getFullContentDetails", auth, getFullContentDetails);
 // ******************************************************************************************
 router.post("/createGenre", auth, isAdmin, createGenre);
 router.get("/getAllGenre", getAllGenre);
+
+// ******************************************************************************************
+//                           Rating And Review Routes 
+// ******************************************************************************************
+router.post("/createReview", auth, isNormal, createReview);
+router.put("/upatedReview", auth, isNormal, updateReview);
+router.delete("/deleteReview", auth, isNormal, deleteReview);
 
 module.exports = router;
