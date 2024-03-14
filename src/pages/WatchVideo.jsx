@@ -7,6 +7,7 @@ import Comments from '../components/common/Comments';
 import { IoPlaySkipForward } from "react-icons/io5";
 import { IoPlaySkipBack } from "react-icons/io5";
 import Review from '../components/core/WatchVideo/Review';
+import ReactStars from "react-rating-stars-component";
 
 
 const WatchVideo = () => {
@@ -24,6 +25,7 @@ const WatchVideo = () => {
     video: null,
     isFirst: false,
   })
+  const [reviewModal, setReviewModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [next, setNext] = useState();
   const [prev, setPrev] = useState();
@@ -43,9 +45,6 @@ const WatchVideo = () => {
             setLoading(false)
             const currentSection = result?.contentSections.filter((section) => section._id === sectionId)[0];
             const currentVideo = currentSection?.subSections.filter((subSection) => subSection._id === subSectionId)[0];
-
-            // console.log("Current Section....", currentSection);
-            // console.log("Current Subsection...", currentVideo)
 
             const sectionIndex = result?.contentSections.findIndex((section) => section._id === currentSection._id)
             const subSectionIndex = currentSection?.subSections.findIndex((subsection) => subsection._id === currentVideo._id)
@@ -155,9 +154,26 @@ const WatchVideo = () => {
           </div>
           
           {/* Video Info */}
-          <div className='w-[680px] mx-auto mt-3'>
-            <h2 className='text-2xl font-poppins'>{subSectionDetails.title}</h2>
-            <p className='text-white/40 font-roboto'>{subSectionDetails.description}</p>
+          <div className='w-[680px] mx-auto mt-3 flex justify-between items-center'>
+            <div>
+              <h2 className='text-2xl font-poppins'>{subSectionDetails.title}</h2>
+              <p className='text-white/40 font-roboto'>{subSectionDetails.description}</p>  
+            </div>
+            <div>
+              <ReactStars 
+                count={5}
+                // onChange={ratingChanged}
+                size={34}
+                activeColor="#ffd700"
+                isHalf={true}
+              />
+              <p className='text-blue-600 cursor-pointer hover:scale-110 transition-all duration-300'
+                onClick={() => setReviewModal(true)}
+              >
+                Add Review+
+              </p>
+            </div>
+            {/* <Review /> */}
           </div>
 
           {/* Content Info */}
@@ -207,8 +223,9 @@ const WatchVideo = () => {
             </div>)}
 
           </div>
-            
-          <Review />
+          
+          <div>
+          </div>
 
         </div>
       )}

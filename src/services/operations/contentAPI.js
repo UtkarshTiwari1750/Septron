@@ -444,4 +444,4 @@ export const createReview = async(contentId, review, rating, token) => {
     toast.dismiss(toastId);
 }
 
-export const updateReview = async(reviewId)
+// export const updateReview = async(reviewId)

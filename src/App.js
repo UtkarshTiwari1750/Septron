@@ -18,6 +18,7 @@ import BuyedContent from './components/core/Dashboard/BuyedContent/BuyedContent'
 import WatchVideo from './pages/WatchVideo';
 import gsap from 'gsap';
 import { useEffect, useRef } from 'react';
+import Footer from './components/common/Footer';
 
 function App() {
   const comp = useRef(null);
@@ -51,7 +52,7 @@ function App() {
 
 
   return (
-    <div className='bg-[#000814] w-full h-screen' ref={comp}>
+    <div className='bg-[#000814] w-full ' ref={comp}>
 
     <div id='contain' className='flex overflow-hidden justify-center absolute z-30  w-full h-full backdrop-blur-md rounded-lg px-2 py-2 shadow-lg ring-1 ring-black/5 bg-black/40 isolate'>
       <img 
@@ -62,26 +63,30 @@ function App() {
       />
     </div>
 
-      <Routes>
-        <Route path='/' element={<Home /> } />
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/verify-email' element={<VerifyEmail />} />
-        <Route element={<Dashboard />}>
-          <Route path='/dashboard/my-profile' element={<MyProfile />}/>
-          <Route path='/dashboard/add-content' element={<AddContent />} />
-          <Route path='/dashboard/settings' element={<Setting />} />
-          <Route path='/dashboard/my-content' element={<MyContent />} />
-          <Route path='/dashboard/overview' element={<Overview />} />
-          <Route path='/dashboard/buyed-content' element={<BuyedContent />} /> 
-        </Route>
-        <Route path='/videos' element={<Videos />} />
-        <Route path='/video/:videoId' element={<VideoDetails />}/>
-        <Route path='/view-content/:contentId/:sectionId/:subSectionId' element={<WatchVideo />} />         
+
+    <Routes>
+      <Route path='/' element={<Home /> } />
+      <Route path='/signup' element={<Signup />} />
+      <Route path='/login' element={<Login />} />
+      <Route path='/verify-email' element={<VerifyEmail />} />
+      <Route element={<Dashboard />}>
+        <Route path='/dashboard/my-profile' element={<MyProfile />}/>
+        <Route path='/dashboard/add-content' element={<AddContent />} />
+        <Route path='/dashboard/settings' element={<Setting />} />
+        <Route path='/dashboard/my-content' element={<MyContent />} />
+        <Route path='/dashboard/overview' element={<Overview />} />
+        <Route path='/dashboard/buyed-content' element={<BuyedContent />} /> 
+      </Route>
+      <Route path='/videos' element={<Videos />} />
+      <Route path='/video/:videoId' element={<VideoDetails />}/>
+      <Route path='/view-content/:contentId/:sectionId/:subSectionId' element={<WatchVideo />} />         
 
 
-        <Route path='*' element={<Error />} />
-      </Routes>
+      <Route path='*' element={<Error />} />
+    </Routes>
+
+    <Footer />
+
     </div>
   );
 }

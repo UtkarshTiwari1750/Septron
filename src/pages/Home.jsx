@@ -50,22 +50,7 @@ const Home = () => {
       </div>
           
         
-          <iframe allowfullscreen="" scrolling="no" className="fp-iframe"  src="https://heyzine.com/flip-book/643b302e8c.html"></iframe>
-                        
-
-          {/* <iframe src="https://publuu.com/flip-book/386453/876881/page/1?embed" width="100%" height="900px" scrolling="no" frameborder="0" allowfullscreen="" allow="clipboard-write" class="publuuflip"></iframe> */}
-
-        {/* <div>
-        <Suspense fallback={<div className='text-white text-5xl'>Loading...</div>}>
-          <Spline scene="https://prod.spline.design/CzeXkC-ZMCuGT3lH/scene.splinecode" 
-          onLoad={onLoad}
-          className='w-[45px] h-[45px]'/>
-        </Suspense>
-        <button type="button" onClick={triggerAnimation}>
-        Trigger Spline Animation
-        </button>
-        </div> */}
-        {/* <Card /> */}
+          
     </div>
     
   )

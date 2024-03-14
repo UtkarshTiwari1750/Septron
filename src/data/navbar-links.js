@@ -7,12 +7,12 @@ export const NavbarLinks =[
         title: "Animes",
         path: "/videos",
     },
-    {
-        title: "Comics",
-        path: "/books",
-    },
-    {
-        title: "Community",
-        path: "/community",
-    }
+    // {
+    //     title: "Comics",
+    //     path: "/books",
+    // },
+    // {
+    //     title: "Community",
+    //     path: "/community",
+    // }
 ];

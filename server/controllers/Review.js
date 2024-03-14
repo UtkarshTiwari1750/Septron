@@ -149,16 +149,3 @@ exports.deleteReview = async(req, res) => {
     }
 }
 
-exports.getAllReviews = async(req, res) => {
-    try {
-        
-    } catch(error) {
-        console.log("GET ALL REVIEW CONTROLLER ERROR...", error);
-        return res.status(500).json({
-            success: false,
-            message: "GET ALL REVIEW CONTROLLER ERROR",
-            error: error,
-        }); 
-    }
-}
-

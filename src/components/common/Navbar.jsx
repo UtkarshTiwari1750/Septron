@@ -34,7 +34,7 @@ const Navbar = () => {
               </Link>
             </div>
             
-            <div className='font-Roboto w-[35%] flex justify-between items-center'>
+            <div className='font-Roboto w-[35%] flex  items-center'>
               {
                 NavbarLinks.map((link, index) => (
                   <>
@@ -51,8 +51,8 @@ const Navbar = () => {
               }
             </div>
             
-            <div className='w-[45%] flex justify-between items-center'>
-                <div className='flex group justify-between items-center relative'>
+            <div className=' flex justify-between items-center'>
+                {/* <div className='flex group justify-between items-center relative'>
 
                   <input type="text" placeholder='Search' 
                     className='bg-transparent font-poppins placeholder:font-poppins border border-white px-4 py-1 outline-none rounded-full font-Roboto placeholder:font-Roboto'
@@ -73,7 +73,7 @@ const Navbar = () => {
                       ))
                     )}
                   </div>
-                </div>
+                </div> */}
 
                 {user 
                   ? (
